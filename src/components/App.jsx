@@ -8,7 +8,7 @@ import Admin from "./page/Admin"
 
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={process.env.PUBLIC_URL}>
       <Route exact path="/" component={Home} />
       <Route path="/introduce" component={Introduce} />
       <Route path="/news" component={News} />
