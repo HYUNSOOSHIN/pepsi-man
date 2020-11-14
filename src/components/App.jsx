@@ -2,9 +2,9 @@ import { BrowserRouter, Route } from "react-router-dom"
 import Home from "./page/Home"
 import Introduce from "./page/Introduce"
 import News from "./page/News"
-import Albums from "./page/Albums"
-import Talk from "./page/Talk"
-import Admin from "./page/Admin"
+import Albums from "./page/albums/Albums"
+import Album from "./page/albums/Album"
+import Talks from "./page/Talks"
 
 function App() {
   return (
@@ -13,8 +13,8 @@ function App() {
       <Route path="/introduce" component={Introduce} />
       <Route path="/news" component={News} />
       <Route path="/albums" component={Albums} />
-      <Route path="/talk" component={Talk} />
-      <Route path="/admin" component={Admin} />
+      <Route path="/album/:albumSeq" component={Album} />
+      <Route path="/talks" component={Talks} />
     </BrowserRouter>
   )
 }

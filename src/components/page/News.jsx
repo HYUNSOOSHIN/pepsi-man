@@ -1,6 +1,6 @@
 import Layout from "../common/Layout"
 
-const Home = () => {
+const News = () => {
   return (
     <Layout>
       <div>뉴스다</div>
@@ -8,4 +8,4 @@ const Home = () => {
   )
 }
 
-export default Home
+export default News
