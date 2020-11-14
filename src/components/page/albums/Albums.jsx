@@ -9,9 +9,7 @@ const Albums = () => {
     <Layout>
       <div
         style={{
-          overflowX: "auto",
           display: "flex",
-          flexWrap: "nowrap",
           justifyContent: "flex-start",
           alignItems: "center",
           width: "100%",
@@ -30,7 +28,7 @@ const Albums = () => {
 
         <button
           style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}
-          onClick={() => history.push(`/album/${1}`)}
+          onClick={() => history.push(`/album/${2}`)}
         >
           <img style={{ width: "300px", height: "300px" }} src={thunderbirdmotel} alt={"앨범 이미지"} />
           <p style={{ marginTop: "10px", fontSize: "20px" }}>앨범이름</p>
@@ -39,7 +37,7 @@ const Albums = () => {
 
         <button
           style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}
-          onClick={() => history.push(`/album/${1}`)}
+          onClick={() => history.push(`/album/${3}`)}
         >
           <img style={{ width: "300px", height: "300px" }} src={thunderbirdmotel} alt={"앨범 이미지"} />
           <p style={{ marginTop: "10px", fontSize: "20px" }}>앨범이름</p>
