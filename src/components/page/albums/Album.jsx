@@ -2,7 +2,7 @@ import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Layout from "../../common/Layout"
 import LyricsDialog from "../../dialog/LyricsDialog"
-import thunderbirdmotel from "./../../../images/thunderbirdmotel.jpg"
+import thunderbirdmotel from "./../../../images/thunderbirdmotel.png"
 
 import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"

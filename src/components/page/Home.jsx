@@ -1,5 +1,5 @@
 import Layout from "../common/Layout"
-import thunderbirdmotel from "./../../images/thunderbirdmotel.jpg"
+import thunderbirdmotel from "./../../images/thunderbirdmotel.png"
 
 const Home = () => {
   return (

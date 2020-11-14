@@ -1,6 +1,6 @@
 import Layout from "../common/Layout"
 
-import zior from "./../../images/zior.jpg"
+import zior from "./../../images/zior.png"
 import instagram from "./../../images/instagram.png"
 import youtube from "./../../images/youtube.png"
 import soundcloud from "./../../images/soundcloud.png"
