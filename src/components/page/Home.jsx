@@ -5,7 +5,7 @@ const Home = () => {
   return (
     <Layout>
       <section id={"home_image"} style={{ display: "flex", flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <img style={{ width: "514px", objectFit: "cover" }} src={thunderbirdmotel} alt={"home img"} />
+        <img style={{ width: "524px", objectFit: "cover" }} src={thunderbirdmotel} alt={"home img"} />
       </section>
     </Layout>
   )

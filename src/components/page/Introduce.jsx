@@ -22,7 +22,7 @@ const Introduce = () => {
           <p style={{ fontSize: "20px", fontWeight: "bold" }}>PROFILE</p>
         </div>
 
-        <div style={{ width: "393px", height: "fit-content", marginTop: "20px" }}>
+        <div style={{ width: "35%", height: "fit-content", marginTop: "20px" }}>
           <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
             <p style={{ flex: 1, fontSize: "18px" }}>이름</p>
             <p style={{ flex: 1, fontSize: "18px" }}>Zior Park</p>
@@ -59,8 +59,8 @@ const Introduce = () => {
           <p style={{ fontSize: "20px", fontWeight: "bold" }}>SNS</p>
         </div>
 
-        <div style={{ width: "393px", height: "fit-content", marginTop: "20px" }}>
-          <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "35%", height: "fit-content", marginTop: "20px" }}>
+          <div style={{ display: "flex", justifyContent: "space-around", alignItems: "center", width: "50%" }}>
             <a target={"_blank"} rel={"noreferrer"} href={"https://www.instagram.com/ziorpark/"}>
               <img style={{ width: "40px", objectFit: "cover" }} src={instagram} alt={"instagram logo"} />
             </a>

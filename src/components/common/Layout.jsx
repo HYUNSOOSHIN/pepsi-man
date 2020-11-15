@@ -21,7 +21,7 @@ const Layout = (props) => {
   return (
     <div id={"container"}>
       <div id={"toggle_view"}>
-        <p>다크모드</p>
+        <p style={{ fontWeight: "bold" }}>다크모드</p>
         <AntSwitch
           checked={toggle}
           onChange={() => {
