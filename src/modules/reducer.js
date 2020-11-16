@@ -135,6 +135,116 @@ const initState = {
     {
       albumSeq: 1,
       albumNo: 2,
+      title: "Beautiful",
+      artist: "Zior Park",
+      imageUri: "https://cdnimg.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/108/998/81108998_1541066067486_1_600x600.JPG/dims/resize/Q_80,0",
+      releaseDate: "2018-10-05",
+      track: [
+        {
+          trackNo: 1,
+          title: "Beautiful",
+          lyrics: `You told me that I'm so twisted
+          Negative vibes only
+          You told me that Im so stupid
+          I know ma stance make 
+          you look selfish 
+          
+          If I don't know
+          ‘bout your details
+          I could think about it 
+          as typical mistake
+          Don't beg me respect
+          Big madness for ya 
+          it's full in this mixtape
+          
+          Boo ! I'm like boogie man
+          I feel like a villain on this land
+          Boo ! Booby trap
+          Ma lady never let me 
+          go from this bed
+          
+          I could just blow it
+          out of proportion 
+          I ain't never lie though
+          I just told ya just the way it 
+          likes I saw you know
+          
+          When I glance it
+          It so nice beautiful 
+          When it closer
+          It so fucking disappointed 
+          
+          When I glance it
+          It so nice beautiful 
+          When it closer
+          When I glance it
+          
+          Blur ma sight lord
+          It's beautiful
+          Dark world rather than here
+          It taught me how you fool
+          
+          Blur ma sight lord 
+          It's beautiful
+          Dark world rather than here
+          It taught me how you fool
+          
+          Take off ma glasses
+          Devil's stretching 
+          Give me some blessing
+          What are you waiting
+          What are you waiting 
+          Why are you hiding
+          huh huh?
+          
+          Take off ma glasses
+          Devil's stretching 
+          Give me some blessing
+          What are you waiting
+          What are you waiting 
+          Why are you hiding
+          huh huh?
+          
+          I could love your ugly face
+          Even you got scar face
+          Don't tryna close
+           to me like them
+          I wanna keep
+          you at arm's length
+          
+          Friends why you change 
+          your stance again
+          In this game,
+          I'm Steven Yeon 
+          all around bitches 
+          walkin' like a dead
+          
+          When I glance it
+          It so nice beautiful 
+          When it closer
+          It so fucking disappointed 
+          
+          When I glance it
+          It so nice beautiful 
+          When it closer
+          When I glance it
+          
+          Blur ma sight lord
+          It's beautiful
+          Dark world rather than here
+          It taught me how you fool
+          
+          Blur ma sight lord 
+          It's beautiful
+          Dark world rather than here
+          It taught me how you fool`,
+          mvUri: "https://www.youtube.com/watch?v=sK1hxwuq5bA",
+        },
+      ],
+    },
+    {
+      albumSeq: 2,
+      albumNo: 3,
       title: "Noise",
       artist: "마미손 & 김승민 & 원슈타인 & Zior Park",
       imageUri: "https://cdnimg.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/205/463/81205463_1557743451554_1_600x600.JPG/dims/resize/Q_80,0",
@@ -274,116 +384,6 @@ const initState = {
           Fake bitches wanna saint Laurant
           Polo shirt for sure already dead (x2)`,
           mvUri: "https://www.youtube.com/watch?v=kfHhJHwaARk",
-        },
-      ],
-    },
-    {
-      albumSeq: 2,
-      albumNo: 3,
-      title: "Beautiful",
-      artist: "Zior Park",
-      imageUri: "https://cdnimg.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/108/998/81108998_1541066067486_1_600x600.JPG/dims/resize/Q_80,0",
-      releaseDate: "2018-10-05",
-      track: [
-        {
-          trackNo: 1,
-          title: "Beautiful",
-          lyrics: `You told me that I'm so twisted
-          Negative vibes only
-          You told me that Im so stupid
-          I know ma stance make 
-          you look selfish 
-          
-          If I don't know
-          ‘bout your details
-          I could think about it 
-          as typical mistake
-          Don't beg me respect
-          Big madness for ya 
-          it's full in this mixtape
-          
-          Boo ! I'm like boogie man
-          I feel like a villain on this land
-          Boo ! Booby trap
-          Ma lady never let me 
-          go from this bed
-          
-          I could just blow it
-          out of proportion 
-          I ain't never lie though
-          I just told ya just the way it 
-          likes I saw you know
-          
-          When I glance it
-          It so nice beautiful 
-          When it closer
-          It so fucking disappointed 
-          
-          When I glance it
-          It so nice beautiful 
-          When it closer
-          When I glance it
-          
-          Blur ma sight lord
-          It's beautiful
-          Dark world rather than here
-          It taught me how you fool
-          
-          Blur ma sight lord 
-          It's beautiful
-          Dark world rather than here
-          It taught me how you fool
-          
-          Take off ma glasses
-          Devil's stretching 
-          Give me some blessing
-          What are you waiting
-          What are you waiting 
-          Why are you hiding
-          huh huh?
-          
-          Take off ma glasses
-          Devil's stretching 
-          Give me some blessing
-          What are you waiting
-          What are you waiting 
-          Why are you hiding
-          huh huh?
-          
-          I could love your ugly face
-          Even you got scar face
-          Don't tryna close
-           to me like them
-          I wanna keep
-          you at arm's length
-          
-          Friends why you change 
-          your stance again
-          In this game,
-          I'm Steven Yeon 
-          all around bitches 
-          walkin' like a dead
-          
-          When I glance it
-          It so nice beautiful 
-          When it closer
-          It so fucking disappointed 
-          
-          When I glance it
-          It so nice beautiful 
-          When it closer
-          When I glance it
-          
-          Blur ma sight lord
-          It's beautiful
-          Dark world rather than here
-          It taught me how you fool
-          
-          Blur ma sight lord 
-          It's beautiful
-          Dark world rather than here
-          It taught me how you fool`,
-          mvUri: "https://www.youtube.com/watch?v=sK1hxwuq5bA",
         },
       ],
     },
