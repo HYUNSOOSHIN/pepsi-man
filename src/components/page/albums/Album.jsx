@@ -1,8 +1,8 @@
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
+import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import LyricsDialog from "../../dialog/LyricsDialog"
-import thunderbirdmotel from "./../../../images/thunderbirdmotel.png"
 
 import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
@@ -10,16 +10,21 @@ import YouTubeIcon from "@material-ui/icons/YouTube"
 
 const Album = (props) => {
   const history = useHistory()
-  const { match } = props
-  const [lyricsDialog, setLyricsDialog] = useState(false)
+  const { album, setAlbum } = props
+  const { albumSeq } = props.match.params
+  const [lyricsDialog, setLyricsDialog] = useState({ open: false, track: {} })
 
-  console.log(match.params.albumSeq)
+  useEffect(() => {
+    setAlbum(albumSeq)
+  })
+
+  if (Object.keys(album).length === 0) return null
 
   return (
     <Layout>
-      <LyricsDialog open={lyricsDialog} onClose={() => setLyricsDialog(false)} />
+      <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
       <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <img style={{ width: "524px", objectFit: "cover" }} src={thunderbirdmotel} alt={"앨범 이미지"} />
+        <img style={{ width: "524px", objectFit: "cover" }} src={album.imageUri} alt={"앨범 이미지"} />
         <table style={{ width: "524px", height: "fit-content", marginTop: "20px" }}>
           <thead>
             <tr>
@@ -30,20 +35,24 @@ const Album = (props) => {
             </tr>
           </thead>
           <tbody>
-            <tr>
-              <td style={{ width: "30px", fontSize: "15px", textAlign: "center" }}>1</td>
-              <td style={{ flex: 1, fontSize: "15px" }}>THUNDERBIRD</td>
-              <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
-                <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog(true)}>
-                  <LibraryBooksIcon />
-                </IconButton>
-              </td>
-              <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
-                <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push("/album/1/MV")}>
-                  <YouTubeIcon />
-                </IconButton>
-              </td>
-            </tr>
+            {album.track.map((i, idx) => (
+              <tr key={idx}>
+                <td style={{ width: "30px", fontSize: "15px", textAlign: "center" }}>{i.trackNo}</td>
+                <td style={{ flex: 1, fontSize: "15px" }}>{i.title}</td>
+                <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
+                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog({ open: true, track: i })}>
+                    <LibraryBooksIcon />
+                  </IconButton>
+                </td>
+                <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
+                  {i.mvUri === "" ? null : (
+                    <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/album/${albumSeq}/MV/${i.trackNo}`)}>
+                      <YouTubeIcon />
+                    </IconButton>
+                  )}
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
@@ -51,4 +60,4 @@ const Album = (props) => {
   )
 }
 
-export default Album
+export default Container(Album)

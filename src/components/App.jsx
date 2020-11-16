@@ -15,7 +15,7 @@ function App() {
       <Route path="/news" component={News} />
       <Route path="/albums" component={Albums} />
       <Switch>
-        <Route path="/album/:albumSeq/MV" component={MV} />
+        <Route path="/album/:albumSeq/MV/:trackNo" component={MV} />
         <Route path="/album/:albumSeq" component={Album} />
       </Switch>
 
