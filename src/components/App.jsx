@@ -5,7 +5,9 @@ import News from "./page/News"
 import Albums from "./page/albums/Albums"
 import Album from "./page/albums/Album"
 import MV from "./page/albums/MV"
-import Talks from "./page/Talks"
+import Talks from "./page/talks/Talks"
+import Talk from "./page/talks/Talk"
+import Search from "./page/talks/Search"
 
 function App() {
   return (
@@ -18,8 +20,9 @@ function App() {
         <Route path="/album/:albumSeq/MV/:trackNo" component={MV} />
         <Route path="/album/:albumSeq" component={Album} />
       </Switch>
-
       <Route path="/talks" component={Talks} />
+      <Route path="/talk" component={Talk} />
+      <Route path="/search" component={Search} />
     </BrowserRouter>
   )
 }

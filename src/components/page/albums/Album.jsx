@@ -23,7 +23,7 @@ const Album = (props) => {
   return (
     <Layout>
       <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
-      <div style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
+      <section style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
         <img style={{ width: "524px", objectFit: "cover" }} src={album.imageUri} alt={"앨범 이미지"} />
         <table style={{ width: "524px", height: "fit-content", marginTop: "20px" }}>
           <thead>
@@ -55,7 +55,7 @@ const Album = (props) => {
             ))}
           </tbody>
         </table>
-      </div>
+      </section>
     </Layout>
   )
 }

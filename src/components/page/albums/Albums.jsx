@@ -83,7 +83,7 @@ const Albums = (props) => {
 
   return (
     <Layout>
-      <div
+      <section
         style={{
           display: "flex",
           flexDirection: "column",
@@ -94,7 +94,7 @@ const Albums = (props) => {
         }}
       >
         {renderAlbums()}
-      </div>
+      </section>
     </Layout>
   )
 }
