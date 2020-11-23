@@ -8,6 +8,7 @@ import MV from "./page/albums/MV"
 import Talks from "./page/talks/Talks"
 import Talk from "./page/talks/Talk"
 import Search from "./page/talks/Search"
+import Write from "./page/talks/Write"
 
 function App() {
   return (
@@ -21,8 +22,9 @@ function App() {
         <Route path="/album/:albumSeq" component={Album} />
       </Switch>
       <Route path="/talks" component={Talks} />
-      <Route path="/talk" component={Talk} />
+      <Route path="/talk/:talkSeq" component={Talk} />
       <Route path="/search" component={Search} />
+      <Route path="/write" component={Write} />
     </BrowserRouter>
   )
 }
