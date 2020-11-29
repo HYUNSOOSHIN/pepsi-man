@@ -1,13 +1,12 @@
 import { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Layout from "../../common/Layout"
+import TalkItem from "../../item/TalkItem"
 import SearchIcon from "@material-ui/icons/Search"
 import CreateIcon from "@material-ui/icons/Create"
-import FindInPageIcon from "@material-ui/icons/FindInPage"
-import FavoriteIcon from "@material-ui/icons/Favorite"
-import CommentIcon from "@material-ui/icons/Comment"
 
 const Talks = () => {
+  const history = useHistory()
   const [orderBy, setOrderBy] = useState(0)
 
   return (
@@ -19,11 +18,10 @@ const Talks = () => {
               backgroundColor: orderBy === 0 ? "#646568" : "#ffffff",
               width: "80px",
               height: "35px",
-              border: orderBy === 0 ? "1px solid #ffffff" : "1px solid #dbdbdb",
+              border: "1px solid",
               borderRadius: "5px",
               borderTopRightRadius: "0px",
               borderBottomRightRadius: "0px",
-              cursor: "pointer",
             }}
             onClick={() => setOrderBy(0)}
           >
@@ -31,12 +29,11 @@ const Talks = () => {
           </button>
           <button
             style={{
-              cursor: "pointer",
               backgroundColor: orderBy === 1 ? "#646568" : "#ffffff",
               width: "80px",
               height: "35px",
               marginLeft: "-1px",
-              border: orderBy === 1 ? "1px solid #ffffff" : "1px solid #dbdbdb",
+              border: "1px solid",
               borderRadius: "5px",
               borderTopLeftRadius: "0px",
               borderBottomLeftRadius: "0px",
@@ -48,10 +45,10 @@ const Talks = () => {
         </div>
 
         <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-          <button style={{ cursor: "pointer", padding: "0px" }}>
+          <button style={{ padding: "0px" }} onClick={() => history.push("/search")}>
             <SearchIcon style={{ width: "30px", height: "30px" }} />
           </button>
-          <button style={{ cursor: "pointer", marginLeft: "5px", padding: "0px" }}>
+          <button style={{ marginLeft: "5px", padding: "0px" }} onClick={() => history.push("/write")}>
             <CreateIcon style={{ width: "30px", height: "30px" }} />
           </button>
         </div>
@@ -67,82 +64,3 @@ const Talks = () => {
 }
 
 export default Talks
-
-const TalkItem = (props) => {
-  const history = useHistory()
-  const { item } = props
-
-  return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "fit-content",
-        marginBottom: "30px",
-      }}
-    >
-      <button
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          width: "80%",
-          height: "fit-content",
-          padding: "0px",
-          border: "1px solid #f0f0f1",
-          borderRadius: "0px",
-          boxShadow: "0px 3.3px 5px 0px #08000010",
-          textAlign: "left",
-        }}
-        onClick={() => history.push(`/talk/${item}`)}
-      >
-        <div style={{ backgroundColor: "red", width: "200px", height: "200px" }} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            justifyContent: "space-around",
-            alignContent: "center",
-            width: "100%",
-            height: "200px",
-            padding: "10px",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>{item}번 째 토크</p>
-          <p
-            style={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              fontSize: "15px",
-              textOverflow: "ellipsis",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            {item}번 째 토크가 어쩌고 저쩌고
-            블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라
-          </p>
-          <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end", marginTop: "10px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end" }}>
-              <p style={{ fontSize: "15px" }}>
-                2020-11-20 <span style={{ fontWeight: "bold" }}>신현수</span>
-              </p>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", marginTop: "10px" }}>
-              <FindInPageIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>3</p>
-              <FavoriteIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>2</p>
-              <CommentIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>3</p>
-            </div>
-          </div>
-        </div>
-      </button>
-    </div>
-  )
-}

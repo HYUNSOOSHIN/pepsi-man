@@ -63,6 +63,10 @@ section::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
+div {
+  border-color: var(--border);
+}
+
 p {
   margin: 0;
   color: var(--text);
@@ -70,10 +74,32 @@ p {
 }
 
 button {
+  cursor: pointer;
   background-color: var(--background);
   border: none;
+  border-color: var(--border);
   outline: none;
   color: var(--text);
+  font-family: "Noto Sans KR";
+}
+
+input {
+  background-color: var(--background);
+  border: 1px solid;
+  outline: none;
+  box-sizing: border-box;
+  color: var(--text);
+  font-family: "Noto Sans KR";
+}
+
+textarea {
+  background-color: var(--background);
+  border: 1px solid;
+  outline: none;
+  resize: none;
+  box-sizing: border-box;
+  color: var(--text);
+  font-family: "Noto Sans KR";
 }
 
 svg {

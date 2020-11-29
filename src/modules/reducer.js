@@ -246,12 +246,12 @@ const initState = {
       albumSeq: 2,
       albumNo: 3,
       title: "Noise",
-      artist: "마미손 & 김승민 & 원슈타인 & Zior Park",
+      artist: "Beautiful Noise",
       imageUri: "https://cdnimg.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/205/463/81205463_1557743451554_1_600x600.JPG/dims/resize/Q_80,0",
       releaseDate: "2019-05-14",
       track: [
         {
-          trackNo: 2,
+          trackNo: 1,
           title: "Noise",
           lyrics: `Noise make u stupid but I like it
           Glow make u blind but u still smile
@@ -1323,6 +1323,202 @@ const initState = {
           About your old world
           
           (ENDING CREDIT)`,
+          mvUri: "",
+        },
+      ],
+    },
+    {
+      albumSeq: 4,
+      albumNo: 5,
+      title: "Michael",
+      artist: "Zior Park & Wunderkid",
+      imageUri: "https://cdnimg.genie.co.kr/Y/IMAGE/IMG_ALBUM/081/738/674/81738674_1605667184049_1_600x600.JPG/dims/resize/Q_80,0",
+      releaseDate: "2020-11-18",
+      track: [
+        {
+          trackNo: 1,
+          title: "The Ellen Show",
+          lyrics: `You will see me on The Ellen Show
+          I gotta show new brand forsho’
+          U see me on The Late Show
+          Then u may say 
+          ＂Wait, I know him thought 
+          he can’t make it , No way＂
+          
+          We on the move
+          Shut it down living it up in new
+          We aint like nobody bunch of fools 
+          Its never like what you assume
+          
+          We on the move
+          Shut it down living it up in new
+          We aint like nobody bunch of fools 
+          Its never like what you assume
+          
+          How to go viral
+          Feel like a coward
+          Pretending like a skywalker
+          I feel your jealousy 
+          Fuck ur balanciaga
+          Too easy to see 
+          
+          Ma tactic in disguise
+          Im sicked of all type 
+          Pissed off all night 
+          Ima leave to new land
+          
+          Im a Christopher Nolan
+          I can visulaize
+          All of fucking lies
+          Ma bad, Did I make u child?
+          
+          Bad bad bad bad bad badass you known
+          E e e e e ellen show
+          Ta ta ta ta ta take a look 
+          Bad lil jaguar wear fucking new shoes
+          
+          New porn every morning new spicy sauce
+          You dork you can’t  catch me I’m a ghost
+          You asked me where ur fucking saurce ? 
+          I killed u friend but u never know 
+          
+          Yeah you know we got the wave
+          It’s a trend so they follow up
+          But they never know the plan
+          We the only ones up
+          
+          Filot sky jetting status
+          Fuck around and never come down
+          They lie they lie they scared uh
+          Pull up we the new race uh
+          
+          You will see me on The Ellen Show
+          I gotta show new brand forsho’
+          U see me on The Late Show
+          Then u may say 
+          ＂Wait, I know him thought 
+          he can’t make it , No way＂
+          
+          We on the move
+          Shut it down living it up in new
+          We aint like nobody bunch of fools 
+          Its never like what you assume
+          
+          We on the move
+          Shut it down living it up in new
+          We aint like nobody bunch of fools 
+          Its never like what you assume`,
+          mvUri: "",
+        },
+        {
+          trackNo: 2,
+          title: "Michael ",
+          lyrics: `Michael
+
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Sorry to block 
+          My new products
+          Terrifyin' Market
+          New name of Michael
+          
+          Feel like a Armstrong 
+          I'm the fucking first man
+          Feel like a phantom 
+          you' never seen my plan 
+          I'm the chosen one that’s why 
+          I ain't go hard for chance 
+          Fuck ur peptalk ur girl sent me 
+          pic yesterday
+          
+          No questions you already
+          feel this atmosphere
+          All of prey running away 
+          they know it’s hunting season
+          Unknown predator takeover 
+          food chain there’s no reason
+          It’s a natural but
+          im looking for profit reason
+          
+          Mocking Z my fans goin' religious
+          It’s goin' billion even I'm a villain 
+          I want more than Bruce more 
+          than new asian iconic figure  
+          Bad news I don't know how to kungfu
+          
+          Its a doomsday I feel like bruce wayne
+          I don't need no new friend 
+          They need a new brand I'm a new plague 
+          Now SynZ goin legend like a michaels 
+          It spreading
+          
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Sorry to block 
+          My new products
+          Terrifyin' Market
+          New name of Michael
+          
+          All of ma team got price on
+          You never got a chance no
+          If I don’t like I swipe up
+          Snipe on your head better duck
+          
+          Shooting the shot from the far post
+          Smooth like Michael
+          You never be on sight no
+          Man Im on ma airplane mode
+          
+          Got ma deadly two fangs out
+          yeah Im never running out nah
+          Feeling like Im all alone at this high 
+          
+          Hurry man hurry man hurry man pass it
+          Get it like nothing new like if its passive
+          Hunnit bands be ma revenue
+          In ma city I be welcome to
+          
+          Nobody do it like how I do mine 
+          you know I’m going so wild
+          I got a team full of ghosts syndrome 
+          we on the muhfuking spotlight
+          Everybody know what we are about 
+          we on the go never miss flight
+          Everything about the brand yeah 
+          you know we making it hell of a sight
+          
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Smooth criminal like a Michael
+          Hit the 3point like a Michael
+          I can control u like a marstro
+          Bitch u could barely hit ma far post 
+          
+          Sorry to block 
+          My new products
+          Terrifyin' Market
+          New name of Michael
+          
+          Michael`,
           mvUri: "",
         },
       ],
