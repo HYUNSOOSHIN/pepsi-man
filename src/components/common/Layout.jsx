@@ -1,5 +1,5 @@
 import { useState } from "react"
-import { darkColors, whiteColors } from "../../util"
+import { darkColors, whiteColors } from "../../utils/util"
 import Header from "./Header"
 import Footer from "./Footer"
 
