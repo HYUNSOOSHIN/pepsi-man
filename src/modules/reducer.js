@@ -1537,11 +1537,11 @@ const reducer = handleActions(
     }),
     [SET_ALBUM]: (state, action) => ({
       ...state,
-      album: state.albums.filter((i) => i.albumSeq === Number(action.payload))[0],
+      album: state.albums.filter(i => i.albumSeq === Number(action.payload))[0],
     }),
     [SET_TRACK]: (state, action) => ({
       ...state,
-      track: state.album.track.filter((i) => i.trackNo === Number(action.payload))[0],
+      track: state.album.track.filter(i => i.trackNo === Number(action.payload))[0],
     }),
   },
   initState

@@ -1,8 +1,9 @@
+import React from "react"
 import { useHistory } from "react-router-dom"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 
-const Albums = (props) => {
+const Albums = props => {
   const history = useHistory()
   const { albums } = props
 
@@ -35,14 +36,11 @@ const Albums = (props) => {
             >
               <p
                 style={{
-                  overflowX: "hidden",
                   flex: 1,
                   width: "0px",
                   marginRight: "5px",
                   fontSize: "15px",
                   textAlign: "left",
-                  whiteSpace: "nowrap",
-                  textOverflow: "ellipsis",
                 }}
               >
                 {i.artist}

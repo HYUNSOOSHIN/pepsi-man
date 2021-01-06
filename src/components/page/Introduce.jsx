@@ -1,3 +1,4 @@
+import React from "react"
 import Layout from "../common/Layout"
 
 import zior from "./../../images/zior.png"
@@ -9,7 +10,7 @@ const Introduce = () => {
   return (
     <Layout>
       {/* 프로필 이미지 */}
-      <section id={"intro_image"} style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
+      <section id={"intro_image"} style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
         <img style={{ width: "524px", objectFit: "cover" }} src={zior} alt={"profile img"} />
       </section>
 
