@@ -1,4 +1,5 @@
-import { useState } from "react"
+import React, { useState } from "react"
+import styled from "styled-components"
 import { darkColors, whiteColors } from "../../utils/util"
 import Header from "./Header"
 import Footer from "./Footer"
@@ -6,11 +7,11 @@ import Footer from "./Footer"
 import { Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
-const Layout = (props) => {
+const Layout = props => {
   const { children } = props
   const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
-  const setColorMode = (colorMode) => {
+  const setColorMode = colorMode => {
     for (const [key, value] of Object.entries(colorMode)) {
       document.documentElement.style.setProperty(`--${key}`, `${value}`)
     }
@@ -19,9 +20,9 @@ const Layout = (props) => {
   setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)
 
   return (
-    <div id={"container"}>
-      <div id={"toggle_view"}>
-        <p style={{ fontWeight: "bold" }}>다크모드</p>
+    <Container>
+      <ToggleView>
+        <ToggleText>다크모드</ToggleText>
         <AntSwitch
           checked={toggle}
           onChange={() => {
@@ -31,17 +32,57 @@ const Layout = (props) => {
           }}
           name="color_toggle"
         />
-      </div>
-      <Header />
-      <div id={"page"}>{children}</div>
-      <Footer />
-    </div>
+      </ToggleView>
+      <Inner>
+        <Header />
+        <ChildView>{children}</ChildView>
+        <Footer />
+      </Inner>
+    </Container>
   )
 }
 
 export default Layout
 
-const AntSwitch = withStyles((theme) => ({
+const Container = styled.div`
+  background-color: inherit;
+  position: relative;
+`
+const Inner = styled.div`
+  position: relative;
+  max-width: 1024px;
+  margin: 0px auto;
+
+  @media (max-width: 1024px) {
+    max-width: none;
+  }
+
+  @media (max-width: 768px) {
+  }
+`
+const ToggleView = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  z-index: 100;
+`
+const ToggleText = styled.p`
+  margin-top: 2px;
+  margin-right: 5px;
+  font-size: 15px;
+  font-weight: bold;
+`
+const ChildView = styled.div`
+  flex: 1;
+  margin-bottom: 120px;
+`
+
+const AntSwitch = withStyles(theme => ({
   root: {
     overflow: "visible",
     width: 28,
@@ -49,7 +90,7 @@ const AntSwitch = withStyles((theme) => ({
     padding: 0,
   },
   switchBase: {
-    padding: "3px 2px",
+    padding: "2px",
     color: theme.palette.grey[500],
     "&$checked": {
       transform: "translateX(12px)",

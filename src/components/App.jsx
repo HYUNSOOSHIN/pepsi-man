@@ -1,4 +1,7 @@
+import React from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
+import { createGlobalStyle } from "styled-components"
+import reset from "styled-reset"
 import Home from "./page/Home"
 import Introduce from "./page/Introduce"
 import News from "./page/News"
@@ -10,9 +13,27 @@ import Talk from "./page/talks/Talk"
 import Search from "./page/talks/Search"
 import Write from "./page/talks/Write"
 
+const InitStyle = createGlobalStyle`
+  ${reset};
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+  * {
+    box-sizing: border-box;
+    line-height: 1.2;
+  }
+`
+
 function App() {
   return (
     <BrowserRouter basename={process.env.PUBLIC_URL}>
+      <InitStyle />
       <Route exact path="/" component={Home} />
       <Route path="/introduce" component={Introduce} />
       <Route path="/news" component={News} />
