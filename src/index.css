@@ -10,6 +10,7 @@
 }
 
 * {
+  box-sizing: border-box;
   transition: background-color 1s, color 0.1s, border 0.5s;
 }
 
@@ -31,15 +32,14 @@ body,
 }
 
 html {
+  overflow-x: hidden;
   font-family: "Noto Sans KR";
 }
 body {
   margin: 0px;
 }
-div,
-section {
-  box-sizing: border-box;
-}
+
+/* 스크롤바 style */
 html::-webkit-scrollbar,
 section::-webkit-scrollbar {
   background-color: var(--background);
@@ -57,6 +57,7 @@ section::-webkit-scrollbar-track {
   background-color: var(--background);
   border-radius: 10px;
 }
+
 div {
   border-color: var(--border);
 }
@@ -65,9 +66,15 @@ p {
   color: var(--text);
   font-family: "Noto Sans KR";
 }
+a {
+  -webkit-tap-highlight-color:transparent;
+  text-decoration: none;
+}
 button {
+  -webkit-tap-highlight-color:transparent;
   cursor: pointer;
   background-color: var(--background);
+  padding: 0px;
   border: none;
   border-color: var(--border);
   outline: none;

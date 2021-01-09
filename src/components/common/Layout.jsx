@@ -1,40 +1,30 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import { darkColors, whiteColors } from "../../utils/util"
 import Header from "./Header"
 import Footer from "./Footer"
 
-import { Switch } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
-
 const Layout = (props) => {
   const { children } = props
-  const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
+  const [hamberger, setHamberger] = useState(false)
 
-  const setColorMode = (colorMode) => {
-    for (const [key, value] of Object.entries(colorMode)) {
-      document.documentElement.style.setProperty(`--${key}`, `${value}`)
+  useEffect(() => {
+    window.addEventListener("scroll", preventScroll)
+
+    return () => {
+      window.removeEventListener("scroll", preventScroll)
+    }
+  }, [hamberger])
+
+  const preventScroll = () => {
+    if (hamberger) {
+      document.getElementsByTagName("html")[0].scrollTop = 0
     }
   }
 
-  setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)
-
   return (
-    <Container>
-      <ToggleView>
-        <ToggleText>다크모드</ToggleText>
-        <AntSwitch
-          checked={toggle}
-          onChange={() => {
-            setColorMode(toggle ? whiteColors : darkColors)
-            setToggle(!toggle)
-            localStorage.setItem("darkMode", `${!toggle}`)
-          }}
-          name="color_toggle"
-        />
-      </ToggleView>
+    <Container hamberger={hamberger}>
       <Inner>
-        <Header />
+        <Header hamberger={hamberger} setHamberger={setHamberger} />
         <ChildView>{children}</ChildView>
         <Footer />
       </Inner>
@@ -45,11 +35,15 @@ const Layout = (props) => {
 export default Layout
 
 const Container = styled.div`
-  background-color: inherit;
+  background-color: var(--background);
+  /* overflow-y: ${(props) => (props.hamberger ? "hidden" : "auto")}; */
   position: relative;
 `
 const Inner = styled.div`
-  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
   max-width: 1024px;
   margin: 0px auto;
 
@@ -60,58 +54,14 @@ const Inner = styled.div`
   @media (max-width: 768px) {
   }
 `
-const ToggleView = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
-  z-index: 100;
-`
-const ToggleText = styled.p`
-  margin-top: 2px;
-  margin-right: 5px;
-  font-size: 15px;
-  font-weight: bold;
-`
 const ChildView = styled.div`
   flex: 1;
-  margin-bottom: 120px;
-`
+  margin: 100px 0;
+  @media (max-width: 1024px) {
+    margin: 70px 0;
+  }
 
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    overflow: "visible",
-    width: 28,
-    height: 16,
-    padding: 0,
-  },
-  switchBase: {
-    padding: "2px",
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch)
+  @media (max-width: 768px) {
+    margin: 40px 0;
+  }
+`
