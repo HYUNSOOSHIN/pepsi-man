@@ -129,7 +129,6 @@ const NaviView = styled.div`
     position: absolute;
     top: 0;
     right: ${(props) => (props.hamberger ? "0" : "-999")}px;
-    transition: 0.3s;
     display: block;
     width: 250px;
     height: 100%;
