@@ -36,7 +36,7 @@ export default Layout
 
 const Container = styled.div`
   background-color: var(--background);
-  /* overflow-y: ${(props) => (props.hamberger ? "hidden" : "auto")}; */
+  overflow-x: hidden;
   position: relative;
 `
 const Inner = styled.div`
