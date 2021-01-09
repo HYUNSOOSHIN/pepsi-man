@@ -3,7 +3,7 @@ import { navigate } from "gatsby"
 import cookie from "react-cookies"
 import { API_URL } from "../config/config"
 
-const apiFunction = method => {
+const apiFunction = (method) => {
   return async (url, { body = {}, header = {}, token = false } = {}) => {
     const accessToken = token ? await cookie.load("access_token", { path: "/" }) : ""
 

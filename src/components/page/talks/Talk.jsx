@@ -6,7 +6,7 @@ import FindInPageIcon from "@material-ui/icons/FindInPage"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
 
-const Talk = props => {
+const Talk = (props) => {
   const { talkSeq } = props.match.params
   const history = useHistory()
   const [comment, setComment] = useState("")
@@ -78,7 +78,7 @@ const Talk = props => {
               style={{ flex: 1, width: "100%", height: "40px", padding: "5px 10px" }}
               placeholder={"코멘트를 입력하세요"}
               value={comment}
-              onChange={e => setComment(e.target.value)}
+              onChange={(e) => setComment(e.target.value)}
             />
             <button
               style={{ width: "fit-content", height: "40px", marginLeft: "-1px", border: "1px solid" }}

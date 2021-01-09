@@ -4,7 +4,7 @@ import FindInPageIcon from "@material-ui/icons/FindInPage"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
 
-const TalkItem = props => {
+const TalkItem = (props) => {
   const history = useHistory()
   const { item } = props
 

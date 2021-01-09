@@ -17,7 +17,7 @@ const Search = () => {
             style={{ width: "500px", height: "30px", border: "none", fontSize: "20px" }}
             placeholder={"검색어를 입력해주세요."}
             value={searchText}
-            onChange={e => setSearchText(e.target.value)}
+            onChange={(e) => setSearchText(e.target.value)}
           />
         </div>
       </section>

@@ -7,11 +7,11 @@ import Footer from "./Footer"
 import { Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
 
-const Layout = props => {
+const Layout = (props) => {
   const { children } = props
   const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
-  const setColorMode = colorMode => {
+  const setColorMode = (colorMode) => {
     for (const [key, value] of Object.entries(colorMode)) {
       document.documentElement.style.setProperty(`--${key}`, `${value}`)
     }
@@ -82,7 +82,7 @@ const ChildView = styled.div`
   margin-bottom: 120px;
 `
 
-const AntSwitch = withStyles(theme => ({
+const AntSwitch = withStyles((theme) => ({
   root: {
     overflow: "visible",
     width: 28,

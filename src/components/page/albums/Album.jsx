@@ -8,7 +8,7 @@ import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
 import YouTubeIcon from "@material-ui/icons/YouTube"
 
-const Album = props => {
+const Album = (props) => {
   const history = useHistory()
   const { album, setAlbum } = props
   const { albumSeq } = props.match.params

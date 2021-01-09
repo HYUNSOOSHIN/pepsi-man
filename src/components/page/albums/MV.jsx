@@ -4,7 +4,7 @@ import ReactPlayer from "react-player/youtube"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 
-const MV = props => {
+const MV = (props) => {
   const { track, setTrack } = props
   const { trackNo } = props.match.params
 

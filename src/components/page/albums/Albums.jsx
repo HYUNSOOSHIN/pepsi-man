@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 
-const Albums = props => {
+const Albums = (props) => {
   const history = useHistory()
   const { albums } = props
 

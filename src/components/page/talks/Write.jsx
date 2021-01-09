@@ -12,12 +12,12 @@ const Write = () => {
   const [images, setImages] = useState([])
   const imageInput = useRef(null)
 
-  const toBase64 = file =>
+  const toBase64 = (file) =>
     new Promise((resolve, reject) => {
       const reader = new FileReader()
       reader.readAsDataURL(file)
       reader.onload = () => resolve(reader.result)
-      reader.onerror = error => reject(error)
+      reader.onerror = (error) => reject(error)
     })
 
   return (
@@ -28,14 +28,14 @@ const Write = () => {
           style={{ width: "100%", height: "40px", padding: "5px 10px", fontSize: "20px" }}
           placeholder={"제목"}
           value={title}
-          onChange={e => setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <textarea
           type={"file"}
           style={{ width: "100%", height: "400px", marginTop: "20px", padding: "5px 10px", fontSize: "20px" }}
           placeholder={"내용"}
           value={contents}
-          onChange={e => setContents(e.target.value)}
+          onChange={(e) => setContents(e.target.value)}
         ></textarea>
         <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%", height: "fit-content" }}>
           <p style={{ color: contents.length > 500 ? "red" : null }}>{contents.length}/500</p>
@@ -47,7 +47,7 @@ const Write = () => {
           ref={imageInput}
           style={{ display: "none" }}
           type={"file"}
-          onChange={async e => {
+          onChange={async (e) => {
             if (e.target.files.length === 0) return
             const file = e.target.files[0]
             const base64 = await toBase64(file)

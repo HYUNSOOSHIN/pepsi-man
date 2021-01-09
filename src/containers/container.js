@@ -3,19 +3,19 @@ import { connect } from "react-redux"
 import { compose } from "redux"
 import { setAlbums, setAlbum, setTrack } from "../modules/reducer"
 
-const mapStateToProps = state => ({
+const mapStateToProps = (state) => ({
   albums: state.reducer.albums,
   album: state.reducer.album,
   track: state.reducer.track,
 })
 
-const mapDispatchToProps = dispatch => ({
-  setAlbums: param => dispatch(setAlbums(param)),
-  setAlbum: param => dispatch(setAlbum(param)),
-  setTrack: param => dispatch(setTrack(param)),
+const mapDispatchToProps = (dispatch) => ({
+  setAlbums: (param) => dispatch(setAlbums(param)),
+  setAlbum: (param) => dispatch(setAlbum(param)),
+  setTrack: (param) => dispatch(setTrack(param)),
 })
 
-const WithHoc = ChildComponent => props => {
+const WithHoc = (ChildComponent) => (props) => {
   return <ChildComponent {...props} />
 }
 
