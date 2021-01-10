@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { setAlbums, setAlbum, setTrack } from "../modules/reducer"
+import { setAlbums, setAlbum, setTrack } from "../reducers/reducer"
 
 const mapStateToProps = (state) => ({
   albums: state.reducer.albums,

@@ -128,7 +128,7 @@ const initState = {
           All of you chase the 
           benefits to get the
           motherfuckin happiness`,
-          mvUri: "https://youtu.be/nRMDY-VGowI",
+          mvUri: "https://www.youtube.com/embed/nRMDY-VGowI",
         },
       ],
     },
@@ -238,7 +238,7 @@ const initState = {
           It's beautiful
           Dark world rather than here
           It taught me how you fool`,
-          mvUri: "https://www.youtube.com/watch?v=sK1hxwuq5bA",
+          mvUri: "https://www.youtube.com/embed/sK1hxwuq5bA",
         },
       ],
     },
