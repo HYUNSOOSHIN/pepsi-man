@@ -42,6 +42,29 @@ section::-webkit-scrollbar-track {
   border-radius: 10px;
 }
 
+@media (max-width: 768px) {
+  html::-webkit-scrollbar,
+  body::-webkit-scrollbar,
+  section::-webkit-scrollbar {
+    background-color: var(--background);
+    width: 6px;
+}
+  html::-webkit-scrollbar-thumb,
+  body::-webkit-scrollbar-thumb,
+  section::-webkit-scrollbar-thumb {
+    background-color: #b6b7b8;
+    border-radius: 10px;
+    background-clip: padding-box;
+    border: 2px solid transparent;
+}
+  html::-webkit-scrollbar-track,
+  body::-webkit-scrollbar-track,
+  section::-webkit-scrollbar-track {
+    background-color: var(--background);
+    border-radius: 10px;
+  }
+}
+
 
 html,
 body,

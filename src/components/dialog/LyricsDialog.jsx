@@ -69,7 +69,6 @@ const Container = styled.div`
   @media (max-width: 768px) {
     width: 90%;
     max-width: 524px;
-    height: 400px;
   }
 `
 
@@ -86,6 +85,14 @@ const HeaderSection = styled.section`
     font-size: 20px;
     font-weight: bold;
   }
+
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    & > p {
+      font-size: 15px;
+    }
+  }
 `
 const LyricsSection = styled.section`
   overflow-y: auto;
@@ -97,5 +104,10 @@ const LyricsSection = styled.section`
     color: var(--text);
     font-size: 15px;
     white-space: pre-line;
+  }
+  @media (max-width: 768px) {
+    & > p {
+      font-size: 13px;
+    }
   }
 `
