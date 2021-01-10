@@ -1,6 +1,5 @@
-import React from "react"
-import { useEffect } from "react"
-import ReactPlayer from "react-player/youtube"
+import React, { useEffect } from "react"
+import styled from "styled-components"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 
@@ -16,9 +15,31 @@ const MV = (props) => {
 
   return (
     <Layout>
-      <ReactPlayer url={track.mvUri} width={1048} height={1048 / 1.78} playing controls />
+      <PlayerSection>
+        <iframe
+          width="1280"
+          height="720"
+          src={track.mvUri}
+          frameBorder="0"
+          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+          allowFullScreen
+        ></iframe>
+      </PlayerSection>
     </Layout>
   )
 }
 
 export default Container(MV)
+
+const PlayerSection = styled.section`
+  position: relative;
+  height: 0;
+  padding-top: 56.25%;
+  & > iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+`

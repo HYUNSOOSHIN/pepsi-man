@@ -36,7 +36,6 @@ export default Layout
 
 const Container = styled.div`
   background-color: var(--background);
-  overflow-x: hidden;
   position: relative;
 `
 const Inner = styled.div`

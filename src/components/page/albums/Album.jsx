@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react"
+import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
@@ -23,41 +24,96 @@ const Album = (props) => {
   return (
     <Layout>
       <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
-      <section style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center" }}>
-        <img style={{ width: "524px", objectFit: "cover" }} src={album.imageUri} alt={"앨범 이미지"} />
-        <table style={{ width: "524px", height: "fit-content", marginTop: "20px" }}>
-          <thead>
-            <tr>
-              <th style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>번호</th>
-              <th style={{ flex: 1, fontSize: "15px", textAlign: "left" }}>곡정보</th>
-              <th style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>가사</th>
-              <th style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>뮤비</th>
-            </tr>
-          </thead>
-          <tbody>
-            {album.track.map((i, idx) => (
-              <tr key={idx}>
-                <td style={{ width: "30px", fontSize: "15px", textAlign: "center" }}>{i.trackNo}</td>
-                <td style={{ flex: 1, fontSize: "15px" }}>{i.title}</td>
-                <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
-                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog({ open: true, track: i })}>
-                    <LibraryBooksIcon />
+      <Section>
+        <img src={album.imageUri} alt={"앨범 이미지"} />
+        <UL>
+          <LI>
+            <p>번호</p>
+            <p>곡정보</p>
+            <p>가사</p>
+            <p>뮤비</p>
+          </LI>
+
+          {album.track.map((i, idx) => (
+            <LI key={idx}>
+              <p>{i.trackNo}</p>
+              <p>{i.title}</p>
+              <p>
+                <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog({ open: true, track: i })}>
+                  <LibraryBooksIcon />
+                </IconButton>
+              </p>
+              <p>
+                {i.mvUri === "" ? null : (
+                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/album/${albumSeq}/MV/${i.trackNo}`)}>
+                    <YouTubeIcon />
                   </IconButton>
-                </td>
-                <td style={{ width: "50px", fontSize: "15px", textAlign: "center" }}>
-                  {i.mvUri === "" ? null : (
-                    <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/album/${albumSeq}/MV/${i.trackNo}`)}>
-                      <YouTubeIcon />
-                    </IconButton>
-                  )}
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </section>
+                )}
+              </p>
+            </LI>
+          ))}
+        </UL>
+      </Section>
     </Layout>
   )
 }
 
 export default Container(Album)
+
+const Section = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  & > img {
+    width: 524px;
+    object-fit: cover;
+  }
+  & svg {
+    width: 24px;
+    height: 24px;
+  }
+
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    & > img {
+      width: 90%;
+      max-width: 524px;
+    }
+    & svg {
+      width: 20px;
+      height: 20px;
+    }
+  }
+`
+const UL = styled.ul`
+  width: 524px;
+  height: fit-content;
+  margin-top: 20px;
+  @media (max-width: 1024px) {
+  }
+
+  @media (max-width: 768px) {
+    width: 90%;
+    max-width: 524px;
+  }
+`
+const LI = styled.li`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 5px;
+  & > p {
+    width: 50px;
+    padding: 0;
+    font-size: 15px;
+    text-align: center;
+    &:nth-child(2) {
+      flex: 1;
+      font-size: 15px;
+      text-align: left;
+    }
+  }
+`

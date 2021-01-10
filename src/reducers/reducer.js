@@ -383,7 +383,7 @@ const initState = {
           OffWhite shirt for sure u  already dead
           Fake bitches wanna saint Laurant
           Polo shirt for sure already dead (x2)`,
-          mvUri: "https://www.youtube.com/watch?v=kfHhJHwaARk",
+          mvUri: "https://www.youtube.com/embed/kfHhJHwaARk",
         },
       ],
     },
@@ -719,7 +719,7 @@ const initState = {
           Keep moving on 
           O oh my lord 
           Why you tryna stop me`,
-          mvUri: "https://www.youtube.com/watch?v=yDC_qKBHx-k",
+          mvUri: "https://www.youtube.com/embed/yDC_qKBHx-k",
         },
         {
           trackNo: 5,
@@ -860,7 +860,7 @@ const initState = {
           Sleepwalk sleepwalk sleepwalking
           Illusion in my head
           Sleepwalk sleepwalk sleepwalking`,
-          mvUri: "https://www.youtube.com/watch?v=-GelpNkPvM8",
+          mvUri: "https://www.youtube.com/embed/-GelpNkPvM8",
         },
         {
           trackNo: 6,
@@ -1065,7 +1065,7 @@ const initState = {
           they make me f**king freak
           I don't know maybe they right
           sh*t I can’t deny`,
-          mvUri: "https://www.youtube.com/watch?v=y8B_pycKLQ8",
+          mvUri: "https://www.youtube.com/embed/y8B_pycKLQ8",
         },
         {
           trackNo: 8,
@@ -1279,7 +1279,7 @@ const initState = {
           There’s nothing in my fountain
           Same night but it’s different
           Same night but it’s deeper`,
-          mvUri: "https://www.youtube.com/watch?v=4K8oGplWiUI",
+          mvUri: "https://www.youtube.com/embed/4K8oGplWiUI",
         },
         {
           trackNo: 10,
