@@ -1,7 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 import Layout from "../common/Layout"
-import thunderbirdmotel from "./../../images/thunderbirdmotel.png"
+import thunderbirdmotel from "./../../images/thunderbirdmotel103.png"
 
 const Home = () => {
   return (
