@@ -25,6 +25,7 @@ const Container = styled.footer`
   #info {
     color: var(--text);
     font-size: 12px;
+    line-height: 15px;
     text-align: center;
     white-space: pre;
   }

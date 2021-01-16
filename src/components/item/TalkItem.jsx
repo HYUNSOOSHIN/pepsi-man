@@ -1,85 +1,136 @@
 import React from "react"
 import { useHistory } from "react-router-dom"
+import styled from "styled-components"
 import FindInPageIcon from "@material-ui/icons/FindInPage"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
+import pepsi from "../../images/pep.jpg"
 
 const TalkItem = (props) => {
   const history = useHistory()
   const { item } = props
 
   return (
-    <div
-      style={{
-        display: "flex",
-        justifyContent: "center",
-        alignItems: "center",
-        width: "100%",
-        height: "fit-content",
-        marginBottom: "30px",
-      }}
-    >
-      <button
-        style={{
-          display: "flex",
-          justifyContent: "flex-start",
-          alignItems: "center",
-          width: "80%",
-          height: "fit-content",
-          padding: "0px",
-          border: "1px solid #f0f0f1",
-          borderRadius: "0px",
-          boxShadow: "0px 3.3px 5px 0px #08000010",
-          textAlign: "left",
-        }}
-        onClick={() => history.push(`/talk/${item}`)}
-      >
-        <div style={{ backgroundColor: "red", width: "200px", height: "200px" }} />
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "column",
-            flex: 1,
-            justifyContent: "space-around",
-            alignContent: "center",
-            width: "100%",
-            height: "200px",
-            padding: "10px",
-          }}
-        >
-          <p style={{ fontSize: "18px" }}>{item}번 째 토크</p>
-          <p
-            style={{
-              overflow: "hidden",
-              display: "-webkit-box",
-              fontSize: "15px",
-              textOverflow: "ellipsis",
-              WebkitLineClamp: 2,
-              WebkitBoxOrient: "vertical",
-            }}
-          >
-            {item}번 째 토크입니다.
-          </p>
-          <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end", marginTop: "10px" }}>
-            <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end" }}>
-              <p style={{ fontSize: "15px" }}>
-                2020-11-20 <span style={{ fontWeight: "bold" }}>신현수</span>
-              </p>
-            </div>
-
-            <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", marginTop: "10px" }}>
-              <FindInPageIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>3</p>
-              <FavoriteIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>2</p>
-              <CommentIcon style={{ width: "15px", height: "15px" }} />
-              <p style={{ margin: "0px 5px", fontSize: "10px", lineHeight: "15px" }}>3</p>
-            </div>
-          </div>
+    <Container onClick={() => history.push(`/talks/${item.talkSeq}`)}>
+      <Thumbnail src={pepsi} alt={"임시 이미지"} />
+      <TextBox>
+        <div>
+          <Title>{item.title}</Title>
+          <Contents>{item.contents}</Contents>
         </div>
-      </button>
-    </div>
+
+        <Box>
+          <WriterView>
+            <p>
+              {item.regDate} <span>{item.userName}</span>
+            </p>
+          </WriterView>
+
+          <TalkStatusView>
+            <FindInPageIcon />
+            <p>{item.clickCount}</p>
+            <FavoriteIcon />
+            <p>{item.likeCount}</p>
+            <CommentIcon />
+            <p>{item.commentCount}</p>
+          </TalkStatusView>
+        </Box>
+      </TextBox>
+    </Container>
   )
 }
 
 export default TalkItem
+
+const Container = styled.button`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 80%;
+  height: fit-content;
+  margin: 0 auto 30px;
+  padding: 0px;
+  border: 1px solid #f0f0f1;
+  border-radius: 0px;
+  box-shadow: 0px 3.3px 5px 0px #08000010;
+  text-align: left;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+const Thumbnail = styled.img`
+  width: 200px;
+  height: 200px;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+    height: auto;
+  }
+`
+const TextBox = styled.div`
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  height: 200px;
+  padding: 10px;
+`
+const Title = styled.p`
+  font-size: 18px;
+  font-weight: bold;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 15px;
+  }
+`
+const Contents = styled.p`
+  overflow: hidden;
+  display: -webkit-box;
+  font-size: 15px;
+  text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`
+const Box = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  margin-top: 10px;
+`
+const WriterView = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > p {
+    font-size: 15px;
+    & > span {
+      font-weight: bold;
+    }
+  }
+`
+const TalkStatusView = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > svg {
+    width: 15px;
+    height: 15px;
+  }
+  & > p {
+    margin: 0px 5px;
+    font-size: 10px;
+    line-height: 15px;
+  }
+`

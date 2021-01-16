@@ -1,15 +1,16 @@
-import React, { useState, useRef } from "react"
+import React from "react"
 import { useHistory } from "react-router-dom"
+import styled from "styled-components"
 import Layout from "../../common/Layout"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 
 const Write = () => {
   const history = useHistory()
-  const [title, setTitle] = useState("")
-  const [contents, setContents] = useState("")
+  const [title, setTitle] = React.useState("")
+  const [contents, setContents] = React.useState("")
   // 이미지 형식 {base64: null, file: null}
-  const [images, setImages] = useState([])
-  const imageInput = useRef(null)
+  const [images, setImages] = React.useState([])
+  const imageInput = React.useRef(null)
 
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {
@@ -21,27 +22,15 @@ const Write = () => {
 
   return (
     <Layout>
-      <section style={{ display: "flex", flexDirection: "column", justifyContent: "flex-start", alignItems: "flex-start" }}>
-        <input
-          type={"text"}
-          style={{ width: "100%", height: "40px", padding: "5px 10px", fontSize: "20px" }}
-          placeholder={"제목"}
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-        />
-        <textarea
-          type={"file"}
-          style={{ width: "100%", height: "400px", marginTop: "20px", padding: "5px 10px", fontSize: "20px" }}
-          placeholder={"내용"}
-          value={contents}
-          onChange={(e) => setContents(e.target.value)}
-        ></textarea>
-        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "100%", height: "fit-content" }}>
-          <p style={{ color: contents.length > 500 ? "red" : null }}>{contents.length}/500</p>
-        </div>
-      </section>
+      <InputSection>
+        <Input type={"text"} placeholder={"제목"} value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Textarea placeholder={"내용"} value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
+        <LeftTextView error={contents.length > 500}>
+          <p>{contents.length}/500</p>
+        </LeftTextView>
+      </InputSection>
 
-      <section style={{ display: "flex", justifyContent: "flex-start", alignItems: "flex-start", marginTop: "20px" }}>
+      <ImageSection>
         <input
           ref={imageInput}
           style={{ display: "none" }}
@@ -55,44 +44,177 @@ const Write = () => {
           }}
           accept={"image/*"}
         />
-        <button
-          style={{ width: "fit-content", height: "fit-content", marginRight: "20px", padding: "5px", border: "1px solid", borderRadius: "5px" }}
+        <ImageAddButton
           onClick={() => {
             if (images.length === 3) alert("이미지는 최대 3개만 가능합니다.")
             else imageInput.current.click()
           }}
         >
-          <p>이미지 추가</p>
-        </button>
+          이미지 추가
+        </ImageAddButton>
 
-        <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
+        <ImageListView>
           {images.map((i, idx) => (
-            <div key={idx} style={{ position: "relative", width: "150px", height: "150px", marginRight: "10px" }}>
-              <img style={{ width: "150px", height: "150px", borderRadius: "10px", objectFit: "cover" }} src={i.base64} alt={`추가 이미지${idx}`} />
-              <button style={{ backgroundColor: "#00000000", position: "absolute", top: "5px", right: "5px", padding: "0px" }}>
-                <RemoveCircleIcon style={{ color: "#000000" }} />
+            <ImageItem key={idx}>
+              <img src={i.base64} alt={`추가 이미지${idx}`} />
+              <button
+                onClick={() => {
+                  const temp = [...images]
+                  temp.splice(idx, 1)
+                  setImages(temp)
+                }}
+              >
+                <RemoveCircleIcon />
               </button>
-            </div>
+            </ImageItem>
           ))}
-        </div>
-      </section>
+        </ImageListView>
+      </ImageSection>
 
-      <section style={{ display: "flex", justifyContent: "center", alignItems: "center", marginTop: "20px" }}>
-        <button
-          style={{ width: "fit-content", height: "fit-content", marginRight: "10px", padding: "10px", border: "1px solid", borderRadius: "5px" }}
-          onClick={() => history.goBack()}
-        >
-          <p style={{ fontSize: "20px" }}>취소</p>
-        </button>
-        <button
-          style={{ width: "fit-content", height: "fit-content", padding: "10px", border: "1px solid", borderRadius: "5px" }}
-          onClick={() => alert("구현중인 기능입니다.")}
-        >
-          <p style={{ fontSize: "20px" }}>작성완료</p>
-        </button>
-      </section>
+      <ButtonsSection>
+        <Button margin={true} onClick={() => history.goBack()}>
+          <p>취소</p>
+        </Button>
+        <Button onClick={() => alert("구현중인 기능입니다.")}>
+          <p>작성완료</p>
+        </Button>
+      </ButtonsSection>
     </Layout>
   )
 }
 
 export default Write
+
+const InputSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 10px;
+  }
+  @media (max-width: 768px) {
+  }
+`
+const Input = styled.input`
+  width: 100%;
+  height: 40px;
+  padding: 5px 10px;
+  font-size: 20px;
+`
+const Textarea = styled.textarea`
+  width: 100%;
+  height: 400px;
+  margin-top: 20px;
+  padding: 5px 10px;
+  font-size: 20px;
+`
+const LeftTextView = styled.div`
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  & > p {
+    margin-top: 5px;
+    color: ${(props) => (props.error ? "#ff0000" : "#000")};
+  }
+`
+// IMAGE
+const ImageSection = styled.section`
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+  margin-top: 20px;
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 10px;
+  }
+  @media (max-width: 768px) {
+    flex-direction: column;
+  }
+`
+const ImageAddButton = styled.button`
+  width: fit-content;
+  height: fit-content;
+  margin-right: 20px;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  font-weight: bold;
+`
+const ImageListView = styled.div`
+  flex: 1;
+  width: 100%;
+  &::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    margin-top: 10px;
+  }
+`
+const ImageItem = styled.div`
+  position: relative;
+  float: left;
+  width: 150px;
+  height: 150px;
+  margin-right: 10px;
+  & > img {
+    width: 100%;
+    height: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+  }
+  & > button {
+    background-color: #00000000;
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    padding: 0px;
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 33.3%;
+    height: auto;
+    margin-right: 0;
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+      display: block;
+    }
+    & > img {
+      position: absolute;
+    }
+  }
+`
+// BUTTONS
+const ButtonsSection = styled.section`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+`
+const Button = styled.button`
+  width: fit-content;
+  height: fit-content;
+  margin-right: ${(props) => (props.margin ? 10 : 0)}px;
+  padding: 5px 10px;
+  border: 1px solid;
+  border-radius: 5px;
+  & > p {
+    font-size: 20px;
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    & > p {
+      font-size: 15px;
+    }
+  }
+`

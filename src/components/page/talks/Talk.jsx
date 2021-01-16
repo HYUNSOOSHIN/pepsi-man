@@ -1,111 +1,268 @@
-import React, { useState } from "react"
+import React from "react"
 import { useHistory } from "react-router-dom"
+import styled from "styled-components"
+import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import FindInPageIcon from "@material-ui/icons/FindInPage"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
+import pepsi from "../../../images/pep.jpg"
 
 const Talk = (props) => {
   const { talkSeq } = props.match.params
+  const { talk, setTalk } = props
   const history = useHistory()
-  const [comment, setComment] = useState("")
+  const [comment, setComment] = React.useState("")
+
+  React.useEffect(() => {
+    setTalk(talkSeq)
+  }, [])
+
+  if (Object.keys(talk).length === 0) return null
 
   return (
     <Layout>
-      <section style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div
-          style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", width: "80%", height: "fit-content" }}
-        >
-          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", height: "fit-content" }}>
-            <p style={{ fontSize: "25px", fontWeight: "bold" }}>{talkSeq}번째 토크</p>
-            <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-              <p style={{ fontSize: "20px" }}>
-                <span style={{ fontWeight: "bold" }}>익명{talkSeq}</span> 작성시간
-              </p>
-            </div>
-          </div>
+      <TalkSection>
+        <Box1>
+          <Title>{talk.title}</Title>
+          <Writer>
+            <span>{talk.userName}</span> {talk.regDate}
+          </Writer>
 
           {/* 이미지 대체 */}
-          <div style={{ backgroundColor: "red", width: "524px", height: "524px", margin: "30px 0px" }}></div>
+          <Thumbnail src={pepsi} alt={"임시 이미지"} />
 
-          <p style={{ width: "100%", height: "fit-content", fontSize: "15px" }}>{talkSeq}번 째 토크입니다.</p>
-        </div>
-      </section>
+          <Contents>{talk.contents}</Contents>
+        </Box1>
 
-      <section style={{ display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center", margin: "30px 0px" }}>
-        <div style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "80%", height: "fit-content", marginTop: "10px" }}>
-          <button
-            style={{
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              width: "fit-content",
-              height: "fit-content",
-              padding: "5px",
-              border: "1px solid",
-              borderRadius: "5px",
-            }}
-            onClick={() => alert("아직 구현되지 않은 기능압니다.")}
-          >
-            <FavoriteIcon style={{ width: "24px", height: "24px", padding: "0px" }} />
+        <Box2>
+          <LikeButton onClick={() => alert("아직 구현되지 않은 기능입니다.")}>
+            <FavoriteIcon />
+          </LikeButton>
+        </Box2>
+
+        <Box3>
+          <FlexBox>
+            <FindInPageIcon />
+            <p>{talk.clickCount}</p>
+            <FavoriteIcon />
+            <p>{talk.likeCount}</p>
+            <CommentIcon />
+            <p>{talk.commentCount}</p>
+          </FlexBox>
+
+          <BackButton onClick={() => history.goBack()}>목록으로</BackButton>
+        </Box3>
+      </TalkSection>
+
+      <CommentSection>
+        <CommentWriteView>
+          <input type={"text"} placeholder={"코멘트를 입력하세요"} value={comment} onChange={(e) => setComment(e.target.value)} />
+          <button onClick={() => alert("아직 구현되지 않은 기능입니다.")}>
+            <p>작성</p>
           </button>
-        </div>
+        </CommentWriteView>
 
-        <div style={{ display: "flex", justifyContent: "flex-end", alignContent: "center", width: "80%", height: "fit-content", marginTop: "10px" }}>
-          <FindInPageIcon style={{ width: "20px", height: "20px" }} />
-          <p style={{ margin: "0px 5px", fontSize: "12px", lineHeight: "20px" }}>3</p>
-          <FavoriteIcon style={{ width: "20px", height: "20px" }} />
-          <p style={{ margin: "0px 5px", fontSize: "12px", lineHeight: "20px" }}>2</p>
-          <CommentIcon style={{ width: "20px", height: "20px" }} />
-          <p style={{ margin: "0px 5px", fontSize: "12px", lineHeight: "20px" }}>3</p>
-        </div>
-        <div style={{ display: "flex", justifyContent: "flex-end", alignItems: "center", width: "80%", height: "fit-content", marginTop: "10px" }}>
-          <button style={{ width: "fit-content", height: "35px", border: "1px solid", borderRadius: "5px" }} onClick={() => history.goBack()}>
-            목록으로
-          </button>
-        </div>
-      </section>
-
-      <section style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
-        <div style={{ width: "80%", height: "fit-content" }}>
-          <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-            <input
-              type={"text"}
-              style={{ flex: 1, width: "100%", height: "40px", padding: "5px 10px" }}
-              placeholder={"코멘트를 입력하세요"}
-              value={comment}
-              onChange={(e) => setComment(e.target.value)}
-            />
-            <button
-              style={{ width: "fit-content", height: "40px", marginLeft: "-1px", border: "1px solid" }}
-              onClick={() => alert("아직 구현되지 않은 기능입니다.")}
-            >
-              <p>작성</p>
-            </button>
+        <CommentListView>
+          <div>
+            <p id={"title"}>익명1</p>
+            <p id={"date"}>작성시간</p>
           </div>
 
-          <div style={{ width: "100%", height: "fit-content" }}>
-            <div style={{ marginTop: "10px", padding: "5px", border: "1px solid" }}>
-              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-                <p style={{ marginRight: "5px", fontSize: "15px" }}>익명1</p>
-                <p style={{ fontSize: "12px" }}>작성시간</p>
-              </div>
-
-              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용입니다</p>
-            </div>
-            <div style={{ marginTop: "10px", padding: "5px", border: "1px solid" }}>
-              <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
-                <p style={{ marginRight: "5px", fontSize: "15px" }}>익명5</p>
-                <p style={{ fontSize: "12px" }}>작성시간</p>
-              </div>
-
-              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용입니다</p>
-            </div>
-          </div>
-        </div>
-      </section>
+          <p>내용입니다</p>
+        </CommentListView>
+      </CommentSection>
     </Layout>
   )
 }
 
-export default Talk
+export default Container(Talk)
+
+// TALK
+const TalkSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: fit-content;
+  margin: 0 auto;
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 10px;
+  }
+  @media (max-width: 768px) {
+  }
+`
+const Box1 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+`
+const Title = styled.p`
+  width: 100%;
+  font-size: 25px;
+  font-weight: bold;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 20px;
+  }
+`
+const Writer = styled.p`
+  width: 100%;
+  margin-top: 5px;
+  font-size: 15px;
+  & > span {
+    font-weight: bold;
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    font-size: 12px;
+  }
+`
+const Thumbnail = styled.img`
+  width: 524px;
+  height: 524px;
+  margin: 30px 0px;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 90%;
+    height: auto;
+    max-width: 524px;
+  }
+`
+const Contents = styled.p`
+  width: 100%;
+  height: fit-content;
+  font-size: 15px;
+`
+const Box2 = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  margin-top: 10px;
+`
+const LikeButton = styled.button`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: fit-content;
+  height: fit-content;
+  margin: 30px 0;
+  padding: 5px;
+  border: 1px solid;
+  border-radius: 5px;
+  & > svg {
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+  }
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    & > svg {
+      width: 18px;
+      height: 18px;
+    }
+  }
+`
+const Box3 = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-end;
+  width: 100%;
+  height: fit-content;
+  margin-top: 10px;
+`
+const FlexBox = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  & > svg {
+    width: 20px;
+    height: 20px;
+  }
+  & > p {
+    margin: 0px 5px;
+    font-size: 12px;
+    line-height: 20px;
+  }
+`
+const BackButton = styled.button`
+  width: fit-content;
+  height: 35px;
+  margin: 10px 0px 30px;
+  padding: 0 10px;
+  border: 1px solid;
+  border-radius: 5px;
+`
+
+// COMMENT
+const CommentSection = styled.section`
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 80%;
+  height: fit-content;
+  margin: 0 auto;
+  @media (max-width: 1024px) {
+    width: 100%;
+    padding: 0 10px;
+  }
+  @media (max-width: 768px) {
+  }
+`
+const CommentWriteView = styled.div`
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  width: 100%;
+  height: fit-content;
+  & > input {
+    flex: 1;
+    width: 100%;
+    height: 40px;
+    padding: 5px 10px;
+  }
+  & > button {
+    width: fit-content;
+    height: 40px;
+    margin-left: -1px;
+    padding: 0 10px;
+    border: 1px solid;
+  }
+`
+const CommentListView = styled.div`
+  width: 100%;
+  height: fit-content;
+  margin-top: 10px;
+  padding: 5px;
+  border: 1px solid;
+  & > div {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    #title {
+      margin-right: 5px;
+      font-size: 15px;
+    }
+    #date {
+      font-size: 12px;
+    }
+  }
+  & > p {
+    margin-top: 5px;
+    font-size: 15px;
+    white-space: pre-line;
+  }
+`

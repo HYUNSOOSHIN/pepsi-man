@@ -102,7 +102,7 @@ const LogoLink = styled(Link)`
   align-items: center;
   color: var(--text);
   font-size: 30px;
-  font-weight: 600;
+  font-weight: bold;
   font-family: "Times New Roman", Times, serif;
 
   &.active {

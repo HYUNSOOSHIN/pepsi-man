@@ -10,11 +10,11 @@ const Albums = (props) => {
 
   return (
     <Layout>
-      <section>
+      <Section>
         {albums
           .sort((a, b) => b.albumNo - a.albumNo)
           .map((albumItem, albumIndex) => (
-            <AlbumItem key={albumIndex} onClick={() => history.push(`/album/${albumItem.albumSeq}`)}>
+            <AlbumItem key={albumIndex} onClick={() => history.push(`/albums/${albumItem.albumSeq}`)}>
               <img src={albumItem.imageUri} alt={"앨범 이미지"} />
               <p>{albumItem.title}</p>
               <div>
@@ -23,13 +23,20 @@ const Albums = (props) => {
               </div>
             </AlbumItem>
           ))}
-      </section>
+      </Section>
     </Layout>
   )
 }
 
 export default Container(Albums)
 
+const Section = styled.section`
+  &::after {
+    content: "";
+    clear: both;
+    display: block;
+  }
+`
 const AlbumItem = styled.button`
   display: flex;
   flex-direction: column;

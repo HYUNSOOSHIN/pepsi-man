@@ -4,10 +4,11 @@ import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 
 const MV = (props) => {
-  const { track, setTrack } = props
-  const { trackNo } = props.match.params
+  const { setAlbum, track, setTrack } = props
+  const { albumSeq, trackNo } = props.match.params
 
   useEffect(() => {
+    setAlbum(albumSeq)
     setTrack(trackNo)
   })
 

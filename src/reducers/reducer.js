@@ -4,11 +4,13 @@ import { createAction, handleActions } from "redux-actions"
 const SET_ALBUMS = "@PEPSI-MAN_WEB/COMMON/SET_ALBUMS"
 const SET_ALBUM = "@PEPSI-MAN_WEB/COMMON/SET_ALBUM"
 const SET_TRACK = "@PEPSI-MAN_WEB/COMMON/SET_TRACK"
+const SET_TALK = "@PEPSI-MAN_WEB/COMMON/SET_TALK"
 
 // action
 export const setAlbums = createAction(SET_ALBUMS)
 export const setAlbum = createAction(SET_ALBUM)
 export const setTrack = createAction(SET_TRACK)
+export const setTalk = createAction(SET_TALK)
 
 // init state
 const initState = {
@@ -1526,6 +1528,39 @@ const initState = {
   ],
   album: {},
   track: {},
+  talks: [
+    {
+      talkSeq: 0,
+      userName: "HYUNSOOSHIN",
+      title: "첫글입니다.",
+      contents: "안녕하세요. 신현수입니다.",
+      regDate: "2021-01-17",
+      clickCount: 4,
+      likeCount: 3,
+      commentCount: 1,
+    },
+    {
+      talkSeq: 1,
+      userName: "ZIORPARK",
+      title: "HYUNSOOSHIN님 감사합니다.",
+      contents: "페이지를 만들어 주셔서 감사합니다 ㅎㅎ",
+      regDate: "2021-01-18",
+      clickCount: 5,
+      likeCount: 5,
+      commentCount: 1,
+    },
+    {
+      talkSeq: 2,
+      userName: "HONG",
+      title: "굉장히 고급스럽고 우아한 페이지네요",
+      contents: "잘 구경하고 갑니다~",
+      regDate: "2021-01-15",
+      clickCount: 12,
+      likeCount: 10,
+      commentCount: 1,
+    },
+  ],
+  talk: {},
 }
 
 // reducer
@@ -1542,6 +1577,10 @@ const reducer = handleActions(
     [SET_TRACK]: (state, action) => ({
       ...state,
       track: state.album.track.filter((i) => i.trackNo === Number(action.payload))[0],
+    }),
+    [SET_TALK]: (state, action) => ({
+      ...state,
+      talk: state.talks.filter((i) => i.talkSeq === Number(action.payload))[0],
     }),
   },
   initState

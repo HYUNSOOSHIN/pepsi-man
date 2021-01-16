@@ -45,7 +45,7 @@ const Album = (props) => {
               </p>
               <p>
                 {i.mvUri === "" ? null : (
-                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/album/${albumSeq}/MV/${i.trackNo}`)}>
+                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/albums/${albumSeq}/${i.trackNo}`)}>
                     <YouTubeIcon />
                   </IconButton>
                 )}

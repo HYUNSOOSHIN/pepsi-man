@@ -17,15 +17,17 @@ function App() {
       <Route exact path="/" component={Home} />
       <Route path="/introduce" component={Introduce} />
       <Route path="/news" component={News} />
-      <Route path="/albums" component={Albums} />
       <Switch>
-        <Route path="/album/:albumSeq/MV/:trackNo" component={MV} />
-        <Route path="/album/:albumSeq" component={Album} />
+        <Route path="/albums/:albumSeq/:trackNo" component={MV} />
+        <Route path="/albums/:albumSeq" component={Album} />
+        <Route path="/albums" component={Albums} />
       </Switch>
-      <Route path="/talks" component={Talks} />
-      <Route path="/talk/:talkSeq" component={Talk} />
-      <Route path="/search" component={Search} />
-      <Route path="/write" component={Write} />
+      <Switch>
+        <Route path="/talks/search" component={Search} />
+        <Route path="/talks/write" component={Write} />
+        <Route path="/talks/:talkSeq" component={Talk} />
+        <Route path="/talks" component={Talks} />
+      </Switch>
     </BrowserRouter>
   )
 }
