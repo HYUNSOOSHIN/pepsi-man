@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react"
 import { useHistory } from "react-router-dom"
 import Layout from "../../common/Layout"
-
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 
 const Write = () => {

@@ -1,7 +1,6 @@
 import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import Layout from "../../common/Layout"
-
 import FindInPageIcon from "@material-ui/icons/FindInPage"
 import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
@@ -29,10 +28,7 @@ const Talk = (props) => {
           {/* 이미지 대체 */}
           <div style={{ backgroundColor: "red", width: "524px", height: "524px", margin: "30px 0px" }}></div>
 
-          <p style={{ width: "100%", height: "fit-content", fontSize: "15px" }}>
-            {talkSeq}번 째 토크가 어쩌고 저쩌고
-            블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라
-          </p>
+          <p style={{ width: "100%", height: "fit-content", fontSize: "15px" }}>{talkSeq}번 째 토크입니다.</p>
         </div>
       </section>
 
@@ -95,7 +91,7 @@ const Talk = (props) => {
                 <p style={{ fontSize: "12px" }}>작성시간</p>
               </div>
 
-              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용 블라블라~~</p>
+              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용입니다</p>
             </div>
             <div style={{ marginTop: "10px", padding: "5px", border: "1px solid" }}>
               <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
@@ -103,7 +99,7 @@ const Talk = (props) => {
                 <p style={{ fontSize: "12px" }}>작성시간</p>
               </div>
 
-              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용 블라블라~~</p>
+              <p style={{ fontSize: "15px", whiteSpace: "pre-line" }}>내용입니다</p>
             </div>
           </div>
         </div>

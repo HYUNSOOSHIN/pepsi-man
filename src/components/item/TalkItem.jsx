@@ -58,8 +58,7 @@ const TalkItem = (props) => {
               WebkitBoxOrient: "vertical",
             }}
           >
-            {item}번 째 토크가 어쩌고 저쩌고
-            블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라블라
+            {item}번 째 토크입니다.
           </p>
           <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end", marginTop: "10px" }}>
             <div style={{ display: "flex", justifyContent: "space-between", alignContent: "flex-end" }}>

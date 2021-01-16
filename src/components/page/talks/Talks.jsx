@@ -11,7 +11,10 @@ const Talks = () => {
 
   return (
     <Layout>
-      <section style={{ display: "flex", justifyContent: "space-between", alignContent: "center" }}>
+      <section style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%", height: "100%" }}>
+        <p style={{ fontSize: "30px" }}>Comming soon..</p>
+      </section>
+      {/* <section style={{ display: "flex", justifyContent: "space-between", alignContent: "center" }}>
         <div style={{ display: "flex", justifyContent: "flex-start", alignItems: "center" }}>
           <button
             style={{
@@ -58,7 +61,7 @@ const Talks = () => {
         {[1, 2, 3, 4].map((item, index) => (
           <TalkItem key={index} item={item} />
         ))}
-      </section>
+      </section> */}
     </Layout>
   )
 }

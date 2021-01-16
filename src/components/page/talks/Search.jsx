@@ -1,7 +1,6 @@
 import React from "react"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
-
 import SearchIcon from "@material-ui/icons/Search"
 
 const Search = () => {
