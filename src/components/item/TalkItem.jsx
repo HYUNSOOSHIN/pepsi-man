@@ -54,7 +54,17 @@ const Container = styled.button`
   border-radius: 0px;
   box-shadow: 0px 3.3px 5px 0px #08000010;
   text-align: left;
+  &:hover {
+    box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1) !important;
+    transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
+    transform: translateY(-8px);
+  }
   @media (max-width: 1024px) {
+    &:hover {
+      box-shadow: 0px 3.3px 5px 0px #08000010 !important;
+      transition: none;
+      transform: none;
+    }
   }
   @media (max-width: 768px) {
     flex-direction: column;

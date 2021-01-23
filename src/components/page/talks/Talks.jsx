@@ -104,6 +104,8 @@ const ButtonsView = styled.div`
   justify-content: flex-start;
   align-items: center;
   & > button {
+    width: 30px;
+    height: 30px;
     padding: 0px;
     & > svg {
       width: 30px;
