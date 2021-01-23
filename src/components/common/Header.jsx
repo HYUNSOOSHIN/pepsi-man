@@ -140,6 +140,9 @@ const NaviView = styled.div`
     & > a {
       margin-bottom: 15px;
     }
+    @media (max-width: 360px) {
+      width: 70%;
+    }
   }
 `
 const OpacityView = styled.div`

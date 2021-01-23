@@ -7,5 +7,5 @@ export const darkColors = {
 export const whiteColors = {
   background: "#ffffff",
   text: "#232323",
-  border: "#393c42",
+  border: "#f0f0f1",
 }

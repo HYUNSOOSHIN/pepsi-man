@@ -50,8 +50,7 @@ const Container = styled.button`
   height: fit-content;
   margin: 0 auto 30px;
   padding: 0px;
-  border: 1px solid #f0f0f1;
-  border-radius: 0px;
+  border: 1px solid var(--border);
   box-shadow: 0px 3.3px 5px 0px #08000010;
   text-align: left;
   &:hover {

@@ -124,7 +124,10 @@ const ButtonsView = styled.div`
   }
 `
 const TalkListSection = styled.section`
-  overflow-y: auto;
-  flex: 1;
-  margin-top: 50px;
+  margin-top: 60px;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    margin-top: 30px;
+  }
 `
