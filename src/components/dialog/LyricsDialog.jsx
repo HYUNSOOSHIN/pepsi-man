@@ -1,24 +1,10 @@
-import React, { useEffect } from "react"
+import React from "react"
 import styled from "styled-components"
 import { IconButton } from "@material-ui/core"
 import CloseIcon from "@material-ui/icons/Close"
 
 export default function LyricsDialog(props) {
   const { open, onClose, track } = props
-
-  useEffect(() => {
-    window.addEventListener("scroll", preventScroll)
-
-    return () => {
-      window.removeEventListener("scroll", preventScroll)
-    }
-  }, [open])
-
-  const preventScroll = () => {
-    if (open) {
-      document.getElementsByTagName("html")[0].scrollTop = 0
-    }
-  }
 
   if (Object.keys(track).length === 0) return null
 

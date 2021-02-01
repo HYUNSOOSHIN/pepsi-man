@@ -127,7 +127,7 @@ const NaviView = styled.div`
     font-family: "Times New Roman", Times, serif;
   }
   @media (max-width: 1024px) {
-    position: absolute;
+    position: fixed;
     top: 0;
     right: ${(props) => (props.hamberger ? "0" : "-999")}px;
     display: block;
@@ -136,18 +136,17 @@ const NaviView = styled.div`
     margin-left: 0;
     padding-top: 55px;
     padding-left: 10px;
-    /* border-left: 1px solid var(--border); */
     & > a {
       margin-bottom: 15px;
     }
-    @media (max-width: 360px) {
-      width: 70%;
-    }
+  }
+  @media (max-width: 360px) {
+    width: 70%;
   }
 `
 const OpacityView = styled.div`
   background-color: rgba(0, 0, 0, 0.35);
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   display: ${(props) => (props.hamberger ? "flex" : "none")};

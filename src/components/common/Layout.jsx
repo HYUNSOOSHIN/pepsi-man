@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import Header from "./Header"
 import Footer from "./Footer"
@@ -6,20 +6,6 @@ import Footer from "./Footer"
 const Layout = (props) => {
   const { children } = props
   const [hamberger, setHamberger] = useState(false)
-
-  useEffect(() => {
-    window.addEventListener("scroll", preventScroll)
-
-    return () => {
-      window.removeEventListener("scroll", preventScroll)
-    }
-  }, [hamberger])
-
-  const preventScroll = () => {
-    if (hamberger) {
-      document.getElementsByTagName("html")[0].scrollTop = 0
-    }
-  }
 
   return (
     <Container hamberger={hamberger}>

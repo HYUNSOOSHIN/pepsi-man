@@ -14,7 +14,7 @@ const TalkItem = (props) => {
     <Container onClick={() => history.push(`/talks/${item.talkSeq}`)}>
       <Thumbnail src={pepsi} alt={"임시 이미지"} />
       <TextBox>
-        <div>
+        <div style={{ width: "100%" }}>
           <Title>{item.title}</Title>
           <Contents>{item.contents}</Contents>
         </div>
@@ -85,13 +85,22 @@ const TextBox = styled.div`
   flex: 1;
   justify-content: space-between;
   align-items: flex-start;
-  width: 100%;
+  width: 0px;
   height: 200px;
   padding: 10px;
+  @media (max-width: 1024px) {
+  }
+  @media (max-width: 768px) {
+    width: 100%;
+  }
 `
 const Title = styled.p`
-  font-size: 18px;
+  font-size: 20px;
   font-weight: bold;
+  /* width: 100%; */
+  overflow-x: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
   @media (max-width: 1024px) {
   }
   @media (max-width: 768px) {
@@ -103,7 +112,8 @@ const Contents = styled.p`
   display: -webkit-box;
   font-size: 15px;
   text-overflow: ellipsis;
-  -webkit-line-clamp: 2;
+  word-break: break-all;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   @media (max-width: 1024px) {
   }
@@ -127,6 +137,9 @@ const WriterView = styled.div`
     & > span {
       font-weight: bold;
     }
+    @media (max-width: 768px) {
+      font-size: 12px;
+    }
   }
 `
 const TalkStatusView = styled.div`
@@ -136,6 +149,10 @@ const TalkStatusView = styled.div`
   & > svg {
     width: 15px;
     height: 15px;
+    @media (max-width: 768px) {
+      width: 12px;
+      height: 12px;
+    }
   }
   & > p {
     margin: 0px 5px;
