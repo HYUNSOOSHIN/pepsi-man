@@ -13,7 +13,7 @@ const Search = (props) => {
     <Layout>
       <Section>
         <SearchIcon />
-        <input type={"text"} placeholder={"검색어를 입력해주세요."} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+        <input type={"text"} placeholder={"Please enter a search term"} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
       </Section>
 
       <TalkListSection>

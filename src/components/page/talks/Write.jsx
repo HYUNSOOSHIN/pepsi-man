@@ -23,8 +23,8 @@ const Write = () => {
   return (
     <Layout>
       <InputSection>
-        <Input type={"text"} placeholder={"제목"} value={title} onChange={(e) => setTitle(e.target.value)} />
-        <Textarea placeholder={"내용"} value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
+        <Input type={"text"} placeholder={"title"} value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Textarea placeholder={"contents"} value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
         <LeftTextView error={contents.length > 500}>
           <p>{contents.length}/500</p>
         </LeftTextView>
@@ -46,11 +46,11 @@ const Write = () => {
         />
         <ImageAddButton
           onClick={() => {
-            if (images.length === 3) alert("이미지는 최대 3개만 가능합니다.")
+            if (images.length === 3) alert("You can add up to 3 images")
             else imageInput.current.click()
           }}
         >
-          이미지 추가
+          Add image
         </ImageAddButton>
 
         <ImageListView>
@@ -73,10 +73,10 @@ const Write = () => {
 
       <ButtonsSection>
         <Button margin={true} onClick={() => history.goBack()}>
-          <p>취소</p>
+          <p>cancel</p>
         </Button>
-        <Button onClick={() => alert("구현중인 기능입니다.")}>
-          <p>작성완료</p>
+        <Button onClick={() => alert("This is a feature under development")}>
+          <p>write</p>
         </Button>
       </ButtonsSection>
     </Layout>

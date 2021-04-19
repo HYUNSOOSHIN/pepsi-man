@@ -28,10 +28,10 @@ const Album = (props) => {
         <img src={album.imageUri} alt={"앨범 이미지"} />
         <UL>
           <LI>
-            <p>번호</p>
-            <p>곡정보</p>
-            <p>가사</p>
-            <p>뮤비</p>
+            <p>NO.</p>
+            <p>TITLE</p>
+            <p>LYRICS</p>
+            <p>MV</p>
           </LI>
 
           {album.track.map((i, idx) => (
@@ -104,7 +104,7 @@ const LI = styled.li`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  margin-bottom: 5px;
+  margin-bottom: 8px;
   & > p {
     width: 50px;
     padding: 0;

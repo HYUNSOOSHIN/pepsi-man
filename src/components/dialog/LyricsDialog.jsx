@@ -13,7 +13,7 @@ export default function LyricsDialog(props) {
       <Container onClick={(e) => e.stopPropagation()}>
         {/* HEADER */}
         <HeaderSection>
-          <p>{track.title} 가사</p>
+          <p>Lyrics - {track.title}</p>
           <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={onClose}>
             <CloseIcon />
           </IconButton>

@@ -36,7 +36,7 @@ const Talk = (props) => {
         </Box1>
 
         <Box2>
-          <LikeButton onClick={() => alert("아직 구현되지 않은 기능입니다.")}>
+          <LikeButton onClick={() => alert("This is a feature under development")}>
             <FavoriteIcon />
           </LikeButton>
         </Box2>
@@ -51,15 +51,15 @@ const Talk = (props) => {
             <p>{talk.commentCount}</p>
           </FlexBox>
 
-          <BackButton onClick={() => history.goBack()}>목록으로</BackButton>
+          <BackButton onClick={() => history.goBack()}>to list</BackButton>
         </Box3>
       </TalkSection>
 
       <CommentSection>
         <CommentWriteView>
-          <input type={"text"} placeholder={"코멘트를 입력하세요"} value={comment} onChange={(e) => setComment(e.target.value)} />
-          <button onClick={() => alert("아직 구현되지 않은 기능입니다.")}>
-            <p>작성</p>
+          <input type={"text"} placeholder={"Please enter a comment"} value={comment} onChange={(e) => setComment(e.target.value)} />
+          <button onClick={() => alert("This is a feature under development")}>
+            <p>write</p>
           </button>
         </CommentWriteView>
 
