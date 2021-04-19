@@ -41,7 +41,7 @@ const Header = (props) => {
       <OpacityView hamberger={hamberger} onClick={() => setHamberger(false)} />
       <NaviView id={"navi"} hamberger={hamberger} onClick={(e) => e.stopPropagation()}>
         <ToggleView>
-          <ToggleText>다크모드</ToggleText>
+          <ToggleText>DarkMode</ToggleText>
           <AntSwitch
             checked={toggle}
             onChange={() => {
@@ -166,7 +166,7 @@ const ToggleView = styled.div`
   z-index: 100;
 `
 const ToggleText = styled.p`
-  margin-top: 2px;
+  margin-top: 5px;
   margin-right: 5px;
   font-size: 15px;
   font-weight: bold;

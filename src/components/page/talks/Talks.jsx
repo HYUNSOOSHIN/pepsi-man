@@ -26,10 +26,10 @@ const Talks = (props) => {
       <Section>
         <OrderByView>
           <OrderByButton bgColor={orderBy === 0 ? "#646568" : "#ffffff"} color={orderBy === 0 ? "#ffffff" : "#646568"} onClick={() => setOrderBy(0)}>
-            <p>최신순</p>
+            <p>Newest</p>
           </OrderByButton>
           <OrderByButton bgColor={orderBy === 1 ? "#646568" : "#ffffff"} color={orderBy === 1 ? "#ffffff" : "#646568"} onClick={() => setOrderBy(1)}>
-            <p>인기순</p>
+            <p>Popularity</p>
           </OrderByButton>
         </OrderByView>
 
@@ -71,7 +71,7 @@ const OrderByView = styled.div`
 `
 const OrderByButton = styled.button`
   background-color: ${(props) => props.bgColor};
-  width: 80px;
+  width: 90px;
   height: 35px;
   border: 1px solid;
   border-radius: 5px;
@@ -92,7 +92,7 @@ const OrderByButton = styled.button`
   @media (max-width: 1024px) {
   }
   @media (max-width: 768px) {
-    width: 60px;
+    width: 65px;
     height: 25px;
     & > p {
       font-size: 12px;

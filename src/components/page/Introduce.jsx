@@ -8,12 +8,12 @@ import soundcloud from "./../../images/soundcloud.png"
 
 const Introduce = () => {
   const profileInfo = [
-    { key: "이름", value: "Zior Park" },
-    { key: "국적", value: "신드롬 행성" },
-    { key: "생년월일", value: "☺☺☺☺-☺☺-☺☺" },
-    { key: "데뷔", value: "2018년 싱글 Benefits" },
-    { key: "크루", value: "SyndromeZ" },
-    { key: "레이블", value: "Beautiful Noise" },
+    { key: "Name", value: "Zior Park" },
+    { key: "Nationality", value: "Syndrome planet" },
+    { key: "Date of birth", value: "☺☺☺☺-☺☺-☺☺" },
+    { key: "Debut", value: "2018 Single Benefits" },
+    { key: "Crew", value: "SyndromeZ" },
+    { key: "Label", value: "Beautiful Noise" },
   ]
 
   return (

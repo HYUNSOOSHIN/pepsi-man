@@ -4,7 +4,7 @@ import styled from "styled-components"
 const Footer = () => {
   return (
     <Container>
-      <p id={"info"}>{`서울시 관악구 어딘가\nT: ☺☺☺-☺☺☺☺-☺☺☺☺ / E: shs0655@gmail.com`}</p>
+      <p id={"info"}>{`Somewhere in Gwanak-gu, Seoul,  Republic of Korea.\nT: ☺☺☺-☺☺☺☺-☺☺☺☺ / E: shs0655@gmail.com`}</p>
       <p id={"copyright"}>© HYUNSOOSHIN</p>
     </Container>
   )
