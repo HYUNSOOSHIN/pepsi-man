@@ -2,23 +2,25 @@ import React from "react"
 import styled from "styled-components"
 import { useHistory } from "react-router-dom"
 
-const AlbumItem = (props) => {
+const ProductItem = (props) => {
   const history = useHistory()
-  const { albumItem } = props
+  const { productItem } = props
 
   return (
-    <Container onClick={() => history.push(`/albums/${albumItem.albumSeq}`)}>
-      <img src={albumItem.imageUri} alt={"앨범 이미지"} />
-      <p>{albumItem.title}</p>
+    <Container onClick={() => history.push(`/shop/product/${productItem.productSeq}`)}>
+      <div id="imgBox">
+        <img src={productItem.imageUri} alt={"앨범 이미지"} />
+      </div>
+
+      <p>{productItem.productName}</p>
       <div>
-        <p id={"artist"}>{albumItem.artist}</p>
-        <p id={"releaseDate"}>{albumItem.releaseDate}</p>
+        <p id={"price"}>price: {productItem.price.toLocaleString()}</p>
       </div>
     </Container>
   )
 }
 
-export default AlbumItem
+export default ProductItem
 
 const Container = styled.button`
   display: flex;
@@ -26,7 +28,7 @@ const Container = styled.button`
   justify-content: flex-start;
   align-items: flex-start;
   float: left;
-  width: 33.3%;
+  width: 25%;
   height: auto;
   padding: 10px;
   border-bottom-left-radius: 5px;
@@ -37,30 +39,36 @@ const Container = styled.button`
     transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
     transform: translateY(-8px);
   }
-
-  & > img {
+  & > div#imgBox {
+    position: relative;
     width: 100%;
-    object-fit: cover;
+    height: auto;
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+      display: block;
+    }
+    & > img {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
+
   & > p {
     margin-top: 10px;
-    font-size: 20px;
+    font-size: 18px;
+    text-align: left;
   }
   & > div {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     width: 100%;
     height: fit-content;
 
-    & > p#artist {
-      flex: 1;
-      width: 0px;
-      margin-right: 5px;
-      font-size: 15px;
-      text-align: left;
-    }
-    & > p#releaseDate {
+    & > p#price {
       font-size: 15px;
     }
   }

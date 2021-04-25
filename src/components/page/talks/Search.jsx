@@ -1,17 +1,21 @@
 import React from "react"
+import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
+import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import SearchIcon from "@material-ui/icons/Search"
 
 const Search = (props) => {
   const { talks } = props
+  const history = useHistory()
   const [searchText, setSearchText] = React.useState("")
 
   return (
     <Layout>
       <Section>
+        <ArrowBackIcon onClick={() => history.goBack()} />
         <SearchIcon />
         <input type={"text"} placeholder={"Please enter a search term"} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
       </Section>

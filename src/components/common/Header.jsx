@@ -57,8 +57,8 @@ const Header = (props) => {
         <LogoLink className={history.location.pathname.includes("introduce") ? "active" : ""} to="/introduce">
           Introduce
         </LogoLink>
-        <LogoLink className={history.location.pathname.includes("new") ? "active" : ""} to="/news">
-          News
+        <LogoLink className={history.location.pathname.includes("shop") ? "active" : ""} to="/shop">
+          Shop
         </LogoLink>
         <LogoLink className={history.location.pathname.includes("album") ? "active" : ""} to="/albums">
           Albums
@@ -166,7 +166,6 @@ const ToggleView = styled.div`
   z-index: 100;
 `
 const ToggleText = styled.p`
-  margin-top: 5px;
   margin-right: 5px;
   font-size: 15px;
   font-weight: bold;
