@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
-import { Switch } from "@material-ui/core"
-import { withStyles } from "@material-ui/core/styles"
 import MenuIcon from "@material-ui/icons/Menu"
 import { darkColors, whiteColors } from "../../utils/util"
+import Toggle from "./Toggle"
 
 const Header = (props) => {
   const history = useHistory()
@@ -40,19 +39,15 @@ const Header = (props) => {
       <LogoLink to="/">ZIOR PARK</LogoLink>
       <OpacityView hamberger={hamberger} onClick={() => setHamberger(false)} />
       <NaviView id={"navi"} hamberger={hamberger} onClick={(e) => e.stopPropagation()}>
-        <ToggleView>
-          <ToggleText>DarkMode</ToggleText>
-          <AntSwitch
-            checked={toggle}
-            onChange={() => {
-              const bool = !toggle
-              setColorMode(toggle ? whiteColors : darkColors)
-              setToggle(bool)
-              localStorage.setItem("darkMode", `${bool}`)
-            }}
-            name="color_toggle"
-          />
-        </ToggleView>
+        <Toggle
+          value={toggle}
+          setValue={() => {
+            const bool = !toggle
+            setColorMode(toggle ? whiteColors : darkColors)
+            setToggle(bool)
+            localStorage.setItem("darkMode", `${bool}`)
+          }}
+        />
 
         <LogoLink className={history.location.pathname.includes("introduce") ? "active" : ""} to="/introduce">
           Introduce
@@ -154,22 +149,6 @@ const OpacityView = styled.div`
   height: 100%;
   z-index: 99;
 `
-const ToggleView = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 20px;
-  display: flex;
-  justify-content: flex-start;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
-  z-index: 100;
-`
-const ToggleText = styled.p`
-  margin-right: 5px;
-  font-size: 15px;
-  font-weight: bold;
-`
 const Hamberger = styled.button`
   display: none;
   width: 30px;
@@ -182,37 +161,3 @@ const Hamberger = styled.button`
     display: block;
   }
 `
-
-const AntSwitch = withStyles((theme) => ({
-  root: {
-    overflow: "visible",
-    width: 28,
-    height: 16,
-    padding: 0,
-  },
-  switchBase: {
-    padding: "2px",
-    color: theme.palette.grey[500],
-    "&$checked": {
-      transform: "translateX(12px)",
-      color: theme.palette.common.white,
-      "& + $track": {
-        opacity: 1,
-        backgroundColor: theme.palette.primary.main,
-        borderColor: theme.palette.primary.main,
-      },
-    },
-  },
-  thumb: {
-    width: 12,
-    height: 12,
-    boxShadow: "none",
-  },
-  track: {
-    border: `1px solid ${theme.palette.grey[500]}`,
-    borderRadius: 16 / 2,
-    opacity: 1,
-    backgroundColor: theme.palette.common.white,
-  },
-  checked: {},
-}))(Switch)
