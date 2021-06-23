@@ -39,7 +39,6 @@ const Write = () => {
             if (e.target.files.length === 0) return
             const file = e.target.files[0]
             const base64 = await toBase64(file)
-            console.log([...images, { base64, file }])
             setImages([...images, { base64, file }])
           }}
           accept={"image/*"}
