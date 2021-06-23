@@ -8,7 +8,6 @@ import { PersistGate } from "redux-persist/integration/react"
 import storageSession from "redux-persist/lib/storage/session" // sessionStorage
 import App from "./components/App"
 import rootReducer from "./reducers"
-import reportWebVitals from "./reportWebVitals"
 import "./index.css"
 
 const persistConfig = {
@@ -32,11 +31,6 @@ ReactDOM.render(
   </React.StrictMode>,
   document.getElementById("root")
 )
-
-// If you want to start measuring performance in your app, pass a function
-// to log results (for example: reportWebVitals(console.log))
-// or send to an analytics endpoint. Learn more: https://bit.ly/CRA-vitals
-reportWebVitals()
 
 console.log("%cWELCOME TO ZIORPARK", `font-size: 25px;`)
 console.log(

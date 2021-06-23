@@ -1,4 +1,4 @@
-pepsi-man_web 
+pepsi-man
 
 
 Zior Park - PENGUIN

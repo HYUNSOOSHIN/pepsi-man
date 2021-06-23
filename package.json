@@ -1,6 +1,6 @@
 {
-  "homepage": "https://hyunsooshin.github.io/pepsi-man_web/",
-  "name": "pepsi-man_web",
+  "homepage": "https://hyunsooshin.github.io/pepsi-man/",
+  "name": "pepsi-man",
   "version": "0.1.0",
   "private": true,
   "dependencies": {

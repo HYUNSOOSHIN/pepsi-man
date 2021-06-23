@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
 import MenuIcon from "@material-ui/icons/Menu"
-import { darkColors, whiteColors } from "../../utils/util"
+import { darkColors, whiteColors } from "../../utils/color"
 import Toggle from "./Toggle"
 
 const Header = (props) => {
