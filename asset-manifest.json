@@ -1,27 +1,27 @@
 {
   "files": {
-    "main.css": "/pepsi-man_web/static/css/main.a733767c.chunk.css",
-    "main.js": "/pepsi-man_web/static/js/main.138e9539.chunk.js",
-    "main.js.map": "/pepsi-man_web/static/js/main.138e9539.chunk.js.map",
-    "runtime-main.js": "/pepsi-man_web/static/js/runtime-main.78d87404.js",
-    "runtime-main.js.map": "/pepsi-man_web/static/js/runtime-main.78d87404.js.map",
-    "static/js/2.4336aab9.chunk.js": "/pepsi-man_web/static/js/2.4336aab9.chunk.js",
-    "static/js/2.4336aab9.chunk.js.map": "/pepsi-man_web/static/js/2.4336aab9.chunk.js.map",
-    "static/js/3.64a57da9.chunk.js": "/pepsi-man_web/static/js/3.64a57da9.chunk.js",
-    "static/js/3.64a57da9.chunk.js.map": "/pepsi-man_web/static/js/3.64a57da9.chunk.js.map",
+    "main.css": "/pepsi-man_web/static/css/main.a06a30dd.chunk.css",
+    "main.js": "/pepsi-man_web/static/js/main.6a9ae609.chunk.js",
+    "main.js.map": "/pepsi-man_web/static/js/main.6a9ae609.chunk.js.map",
+    "runtime-main.js": "/pepsi-man_web/static/js/runtime-main.5d5fdefb.js",
+    "runtime-main.js.map": "/pepsi-man_web/static/js/runtime-main.5d5fdefb.js.map",
+    "static/js/2.77a70293.chunk.js": "/pepsi-man_web/static/js/2.77a70293.chunk.js",
+    "static/js/2.77a70293.chunk.js.map": "/pepsi-man_web/static/js/2.77a70293.chunk.js.map",
+    "static/js/3.1997ccac.chunk.js": "/pepsi-man_web/static/js/3.1997ccac.chunk.js",
+    "static/js/3.1997ccac.chunk.js.map": "/pepsi-man_web/static/js/3.1997ccac.chunk.js.map",
     "index.html": "/pepsi-man_web/index.html",
-    "static/css/main.a733767c.chunk.css.map": "/pepsi-man_web/static/css/main.a733767c.chunk.css.map",
-    "static/js/2.4336aab9.chunk.js.LICENSE.txt": "/pepsi-man_web/static/js/2.4336aab9.chunk.js.LICENSE.txt",
+    "static/css/main.a06a30dd.chunk.css.map": "/pepsi-man_web/static/css/main.a06a30dd.chunk.css.map",
+    "static/js/2.77a70293.chunk.js.LICENSE.txt": "/pepsi-man_web/static/js/2.77a70293.chunk.js.LICENSE.txt",
     "static/media/index.css": "/pepsi-man_web/static/media/NotoSansKR-Regular.81f0390f.woff",
     "static/media/instagram.513d4aff.png": "/pepsi-man_web/static/media/instagram.513d4aff.png",
+    "static/media/main.e1fa9e63.jpg": "/pepsi-man_web/static/media/main.e1fa9e63.jpg",
     "static/media/pep.456b8fc2.jpg": "/pepsi-man_web/static/media/pep.456b8fc2.jpg",
-    "static/media/thunderbirdmotel103.1a38a384.png": "/pepsi-man_web/static/media/thunderbirdmotel103.1a38a384.png",
-    "static/media/zior168.19da9f7d.png": "/pepsi-man_web/static/media/zior168.19da9f7d.png"
+    "static/media/zior.19da9f7d.png": "/pepsi-man_web/static/media/zior.19da9f7d.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.78d87404.js",
-    "static/js/2.4336aab9.chunk.js",
-    "static/css/main.a733767c.chunk.css",
-    "static/js/main.138e9539.chunk.js"
+    "static/js/runtime-main.5d5fdefb.js",
+    "static/js/2.77a70293.chunk.js",
+    "static/css/main.a06a30dd.chunk.css",
+    "static/js/main.6a9ae609.chunk.js"
   ]
 }
