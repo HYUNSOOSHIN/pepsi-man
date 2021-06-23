@@ -1,13 +1,13 @@
 import React from "react"
 import styled from "styled-components"
 import Layout from "../common/Layout"
-import thunderbirdmotel from "./../../images/thunderbirdmotel103.png"
+import main from "./../../images/main.jpg"
 
 const Home = () => {
   return (
     <Layout>
       <MainSection>
-        <img src={thunderbirdmotel} alt={"home img"} />
+        <img src={main} alt={"home img"} />
       </MainSection>
     </Layout>
   )

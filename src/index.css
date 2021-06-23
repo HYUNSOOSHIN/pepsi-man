@@ -98,6 +98,7 @@ button {
   background-color: var(--background);
   padding: 0px;
   border: none;
+  border-radius: 5px;
   border-color: var(--border);
   outline: none;
   color: var(--text);
