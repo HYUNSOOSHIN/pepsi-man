@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import Container from "../../../containers/container"
@@ -10,7 +10,7 @@ import SearchIcon from "@material-ui/icons/Search"
 const Search = (props) => {
   const { talks } = props
   const history = useHistory()
-  const [searchText, setSearchText] = React.useState("")
+  const [searchText, setSearchText] = useState("")
 
   return (
     <Layout>

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import Layout from "../../common/Layout"
@@ -6,11 +6,11 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 
 const Write = () => {
   const history = useHistory()
-  const [title, setTitle] = React.useState("")
-  const [contents, setContents] = React.useState("")
+  const [title, setTitle] = useState("")
+  const [contents, setContents] = useState("")
   // 이미지 형식 {base64: null, file: null}
-  const [images, setImages] = React.useState([])
-  const imageInput = React.useRef(null)
+  const [images, setImages] = useState([])
+  const imageInput = useRef(null)
 
   const toBase64 = (file) =>
     new Promise((resolve, reject) => {

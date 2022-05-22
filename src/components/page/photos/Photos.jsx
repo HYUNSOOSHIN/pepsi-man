@@ -1,13 +1,21 @@
-import React, { useState } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import Container from "../../../containers/container"
+import { dbService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import PhotoItem from "components/item/PhotoItem"
 import PhotoDialog from "components/dialog/photoDialog"
 import zior from "./../../../images/zior.png"
 
-const Photos = (props) => {
+const Photos = () => {
   const [photoDialog, setPhotoDialog] = useState({ open: false, img: null })
+
+  useEffect(() => {
+    dbService.collection("photos").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        console.log(doc.data())
+      })
+    })
+  }, [])
 
   return (
     <Layout>
@@ -23,7 +31,7 @@ const Photos = (props) => {
   )
 }
 
-export default Container(Photos)
+export default Photos
 
 const Section = styled.section`
   &::after {

@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import Container from "../../../containers/container"
@@ -12,9 +12,9 @@ const Talk = (props) => {
   const { talkSeq } = props.match.params
   const { talk, setTalk } = props
   const history = useHistory()
-  const [comment, setComment] = React.useState("")
+  const [comment, setComment] = useState("")
 
-  React.useEffect(() => {
+  useEffect(() => {
     setTalk(talkSeq)
   }, [])
 

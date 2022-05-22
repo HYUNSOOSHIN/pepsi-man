@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
+import { dbService } from "../../../fireBase"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
@@ -10,7 +11,15 @@ import CreateIcon from "@material-ui/icons/Create"
 const Talks = (props) => {
   const history = useHistory()
   const { talks } = props
-  const [orderBy, setOrderBy] = React.useState(0)
+  const [orderBy, setOrderBy] = useState(0)
+
+  useEffect(() => {
+    dbService.collection("talks").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        console.log(doc.data())
+      })
+    })
+  }, [])
 
   function orderByFunc(list) {
     const sortList = [...list]

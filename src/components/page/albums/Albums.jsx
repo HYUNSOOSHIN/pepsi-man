@@ -1,11 +1,20 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import { dbService } from "../../../fireBase"
 import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import AlbumItem from "../../item/AlbumItem"
 
 const Albums = (props) => {
   const { albums } = props
+
+  useEffect(() => {
+    dbService.collection("albums").onSnapshot((snapshot) => {
+      snapshot.docs.map((doc) => {
+        console.log(doc.data())
+      })
+    })
+  }, [])
 
   return (
     <Layout>

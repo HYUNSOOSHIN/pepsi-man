@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState } from "react"
 import styled from "styled-components"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
@@ -8,7 +8,7 @@ import Toggle from "../common/Toggle"
 import zior from "images/zior.png"
 
 const Login = () => {
-  const [toggle, setToggle] = React.useState(localStorage.getItem("darkMode") === "true")
+  const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
   const setColorMode = (colorMode) => {
     for (const [key, value] of Object.entries(colorMode)) {
