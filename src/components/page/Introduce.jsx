@@ -1,20 +1,21 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import { dbService } from "../../fireBase"
 import Layout from "../common/Layout"
 import zior from "./../../images/zior.png"
 import instagram from "./../../images/instagram.png"
+import tiktok from "./../../images/tiktok.png"
 import youtube from "./../../images/youtube.png"
 import soundcloud from "./../../images/soundcloud.png"
 
 const Introduce = () => {
-  const profileInfo = [
-    { key: "Name", value: "Zior Park" },
-    { key: "Nationality", value: "Syndrome planet" },
-    { key: "Date of birth", value: "☺☺☺☺-☺☺-☺☺" },
-    { key: "Debut", value: "2018 Single Benefits" },
-    { key: "Crew", value: "SyndromeZ" },
-    { key: "Label", value: "Beautiful Noise" },
-  ]
+  const [profileInfo, setProfileInfo] = useState({})
+
+  useEffect(() => {
+    dbService.collection("introduce").onSnapshot((snapshot) => {
+      setProfileInfo(snapshot.docs[0].data())
+    })
+  }, [])
 
   return (
     <Layout>
@@ -27,12 +28,30 @@ const Introduce = () => {
       <ProfileSection>
         <Title>PROFILE</Title>
         <ContentBox>
-          {profileInfo.map((info, infoIndex) => (
-            <div key={infoIndex} className={"profile"}>
-              <p>{info.key}</p>
-              <p>{info.value}</p>
-            </div>
-          ))}
+          <div className={"profile"}>
+            <p>Name</p>
+            <p>{profileInfo.name}</p>
+          </div>
+          <div className={"profile"}>
+            <p>Nationality</p>
+            <p>{profileInfo.nationality}</p>
+          </div>
+          <div className={"profile"}>
+            <p>Date of birth</p>
+            <p>{profileInfo.birth}</p>
+          </div>
+          <div className={"profile"}>
+            <p>Debut</p>
+            <p>{profileInfo.debut}</p>
+          </div>
+          <div className={"profile"}>
+            <p>Crew</p>
+            <p>{profileInfo.crew}</p>
+          </div>
+          <div className={"profile"}>
+            <p>Label</p>
+            <p>{profileInfo.label}</p>
+          </div>
         </ContentBox>
       </ProfileSection>
 
@@ -41,13 +60,16 @@ const Introduce = () => {
         <Title>SNS</Title>
         <ContentBox>
           <div className={"sns"}>
-            <a target={"_blank"} rel={"noreferrer"} href={"https://www.instagram.com/ziorpark/"}>
+            <a target={"_blank"} rel={"noreferrer"} href={profileInfo.instaUrl}>
               <img src={instagram} alt={"instagram logo"} />
             </a>
-            <a target={"_blank"} rel={"noreferrer"} href={"https://www.youtube.com/channel/UCFPCZLYfZj0Ehu2it-HuQiQ"}>
+            <a target={"_blank"} rel={"noreferrer"} href={profileInfo.tiktokUrl}>
+              <img src={tiktok} alt={"soundcloud logo"} />
+            </a>
+            <a target={"_blank"} rel={"noreferrer"} href={profileInfo.youtubeUrl}>
               <img src={youtube} alt={"youtube logo"} />
             </a>
-            <a target={"_blank"} rel={"noreferrer"} href={"https://soundcloud.com/ziorpark"}>
+            <a target={"_blank"} rel={"noreferrer"} href={profileInfo.soundcloudUrl}>
               <img src={soundcloud} alt={"soundcloud logo"} />
             </a>
           </div>
@@ -90,6 +112,7 @@ const SNSSection = styled.section`
   margin-top: 20px;
 `
 const Title = styled.p`
+  margin-top: 20px;
   font-size: 20px;
   font-weight: bold;
 `
