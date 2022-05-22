@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
-import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
+import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { authService } from "../fireBase"
+import { useSelector } from "react-redux"
+// 페이지
 import Login from "./page/Login"
 import Home from "./page/Home"
 import Introduce from "./page/Introduce"
@@ -12,8 +14,15 @@ import Talks from "./page/talks/Talks"
 import Talk from "./page/talks/Talk"
 import Search from "./page/talks/Search"
 import Write from "./page/talks/Write"
+// 관리자 페이지
+import Admin from "./page/admin"
+import AdminIntroduce from "./page/admin/Introduce"
+import AdminPhotos from "./page/admin/Photos"
+import AdminAlbums from "./page/admin/Albums"
+import AdminTalks from "./page/admin/Talks"
 
 function App() {
+  const { user } = useSelector((state) => state.reducer)
   const [init, setInit] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
 
@@ -22,11 +31,6 @@ function App() {
     authService.onAuthStateChanged((user) => {
       if (user) {
         setIsLogin(true)
-        // setUserObj({
-        //   displayName: user.displayName,
-        //   uid: user.uid,
-        //   updateProfile: (args) => user.updateProfile(args),
-        // })
       } else {
         setIsLogin(false)
       }
@@ -56,12 +60,20 @@ function App() {
               <Route path="/talks/:talkSeq" component={Talk} />
               <Route path="/talks" component={Talks} />
             </Switch>
-            {/* <Redirect from="*" to="/" /> */}
+
+            {user.email?.includes("admin") && (
+              <Switch>
+                <Route exact path="/admin" component={Admin} />
+                <Route path="/admin/introduce" component={AdminIntroduce} />
+                <Route path="/admin/photos" component={AdminPhotos} />
+                <Route path="/admin/albums" component={AdminAlbums} />
+                <Route path="/admin/talks" component={AdminTalks} />
+              </Switch>
+            )}
           </>
         ) : (
           <>
-            <Route exact path="/" component={Login} />
-            {/* <Redirect from="*" to="/" /> */}
+            <Route strict path="/" component={Login} />
           </>
         )}
       </BrowserRouter>

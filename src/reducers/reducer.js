@@ -1,12 +1,14 @@
 import { createAction, handleActions } from "redux-actions"
 
 // action type
+const SET_USER = "@PEPSI_MAN/COMMON/SET_USER"
 const SET_ALBUMS = "@PEPSI-MAN/COMMON/SET_ALBUMS"
 const SET_ALBUM = "@PEPSI-MAN/COMMON/SET_ALBUM"
 const SET_TRACK = "@PEPSI-MAN/COMMON/SET_TRACK"
 const SET_TALK = "@PEPSI-MAN/COMMON/SET_TALK"
 
 // action
+export const setUser = createAction(SET_USER)
 export const setAlbums = createAction(SET_ALBUMS)
 export const setAlbum = createAction(SET_ALBUM)
 export const setTrack = createAction(SET_TRACK)
@@ -14,6 +16,7 @@ export const setTalk = createAction(SET_TALK)
 
 // init state
 const initState = {
+  user: {},
   albums: [
     {
       albumSeq: 0,
@@ -1566,6 +1569,10 @@ const initState = {
 // reducer
 const reducer = handleActions(
   {
+    [SET_USER]: (state, action) => ({
+      ...state,
+      user: action.payload,
+    }),
     [SET_ALBUMS]: (state, action) => ({
       ...state,
       albums: action.payload,

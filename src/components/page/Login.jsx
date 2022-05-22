@@ -1,13 +1,20 @@
 import React, { useState } from "react"
+import { useHistory } from "react-router-dom"
 import styled from "styled-components"
+import { useDispatch } from "react-redux"
+import { setUser } from "reducers/reducer"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
-import { faGoogle, faGithub } from "@fortawesome/free-brands-svg-icons"
+import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import { darkColors, whiteColors } from "../../utils/color"
 import { authService, firebaseInstance } from "../../fireBase"
 import Toggle from "../common/Toggle"
+import AdminDialog from "components/dialog/adminDialog"
 import zior from "images/zior.png"
 
 const Login = () => {
+  const history = useHistory()
+  const dispatch = useDispatch()
+  const [adminDialog, setAdminDialog] = useState(false)
   const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
   const setColorMode = (colorMode) => {
@@ -21,47 +28,53 @@ const Login = () => {
   const onClickLogin = () => {
     authService
       .signInAnonymously()
-      .then((a) => {
-        console.log(a)
+      .then((data) => {
+        dispatch(setUser(data.user))
       })
       .catch((err) => console.log(err))
   }
 
-  const onClickSocilLogin = async (event) => {
-    const name = event.target.name
-
-    let provider
-    if (name === "google") {
-      provider = new firebaseInstance.default.auth.GoogleAuthProvider()
-    } else if (name === "github") {
-      provider = new firebaseInstance.default.auth.GithubAuthProvider()
-    }
+  const onClickSocilLogin = async () => {
+    const provider = new firebaseInstance.default.auth.GoogleAuthProvider()
 
     const data = await authService.signInWithPopup(provider)
-    console.log(data)
+    dispatch(setUser(data.user))
+  }
+
+  const onClickAdminButton = () => {
+    setAdminDialog(true)
+  }
+
+  const onClickAdminLogin = async (id, pw) => {
+    await authService.signInWithEmailAndPassword(id, pw).then((data) => {
+      dispatch(setUser(data.user))
+      history.replace("/admin")
+    })
   }
 
   return (
     <Container>
-      <Toggle
-        value={toggle}
-        setValue={() => {
-          const bool = !toggle
-          setColorMode(toggle ? whiteColors : darkColors)
-          setToggle(bool)
-          localStorage.setItem("darkMode", `${bool}`)
-        }}
-      />
+      <AdminDialog open={adminDialog} onClose={() => setAdminDialog(false)} onClickLogin={onClickAdminLogin} />
+      <AbsoluteView>
+        <Toggle
+          value={toggle}
+          setValue={() => {
+            const bool = !toggle
+            setColorMode(toggle ? whiteColors : darkColors)
+            setToggle(bool)
+            localStorage.setItem("darkMode", `${bool}`)
+          }}
+        />
+      </AbsoluteView>
+
+      <AdminButton onClick={onClickAdminButton}>ADMIN</AdminButton>
 
       <InputView>
         <Title>PepSiMan</Title>
         <Img src={zior} alt="loginImage" />
         <Button onClick={onClickLogin}>Anonymously Login</Button>
-        <Button name="google" onClick={onClickSocilLogin}>
+        <Button onClick={onClickSocilLogin}>
           Continue with google <FontAwesomeIcon icon={faGoogle} />
-        </Button>
-        <Button name="github" onClick={onClickSocilLogin}>
-          Continue with github <FontAwesomeIcon icon={faGithub} />
         </Button>
       </InputView>
     </Container>
@@ -75,6 +88,18 @@ const Container = styled.div`
   align-items: center;
   width: 100%;
   height: 100%;
+`
+const AbsoluteView = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+`
+const AdminButton = styled.button`
+  position: absolute;
+  right: 20px;
+  bottom: 20px;
+  color: var(--text);
+  font-size: 13px;
 `
 const InputView = styled.div`
   display: flex;

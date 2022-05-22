@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
+import { useSelector } from "react-redux"
+import { authService } from "../../fireBase"
 import MenuIcon from "@material-ui/icons/Menu"
 import { darkColors, whiteColors } from "../../utils/color"
 import Toggle from "./Toggle"
@@ -8,6 +10,7 @@ import Toggle from "./Toggle"
 const Header = (props) => {
   const history = useHistory()
   const { hamberger, setHamberger } = props
+  const { user } = useSelector((state) => state.reducer)
   const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
   useEffect(() => {
@@ -32,33 +35,53 @@ const Header = (props) => {
     }
   }
 
+  const onClickLogout = () => {
+    authService.signOut()
+  }
+
   setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)
 
   return (
     <Container>
-      <LogoLink to="/">ZIOR PARK</LogoLink>
+      <LogoLink to={user.email?.includes("admin") ? "/admin" : "/"}>ZIOR PARK</LogoLink>
       <OpacityView hamberger={hamberger} onClick={() => setHamberger(false)} />
       <NaviView id={"navi"} hamberger={hamberger} onClick={(e) => e.stopPropagation()}>
-        <Toggle
-          value={toggle}
-          setValue={() => {
-            const bool = !toggle
-            setColorMode(toggle ? whiteColors : darkColors)
-            setToggle(bool)
-            localStorage.setItem("darkMode", `${bool}`)
-          }}
-        />
+        <AbsoluteView>
+          <Toggle
+            value={toggle}
+            setValue={() => {
+              const bool = !toggle
+              setColorMode(toggle ? whiteColors : darkColors)
+              setToggle(bool)
+              localStorage.setItem("darkMode", `${bool}`)
+            }}
+          />
+          <UserName>{user.email?.includes("admin") ? "관리자" : user.isAnonymous ? "익명의 사용자" : user.displayName}</UserName>
+          <LogoutButton onClick={onClickLogout}>logout</LogoutButton>
+        </AbsoluteView>
 
-        <LogoLink className={history.location.pathname.includes("introduce") ? "active" : ""} to="/introduce">
+        <LogoLink
+          className={history.location.pathname.includes("introduce") ? "active" : ""}
+          to={user.email?.includes("admin") ? "/admin/introduce" : "/introduce"}
+        >
           Introduce
         </LogoLink>
-        <LogoLink className={history.location.pathname.includes("photo") ? "active" : ""} to="/photos">
+        <LogoLink
+          className={history.location.pathname.includes("photo") ? "active" : ""}
+          to={user.email?.includes("admin") ? "/admin/photos" : "/photos"}
+        >
           Photos
         </LogoLink>
-        <LogoLink className={history.location.pathname.includes("album") ? "active" : ""} to="/albums">
+        <LogoLink
+          className={history.location.pathname.includes("album") ? "active" : ""}
+          to={user.email?.includes("admin") ? "/admin/albums" : "/albums"}
+        >
           Albums
         </LogoLink>
-        <LogoLink className={history.location.pathname.includes("talk") ? "active" : ""} to="/talks">
+        <LogoLink
+          className={history.location.pathname.includes("talk") ? "active" : ""}
+          to={user.email?.includes("admin") ? "/admin/talks" : "/talks"}
+        >
           Talks
         </LogoLink>
       </NaviView>
@@ -148,6 +171,25 @@ const OpacityView = styled.div`
   width: 100%;
   height: 100%;
   z-index: 99;
+`
+const AbsoluteView = styled.div`
+  position: absolute;
+  top: 15px;
+  right: 20px;
+  display: flex;
+  align-items: center;
+`
+const UserName = styled.p`
+  margin: 0 10px;
+  color: var(--text);
+  font-size: 14px;
+  font-weight: bold;
+`
+const LogoutButton = styled.button`
+  background-color: #4351af;
+  padding: 2px 5px;
+  color: #ffffff;
+  font-size: 13px;
 `
 const Hamberger = styled.button`
   display: none;

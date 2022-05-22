@@ -13,9 +13,6 @@ const Toggle = ({ value, setValue }) => {
 }
 
 const ToggleView = styled.div`
-  position: absolute;
-  top: 15px;
-  right: 20px;
   display: flex;
   justify-content: flex-start;
   align-items: center;
