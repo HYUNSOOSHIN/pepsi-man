@@ -1,4 +1,4 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import { BrowserRouter, Route, Switch, Redirect } from "react-router-dom"
 import { authService } from "../fireBase"
 import Login from "./page/Login"
@@ -14,10 +14,10 @@ import Search from "./page/talks/Search"
 import Write from "./page/talks/Write"
 
 function App() {
-  const [init, setInit] = React.useState(false)
-  const [isLogin, setIsLogin] = React.useState(false)
+  const [init, setInit] = useState(false)
+  const [isLogin, setIsLogin] = useState(false)
 
-  React.useEffect(() => {
+  useEffect(() => {
     // 로그인/로그아웃 감지하는 관찰자 함수
     authService.onAuthStateChanged((user) => {
       if (user) {
@@ -56,12 +56,12 @@ function App() {
               <Route path="/talks/:talkSeq" component={Talk} />
               <Route path="/talks" component={Talks} />
             </Switch>
-            <Redirect from="*" to="/" />
+            {/* <Redirect from="*" to="/" /> */}
           </>
         ) : (
           <>
             <Route exact path="/" component={Login} />
-            <Redirect from="*" to="/" />
+            {/* <Redirect from="*" to="/" /> */}
           </>
         )}
       </BrowserRouter>
