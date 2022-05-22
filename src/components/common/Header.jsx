@@ -52,8 +52,8 @@ const Header = (props) => {
         <LogoLink className={history.location.pathname.includes("introduce") ? "active" : ""} to="/introduce">
           Introduce
         </LogoLink>
-        <LogoLink className={history.location.pathname.includes("shop") ? "active" : ""} to="/shop">
-          Shop
+        <LogoLink className={history.location.pathname.includes("photo") ? "active" : ""} to="/photos">
+          Photos
         </LogoLink>
         <LogoLink className={history.location.pathname.includes("album") ? "active" : ""} to="/albums">
           Albums
@@ -140,7 +140,7 @@ const NaviView = styled.div`
   }
 `
 const OpacityView = styled.div`
-  background-color: rgba(0, 0, 0, 0.35);
+  background-color: rgba(0, 0, 0, 0.4);
   position: fixed;
   top: 0;
   left: 0;

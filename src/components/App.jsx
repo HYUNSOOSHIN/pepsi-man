@@ -4,8 +4,7 @@ import { authService } from "../fireBase"
 import Login from "./page/Login"
 import Home from "./page/Home"
 import Introduce from "./page/Introduce"
-import Shop from "./page/shop/Shop"
-import Product from "./page/shop/Product"
+import Photos from "./page/photos/Photos"
 import Albums from "./page/albums/Albums"
 import Album from "./page/albums/Album"
 import MV from "./page/albums/MV"
@@ -43,10 +42,7 @@ function App() {
             <Route exact path="/" component={Home} />
             <Route path="/introduce" component={Introduce} />
 
-            <Switch>
-              <Route path="/shop/product/:productSeq" component={Product} />
-              <Route path="/shop" component={Shop} />
-            </Switch>
+            <Route path="/photos" component={Photos} />
 
             <Switch>
               <Route path="/albums/:albumSeq/:trackNo" component={MV} />

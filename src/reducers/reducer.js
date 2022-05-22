@@ -5,14 +5,12 @@ const SET_ALBUMS = "@PEPSI-MAN/COMMON/SET_ALBUMS"
 const SET_ALBUM = "@PEPSI-MAN/COMMON/SET_ALBUM"
 const SET_TRACK = "@PEPSI-MAN/COMMON/SET_TRACK"
 const SET_TALK = "@PEPSI-MAN/COMMON/SET_TALK"
-const SET_PRODUCT = "@PEPSI-MAN/COMMON/SET_PRODUCT"
 
 // action
 export const setAlbums = createAction(SET_ALBUMS)
 export const setAlbum = createAction(SET_ALBUM)
 export const setTrack = createAction(SET_TRACK)
 export const setTalk = createAction(SET_TALK)
-export const setProduct = createAction(SET_PRODUCT)
 
 // init state
 const initState = {
@@ -1563,44 +1561,6 @@ const initState = {
     },
   ],
   talk: {},
-  products: [
-    {
-      productSeq: 0,
-      productName: `Earring`,
-      productDescription: `It is a very free-minded and avant-garde product...`,
-      price: 50000,
-      imageUri: `https://blog.kakaocdn.net/dn/bNMSOn/btqN8Zegssr/s2Ij5VXbkHxLveSPGMYdnk/img.jpg`,
-    },
-    {
-      productSeq: 1,
-      productName: `Check jacket`,
-      productDescription: `It is a very free-minded and avant-garde product...`,
-      price: 150000,
-      imageUri: `https://img.hankyung.com/photo/202004/BF.22324907.1-1200x.jpg`,
-    },
-    {
-      productSeq: 2,
-      productName: `Chucky short sleeves`,
-      productDescription: `It is a very free-minded and avant-garde product...`,
-      price: 38000,
-      imageUri: "https://www.tiktok.com/api/img/?itemId=6930658666907503874&location=0&aid=1988",
-    },
-    {
-      productSeq: 3,
-      productName: `Sunglasses`,
-      productDescription: `It is a very free-minded and avant-garde product...`,
-      price: 60000,
-      imageUri: "https://pbs.twimg.com/media/Et64iAsVgAM0PVU.jpg",
-    },
-    {
-      productSeq: 4,
-      productName: `Blue new york city cap`,
-      productDescription: `It is a very free-minded and avant-garde product...`,
-      price: 25000,
-      imageUri: "https://blog.kakaocdn.net/dn/zngiQ/btqN8fInkwI/Lx7m1p3dUDGNmb54N0GchK/img.jpg",
-    },
-  ],
-  product: {},
 }
 
 // reducer
@@ -1621,10 +1581,6 @@ const reducer = handleActions(
     [SET_TALK]: (state, action) => ({
       ...state,
       talk: state.talks.filter((i) => i.talkSeq === Number(action.payload))[0],
-    }),
-    [SET_PRODUCT]: (state, action) => ({
-      ...state,
-      product: state.products.filter((i) => i.productSeq === Number(action.payload))[0],
     }),
   },
   initState
