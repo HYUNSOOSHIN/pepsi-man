@@ -4,15 +4,15 @@ import { createStore } from "redux"
 import { Provider } from "react-redux"
 import { persistStore, persistReducer } from "redux-persist"
 import { PersistGate } from "redux-persist/integration/react"
-// import storage from "redux-persist/lib/storage" // localStorage
-import storageSession from "redux-persist/lib/storage/session" // sessionStorage
+import storage from "redux-persist/lib/storage" // localStorage
+// import storageSession from "redux-persist/lib/storage/session" // sessionStorage
 import App from "./components/App"
 import rootReducer from "./reducers"
 import "./index.css"
 
 const persistConfig = {
   key: "root",
-  storage: storageSession,
+  storage: storage,
 }
 
 const enhancedReducer = persistReducer(persistConfig, rootReducer)
