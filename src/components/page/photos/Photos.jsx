@@ -3,17 +3,16 @@ import styled from "styled-components"
 import { dbService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import PhotoItem from "components/item/PhotoItem"
-import PhotoDialog from "components/dialog/photoDialog"
-import zior from "./../../../images/zior.png"
+import PhotoDialog from "components/dialog/PhotoDialog"
 
 const Photos = () => {
   const [photoDialog, setPhotoDialog] = useState({ open: false, img: null })
+  const [photoList, setPhotoList] = useState([])
 
   useEffect(() => {
     dbService.collection("photos").onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
-        console.log(doc.data())
-      })
+      const photoArray = snapshot.docs.map((doc) => doc.data())
+      setPhotoList(photoArray)
     })
   }, [])
 
@@ -21,11 +20,9 @@ const Photos = () => {
     <Layout>
       <PhotoDialog open={photoDialog.open} onClose={() => setPhotoDialog({ ...photoDialog, open: false })} img={photoDialog.img} />
       <Section>
-        {Array(10)
-          .fill(0)
-          .map((i, idx) => (
-            <PhotoItem key={idx} img={zior} onClick={() => setPhotoDialog({ open: true, img: zior })} />
-          ))}
+        {photoList.map((i, idx) => (
+          <PhotoItem key={idx} img={i.imageUrl} onClick={() => setPhotoDialog({ open: true, img: i.imageUrl })} />
+        ))}
       </Section>
     </Layout>
   )

@@ -8,7 +8,7 @@ import { faGoogle } from "@fortawesome/free-brands-svg-icons"
 import { darkColors, whiteColors } from "../../utils/color"
 import { authService, firebaseInstance } from "../../fireBase"
 import Toggle from "../common/Toggle"
-import AdminDialog from "components/dialog/adminDialog"
+import AdminDialog from "components/dialog/AdminDialog"
 import zior from "images/zior.png"
 
 const Login = () => {
