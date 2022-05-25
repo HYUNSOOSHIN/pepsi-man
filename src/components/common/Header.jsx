@@ -56,7 +56,7 @@ const Header = (props) => {
               localStorage.setItem("darkMode", `${bool}`)
             }}
           />
-          <UserName>{user.email?.includes("admin") ? "관리자" : user.isAnonymous ? "익명의 사용자" : user.displayName}</UserName>
+          <UserName>{user.email?.includes("admin") ? "Admin" : user.isAnonymous ? "Anonymous" : user.displayName}</UserName>
           <LogoutButton onClick={onClickLogout}>logout</LogoutButton>
         </AbsoluteView>
 

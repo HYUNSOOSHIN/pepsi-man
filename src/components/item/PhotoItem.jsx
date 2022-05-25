@@ -6,7 +6,7 @@ const PhotoItem = (props) => {
 
   return (
     <Container onClick={onClick}>
-      <img src={img} alt={"사진"} />
+      <img src={img} alt={"photo image"} />
     </Container>
   )
 }

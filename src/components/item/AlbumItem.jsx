@@ -8,7 +8,7 @@ const AlbumItem = (props) => {
 
   return (
     <Container onClick={() => history.push(`/albums/${albumItem.albumSeq}`)}>
-      <img src={albumItem.imageUri} alt={"앨범 이미지"} />
+      <img src={albumItem.imageUri} alt={"album image"} />
       <p>{albumItem.title}</p>
       <div>
         <p id={"artist"}>{albumItem.artist}</p>

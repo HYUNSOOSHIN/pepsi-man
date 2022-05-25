@@ -67,8 +67,8 @@ const AdminIntroduce = () => {
               }
             }}
           />
-          <Input r type="text" value={file ? file.name : introduce.imageUrl} readOnly />
-          <FileButton onClick={() => inputRef.current.click()}>찾아보기</FileButton>
+          <Input type="text" value={file ? file.name : introduce.imageUrl} readOnly />
+          <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
         <InputView>
           <Label>Name</Label>
@@ -114,7 +114,7 @@ const AdminIntroduce = () => {
       </InputSection>
 
       <ButtonSection>
-        <Button onClick={onSubmit}>저장</Button>
+        <Button onClick={onSubmit}>Save</Button>
       </ButtonSection>
     </Layout>
   )

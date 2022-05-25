@@ -12,7 +12,7 @@ const TalkItem = (props) => {
 
   return (
     <Container onClick={() => history.push(`/talks/${item.talkSeq}`)}>
-      <Thumbnail src={pepsi} alt={"임시 이미지"} />
+      <Thumbnail src={pepsi} alt={"temp image"} />
       <TextBox>
         <div style={{ width: "100%" }}>
           <Title>{item.title}</Title>

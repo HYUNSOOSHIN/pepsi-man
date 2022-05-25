@@ -9,10 +9,10 @@ export default function AdminDialog(props) {
   return (
     <Backdrop open={open} onClick={onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
-        <Title>관리자 로그인</Title>
-        <Input type="text" placeholder="이메일" value={id} onChange={(e) => setId(e.target.value)} />
-        <Input type="password" placeholder="비밀번호" value={pw} onChange={(e) => setPw(e.target.value)} />
-        <Button onClick={() => onClickLogin(id, pw)}>로그인</Button>
+        <Title>ADMIN LOGIN</Title>
+        <Input type="text" placeholder="EMAIL" value={id} onChange={(e) => setId(e.target.value)} />
+        <Input type="password" placeholder="PASSWORD" value={pw} onChange={(e) => setPw(e.target.value)} />
+        <Button onClick={() => onClickLogin(id, pw)}>LOGIN</Button>
       </Container>
     </Backdrop>
   )

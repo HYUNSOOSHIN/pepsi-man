@@ -67,12 +67,12 @@ const Admin = () => {
             }}
           />
           <Input type="text" value={file ? file.name : main.mainImage} readOnly />
-          <FileButton onClick={() => inputRef.current.click()}>찾아보기</FileButton>
+          <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
       </InputSection>
 
       <ButtonSection>
-        <Button onClick={onSubmit}>저장</Button>
+        <Button onClick={onSubmit}>Save</Button>
       </ButtonSection>
     </Layout>
   )
