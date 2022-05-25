@@ -1,13 +1,21 @@
-import React from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
+import { dbService } from "../../fireBase"
 import Layout from "../common/Layout"
-import main from "./../../images/main.jpg"
 
 const Home = () => {
+  const [mainImage, setMainImage] = useState("")
+
+  useEffect(() => {
+    dbService.collection("main").onSnapshot((snapshot) => {
+      setMainImage(snapshot.docs[0].data().mainImage)
+    })
+  }, [])
+
   return (
     <Layout>
       <MainSection>
-        <img src={main} alt={"home img"} />
+        <img src={mainImage} alt={"home img"} />
       </MainSection>
     </Layout>
   )

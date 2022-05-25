@@ -1,38 +1,39 @@
 import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
-import { dbService, storageService } from "../../../fireBase"
+import { dbService, storageService } from "../../../../fireBase"
 import Layout from "components/common/Layout"
 
-const Admin = () => {
-  const [main, setMain] = useState("")
+const AdminIntroduce = () => {
+  const [introduce, setIntroduce] = useState({})
   const [file, setFile] = useState(null)
   const [fileData, setFileData] = useState("")
   const inputRef = useRef()
   const previewRef = useRef()
 
   useEffect(() => {
-    dbService.collection("main").onSnapshot((snapshot) => {
-      setMain({ ...snapshot.docs[0].data(), id: snapshot.docs[0].id })
+    dbService.collection("introduce").onSnapshot((snapshot) => {
+      setIntroduce({ ...snapshot.docs[0].data(), id: snapshot.docs[0].id })
     })
   }, [])
 
   const onSubmit = async () => {
     let fileUrl = ""
     if (fileData !== "") {
-      const fileRef = storageService.ref().child(`main/${file.name}`)
+      const fileRef = storageService.ref().child(`profile/${file.name}`)
       const response = await fileRef.putString(fileData, "data_url")
       fileUrl = await response.ref.getDownloadURL()
     }
-    const data = { ...main }
+    const data = { ...introduce }
     const id = data.id
 
     delete data.id
 
     await dbService
-      .collection("main")
+      .collection("introduce")
       .doc(id)
       .update({
-        mainImage: fileUrl || data.mainImage,
+        ...data,
+        imageUrl: fileUrl || data.imageUrl,
       })
       .then(() => {
         setFileData("")
@@ -43,7 +44,7 @@ const Admin = () => {
   return (
     <Layout>
       <ProfileImgSection>
-        <img ref={previewRef} src={main.mainImage} alt={"profile img"} />
+        <img ref={previewRef} src={introduce.imageUrl} alt={"profile img"} />
       </ProfileImgSection>
 
       <InputSection>
@@ -66,8 +67,49 @@ const Admin = () => {
               }
             }}
           />
-          <Input type="text" value={file ? file.name : main.mainImage} readOnly />
+          <Input r type="text" value={file ? file.name : introduce.imageUrl} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>찾아보기</FileButton>
+        </InputView>
+        <InputView>
+          <Label>Name</Label>
+          <Input type="text" value={introduce.name} onChange={(e) => setIntroduce({ ...introduce, name: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Nationality</Label>
+          <Input type="text" value={introduce.nationality} onChange={(e) => setIntroduce({ ...introduce, nationality: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Date of birth</Label>
+          <Input type="text" value={introduce.birth} onChange={(e) => setIntroduce({ ...introduce, birth: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Debut</Label>
+          <Input type="text" value={introduce.debut} onChange={(e) => setIntroduce({ ...introduce, debut: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Crew</Label>
+          <Input type="text" value={introduce.crew} onChange={(e) => setIntroduce({ ...introduce, crew: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Label</Label>
+          <Input type="text" value={introduce.label} onChange={(e) => setIntroduce({ ...introduce, label: e.target.value })} />
+        </InputView>
+
+        <InputView>
+          <Label>Instagram</Label>
+          <Input type="text" value={introduce.instaUrl} onChange={(e) => setIntroduce({ ...introduce, instaUrl: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Tiktok</Label>
+          <Input type="text" value={introduce.tiktokUrl} onChange={(e) => setIntroduce({ ...introduce, tiktokUrl: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>Youtube</Label>
+          <Input type="text" value={introduce.youtubeUrl} onChange={(e) => setIntroduce({ ...introduce, youtubeUrl: e.target.value })} />
+        </InputView>
+        <InputView>
+          <Label>SoundCloud</Label>
+          <Input type="text" value={introduce.soundcloudUrl} onChange={(e) => setIntroduce({ ...introduce, soundcloudUrl: e.target.value })} />
         </InputView>
       </InputSection>
 
@@ -78,7 +120,7 @@ const Admin = () => {
   )
 }
 
-export default Admin
+export default AdminIntroduce
 
 const ProfileImgSection = styled.section`
   display: flex;

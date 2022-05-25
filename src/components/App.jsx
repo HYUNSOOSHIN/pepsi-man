@@ -16,10 +16,10 @@ import Search from "./page/talks/Search"
 import Write from "./page/talks/Write"
 // 관리자 페이지
 import Admin from "./page/admin"
-import AdminIntroduce from "./page/admin/Introduce"
-import AdminPhotos from "./page/admin/Photos"
-import AdminAlbums from "./page/admin/Albums"
-import AdminTalks from "./page/admin/Talks"
+import AdminIntroduce from "./page/admin/introduce"
+import AdminPhotos from "./page/admin/photos"
+import AdminAlbums from "./page/admin/albums"
+import AdminTalks from "./page/admin/talks"
 
 function App() {
   const { user } = useSelector((state) => state.reducer)

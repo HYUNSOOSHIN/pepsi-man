@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react"
 import styled from "styled-components"
 import { dbService } from "../../fireBase"
 import Layout from "../common/Layout"
-import zior from "./../../images/zior.png"
 import instagram from "./../../images/instagram.png"
 import tiktok from "./../../images/tiktok.png"
 import youtube from "./../../images/youtube.png"
@@ -21,7 +20,7 @@ const Introduce = () => {
     <Layout>
       {/* 프로필 이미지 */}
       <ProfileImgSection>
-        <img src={zior} alt={"profile img"} />
+        <img src={profileInfo.imageUrl} alt={"profile img"} />
       </ProfileImgSection>
 
       {/* 프로필 */}
