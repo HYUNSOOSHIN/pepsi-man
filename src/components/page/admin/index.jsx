@@ -134,7 +134,6 @@ const FileButton = styled.button`
   width: 80px;
   height: 40px;
   margin-left: 10px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 15px;
@@ -153,7 +152,6 @@ const Button = styled.button`
   background-color: #4351af;
   width: 200px;
   height: 50px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 20px;

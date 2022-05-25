@@ -8,6 +8,12 @@ export default function PhotoAddDialog(props) {
   const [fileData, setFileData] = useState("")
   const inputRef = useRef()
 
+  useEffect(() => {
+    if (open == false) {
+      initState()
+    }
+  }, [open])
+
   const initState = () => {
     setFile(null)
     setFileData("")
@@ -19,10 +25,7 @@ export default function PhotoAddDialog(props) {
         .collection("photos")
         .doc(data.id)
         .delete()
-        .then(() => {
-          initState()
-          onClose()
-        })
+        .then(() => onClose())
   }
 
   const onClickEdit = async () => {
@@ -40,10 +43,7 @@ export default function PhotoAddDialog(props) {
       .collection("photos")
       .doc(id)
       .update({ imageUrl: fileUrl || data.imageUrl })
-      .then(() => {
-        initState()
-        onClose()
-      })
+      .then(() => onClose())
   }
 
   return (
@@ -142,7 +142,6 @@ const FileButton = styled.button`
   width: 80px;
   height: 40px;
   margin-left: 10px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 15px;
@@ -161,7 +160,6 @@ const Button = styled.button`
   width: 80px;
   height: 40px;
   margin-left: 10px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 15px;

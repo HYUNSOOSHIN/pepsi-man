@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useEffect, useRef } from "react"
 import styled from "styled-components"
 import { dbService, storageService } from "../../fireBase"
 
@@ -7,6 +7,12 @@ export default function PhotoAddDialog(props) {
   const [file, setFile] = useState(null)
   const [fileData, setFileData] = useState("")
   const inputRef = useRef()
+
+  useEffect(() => {
+    if (open == false) {
+      initState()
+    }
+  }, [open])
 
   const initState = () => {
     setFile(null)
@@ -25,10 +31,7 @@ export default function PhotoAddDialog(props) {
       dbService
         .collection("photos")
         .add({ imageUrl: fileUrl })
-        .then(() => {
-          initState()
-          onClose()
-        })
+        .then(() => onClose())
   }
 
   return (
@@ -126,7 +129,6 @@ const FileButton = styled.button`
   width: 80px;
   height: 40px;
   margin-left: 10px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 15px;
@@ -145,7 +147,6 @@ const AddButton = styled.button`
   width: 80px;
   height: 40px;
   margin-left: 10px;
-  border: 1px solid;
   border-radius: 5px;
   color: #ffffff;
   font-size: 15px;
