@@ -48,17 +48,21 @@ const Header = (props) => {
       <OpacityView hamberger={hamberger} onClick={() => setHamberger(false)} />
       <NaviView id={"navi"} hamberger={hamberger} onClick={(e) => e.stopPropagation()}>
         <AbsoluteView>
-          <Toggle
-            value={toggle}
-            setValue={() => {
-              const bool = !toggle
-              setColorMode(toggle ? whiteColors : darkColors)
-              setToggle(bool)
-              localStorage.setItem("darkMode", `${bool}`)
-            }}
-          />
-          <UserName>{user.email?.includes("admin") ? "Admin" : user.isAnonymous ? "Anonymous" : user.displayName}</UserName>
-          <LogoutButton onClick={onClickLogout}>logout</LogoutButton>
+          <ToggleView hamberger={hamberger}>
+            <Toggle
+              value={toggle}
+              setValue={() => {
+                const bool = !toggle
+                setColorMode(toggle ? whiteColors : darkColors)
+                setToggle(bool)
+                localStorage.setItem("darkMode", `${bool}`)
+              }}
+            />
+          </ToggleView>
+          <UserView>
+            <UserName>{user.email?.includes("admin") ? "Admin" : user.isAnonymous ? "Person" : user.displayName}</UserName>
+            <LogoutButton onClick={onClickLogout}>logout</LogoutButton>
+          </UserView>
         </AbsoluteView>
 
         <LogoLink
@@ -153,10 +157,10 @@ const NaviView = styled.div`
     width: 250px;
     height: 100%;
     margin-left: 0;
-    padding-top: 55px;
+    padding-top: 50px;
     padding-left: 10px;
     & > a {
-      margin-bottom: 15px;
+      height: 40px;
     }
   }
   @media (max-width: 360px) {
@@ -179,12 +183,36 @@ const AbsoluteView = styled.div`
   right: 20px;
   display: flex;
   align-items: center;
+  @media (max-width: 1024px) {
+    position: initial;
+    flex-direction: column;
+  }
+`
+const ToggleView = styled.div`
+  @media (max-width: 1024px) {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+  }
+`
+const UserView = styled.div`
+  display: flex;
+  align-items: center;
+  @media (max-width: 1024px) {
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 15px;
+    padding-right: 20px;
+  }
 `
 const UserName = styled.p`
   margin: 0 10px;
   color: var(--text);
   font-size: 14px;
   font-weight: bold;
+  @media (max-width: 1024px) {
+    margin: 0;
+  }
 `
 const LogoutButton = styled.button`
   background-color: #4351af;
