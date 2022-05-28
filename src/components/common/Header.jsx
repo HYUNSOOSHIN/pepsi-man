@@ -160,7 +160,7 @@ const NaviView = styled.div`
     padding-top: 50px;
     padding-left: 10px;
     & > a {
-      height: 40px;
+      height: 45px;
     }
   }
   @media (max-width: 360px) {

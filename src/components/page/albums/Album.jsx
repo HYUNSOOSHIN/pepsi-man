@@ -30,7 +30,9 @@ const Album = (props) => {
     <Layout>
       <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
       <Section>
-        <img src={album.imageUrl} alt={"앨범 이미지"} />
+        <div className="img-view">
+          <img src={album.imageUrl} alt={"앨범 이미지"} />
+        </div>
         <UL>
           <LI>
             <p>NO.</p>
@@ -74,9 +76,24 @@ const Section = styled.section`
   flex-direction: column;
   justify-content: center;
   align-items: center;
-  & > img {
+  & > .img-view {
+    position: relative;
     width: 524px;
-    object-fit: cover;
+
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+      display: block;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   & svg {
     width: 24px;
@@ -87,7 +104,7 @@ const Section = styled.section`
   }
 
   @media (max-width: 768px) {
-    & > img {
+    & > .img-view {
       width: 90%;
       max-width: 524px;
     }
