@@ -37,6 +37,7 @@ const Header = (props) => {
 
   const onClickLogout = () => {
     authService.signOut()
+    history.replace("/")
   }
 
   setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)

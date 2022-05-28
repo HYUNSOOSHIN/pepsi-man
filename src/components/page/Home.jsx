@@ -14,9 +14,7 @@ const Home = () => {
 
   return (
     <Layout>
-      <MainSection>
-        <img src={mainImage} alt={"home img"} />
-      </MainSection>
+      <MainSection>{mainImage && <img src={mainImage} alt={"home img"} />}</MainSection>
     </Layout>
   )
 }
@@ -25,9 +23,11 @@ export default Home
 
 const MainSection = styled.section`
   display: flex;
-  flex: 1;
   justify-content: center;
   align-items: center;
+  width: 524px;
+  height: 524px;
+  margin: 0 auto;
   & > img {
     width: 524px;
     object-fit: cover;
@@ -37,6 +37,7 @@ const MainSection = styled.section`
   }
 
   @media (max-width: 768px) {
+    width: 100%;
     & > img {
       width: 90%;
       max-width: 524px;

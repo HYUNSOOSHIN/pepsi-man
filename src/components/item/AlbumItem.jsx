@@ -1,14 +1,12 @@
 import React from "react"
 import styled from "styled-components"
-import { useHistory } from "react-router-dom"
 
 const AlbumItem = (props) => {
-  const history = useHistory()
-  const { albumItem } = props
+  const { albumItem, onClick } = props
 
   return (
-    <Container onClick={() => history.push(`/albums/${albumItem.albumSeq}`)}>
-      <img src={albumItem.imageUri} alt={"album image"} />
+    <Container onClick={onClick}>
+      <div className="img-view">{albumItem.imageUrl && <img src={albumItem.imageUrl} alt={"album image"} />}</div>
       <p>{albumItem.title}</p>
       <div>
         <p id={"artist"}>{albumItem.artist}</p>
@@ -38,9 +36,24 @@ const Container = styled.button`
     transform: translateY(-8px);
   }
 
-  & > img {
+  & > .img-view {
+    position: relative;
     width: 100%;
-    object-fit: cover;
+
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+      display: block;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
   & > p {
     margin-top: 10px;

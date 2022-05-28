@@ -19,10 +19,7 @@ const Introduce = () => {
   return (
     <Layout>
       {/* 프로필 이미지 */}
-      <ProfileImgSection>
-        <img src={profileInfo.imageUrl} alt={"profile img"} />
-      </ProfileImgSection>
-
+      <ProfileImgSection>{profileInfo.imageUrl && <img src={profileInfo.imageUrl} alt={"profile img"} />}</ProfileImgSection>
       {/* 프로필 */}
       <ProfileSection>
         <Title>PROFILE</Title>
@@ -53,7 +50,6 @@ const Introduce = () => {
           </div>
         </ContentBox>
       </ProfileSection>
-
       {/* SNS */}
       <SNSSection>
         <Title>SNS</Title>
@@ -84,12 +80,15 @@ const ProfileImgSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 524px;
+  height: 524px;
+  margin: 0 auto;
   & > img {
     width: 524px;
     object-fit: cover;
   }
   @media (max-width: 768px) {
+    width: 100%;
     & > img {
       width: 90%;
       max-width: 524px;

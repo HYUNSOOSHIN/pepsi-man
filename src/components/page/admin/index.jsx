@@ -42,9 +42,7 @@ const Admin = () => {
 
   return (
     <Layout>
-      <ProfileImgSection>
-        <img ref={previewRef} src={main.mainImage} alt={"profile img"} />
-      </ProfileImgSection>
+      <ProfileImgSection>{main.mainImage && <img ref={previewRef} src={main.mainImage} alt={"profile img"} />}</ProfileImgSection>
 
       <InputSection>
         <InputView>
@@ -84,12 +82,15 @@ const ProfileImgSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
+  width: 524px;
+  height: 524px;
+  margin: 0 auto;
   & > img {
     width: 524px;
     object-fit: cover;
   }
   @media (max-width: 768px) {
+    width: 100%;
     & > img {
       width: 90%;
       max-width: 524px;

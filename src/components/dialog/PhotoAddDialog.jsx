@@ -30,7 +30,7 @@ export default function PhotoAddDialog(props) {
     if (fileUrl)
       dbService
         .collection("photos")
-        .add({ imageUrl: fileUrl })
+        .add({ imageUrl: fileUrl, createdAt: Date.now() })
         .then(() => onClose())
   }
 

@@ -6,7 +6,7 @@ const PhotoItem = (props) => {
 
   return (
     <Container onClick={onClick}>
-      <img src={img} alt={"photo image"} />
+      <div className="img-view">{img && <img src={img} alt={"photo image"} />}</div>
     </Container>
   )
 }
@@ -31,9 +31,24 @@ const Container = styled.button`
     transform: translateY(-8px);
   }
 
-  & > img {
+  & > .img-view {
+    position: relative;
     width: 100%;
-    object-fit: cover;
+
+    &::after {
+      content: "";
+      padding-bottom: 100%;
+      display: block;
+    }
+
+    img {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
   }
 
   @media (max-width: 1024px) {
