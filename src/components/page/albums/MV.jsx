@@ -1,36 +1,38 @@
-import React, { useEffect } from "react"
+import React, { useState, useEffect } from "react"
 import styled from "styled-components"
-import Container from "../../../containers/container"
+import { dbService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 
 const MV = (props) => {
-  const { setAlbum, track, setTrack } = props
-  const { albumSeq, trackNo } = props.match.params
+  const { trackSeq } = props.match.params
+  const [track, setTrack] = useState({})
 
   useEffect(() => {
-    setAlbum(albumSeq)
-    setTrack(trackNo)
-  })
-
-  if (Object.keys(track).length === 0) return null
+    ;(async () => {
+      const result = await dbService.collection("tracks").doc(trackSeq).get()
+      setTrack(result.data())
+    })()
+  }, [])
 
   return (
     <Layout>
       <PlayerSection>
-        <iframe
-          width="1280"
-          height="720"
-          src={track.mvUri}
-          frameBorder="0"
-          allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-          allowFullScreen
-        ></iframe>
+        {track?.mv && (
+          <iframe
+            width="1280"
+            height="720"
+            src={"https://www.youtube.com/embed/" + track.mv}
+            frameBorder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+            allowFullScreen
+          ></iframe>
+        )}
       </PlayerSection>
     </Layout>
   )
 }
 
-export default Container(MV)
+export default MV
 
 const PlayerSection = styled.section`
   position: relative;

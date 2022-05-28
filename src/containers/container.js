@@ -1,7 +1,7 @@
 import React from "react"
 import { connect } from "react-redux"
 import { compose } from "redux"
-import { setAlbums, setAlbum, setTrack, setTalk } from "../reducers/reducer"
+import { setTalk } from "../reducers/reducer"
 
 const mapStateToProps = (state) => ({
   albums: state.reducer.albums,
@@ -12,9 +12,6 @@ const mapStateToProps = (state) => ({
 })
 
 const mapDispatchToProps = (dispatch) => ({
-  setAlbums: (param) => dispatch(setAlbums(param)),
-  setAlbum: (param) => dispatch(setAlbum(param)),
-  setTrack: (param) => dispatch(setTrack(param)),
   setTalk: (param) => dispatch(setTalk(param)),
 })
 

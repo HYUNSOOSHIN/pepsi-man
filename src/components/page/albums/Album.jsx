@@ -1,31 +1,36 @@
 import React, { useState, useEffect } from "react"
-import styled from "styled-components"
 import { useHistory } from "react-router-dom"
-import Container from "../../../containers/container"
+import styled from "styled-components"
+import { dbService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import LyricsDialog from "../../dialog/LyricsDialog"
-
 import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
 import YouTubeIcon from "@material-ui/icons/YouTube"
 
 const Album = (props) => {
   const history = useHistory()
-  const { album, setAlbum } = props
   const { albumSeq } = props.match.params
+  const [album, setAlbum] = useState({})
+  const [trackList, setTrackList] = useState([])
   const [lyricsDialog, setLyricsDialog] = useState({ open: false, track: {} })
 
   useEffect(() => {
-    setAlbum(albumSeq)
-  })
-
-  if (Object.keys(album).length === 0) return null
+    ;(async () => {
+      const pro1 = await dbService.collection("albums").doc(albumSeq).get()
+      const pro2 = await dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
+      Promise.all([pro1, pro2]).then((res) => {
+        setAlbum(res[0].data())
+        setTrackList(res[1].docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      })
+    })()
+  }, [])
 
   return (
     <Layout>
       <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
       <Section>
-        <img src={album.imageUri} alt={"앨범 이미지"} />
+        <img src={album.imageUrl} alt={"앨범 이미지"} />
         <UL>
           <LI>
             <p>NO.</p>
@@ -34,31 +39,35 @@ const Album = (props) => {
             <p>MV</p>
           </LI>
 
-          {album.track.map((i, idx) => (
-            <LI key={idx}>
-              <p>{i.trackNo}</p>
-              <p>{i.title}</p>
-              <p>
-                <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog({ open: true, track: i })}>
-                  <LibraryBooksIcon />
-                </IconButton>
-              </p>
-              <p>
-                {i.mvUri === "" ? null : (
-                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/albums/${albumSeq}/${i.trackNo}`)}>
-                    <YouTubeIcon />
-                  </IconButton>
-                )}
-              </p>
-            </LI>
-          ))}
+          {trackList
+            .sort((a, b) => b.seq - a.seq)
+            .map((i, idx) => (
+              <LI key={idx}>
+                <p>{idx + 1}</p>
+                <p>{i.title}</p>
+                <p>
+                  {i.lyrics === "" ? null : (
+                    <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => setLyricsDialog({ open: true, track: i })}>
+                      <LibraryBooksIcon />
+                    </IconButton>
+                  )}
+                </p>
+                <p>
+                  {i.mv === "" ? null : (
+                    <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => history.push(`/albums/${albumSeq}/${i.id}`)}>
+                      <YouTubeIcon />
+                    </IconButton>
+                  )}
+                </p>
+              </LI>
+            ))}
         </UL>
       </Section>
     </Layout>
   )
 }
 
-export default Container(Album)
+export default Album
 
 const Section = styled.section`
   display: flex;

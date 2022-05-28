@@ -19,6 +19,8 @@ import Admin from "./page/admin"
 import AdminIntroduce from "./page/admin/introduce"
 import AdminPhotos from "./page/admin/photos"
 import AdminAlbums from "./page/admin/albums"
+import AdminAlbumAdd from "./page/admin/albums/Add"
+import AdminAlbumEdit from "./page/admin/albums/Edit"
 import AdminTalks from "./page/admin/talks"
 
 function App() {
@@ -49,7 +51,7 @@ function App() {
             <Route path="/photos" component={Photos} />
 
             <Switch>
-              <Route path="/albums/:albumSeq/:trackNo" component={MV} />
+              <Route path="/albums/:albumSeq/:trackSeq" component={MV} />
               <Route path="/albums/:albumSeq" component={Album} />
               <Route path="/albums" component={Albums} />
             </Switch>
@@ -67,6 +69,8 @@ function App() {
                 <Route path="/admin/introduce" component={AdminIntroduce} />
                 <Route path="/admin/photos" component={AdminPhotos} />
                 <Route path="/admin/albums" component={AdminAlbums} />
+                <Route path="/admin/album/add" component={AdminAlbumAdd} />
+                <Route path="/admin/album/edit/:albumSeq" component={AdminAlbumEdit} />
                 <Route path="/admin/talks" component={AdminTalks} />
               </Switch>
             )}
