@@ -30,9 +30,7 @@ const Album = (props) => {
     <Layout>
       <LyricsDialog open={lyricsDialog.open} onClose={() => setLyricsDialog({ open: false, track: {} })} track={lyricsDialog.track} />
       <Section>
-        <div className="img-view">
-          <img src={album.imageUrl} alt={"앨범 이미지"} />
-        </div>
+        <div className="img-view">{album.imageUrl && <img src={album.imageUrl} alt={"앨범 이미지"} />}</div>
         <UL>
           <LI>
             <p>NO.</p>
