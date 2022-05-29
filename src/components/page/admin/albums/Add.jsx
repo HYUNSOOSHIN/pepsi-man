@@ -47,14 +47,14 @@ const AdminAlbumAdd = () => {
         onClose={() => setTrackDialog({ open: false, data: null })}
         data={trackDialog.data}
         onClickAdd={(value) => {
-          const index = trackList.findIndex((i) => i.seq == value.seq)
+          const index = trackList.findIndex((i) => i.trackNo == value.trackNo)
           if (index != -1) {
             const temp = [...trackList]
             temp[index] = value
             setTrackList(temp)
           } else {
             const temp = [...trackList]
-            temp.push({ ...value, seq: trackList.length > 0 ? trackList[trackList.length - 1].seq + 1 : 0 })
+            temp.push({ ...value, trackNo: trackList.length > 0 ? trackList[trackList.length - 1].trackNo + 1 : 0 })
             setTrackList(temp)
           }
           setTrackDialog({ open: false, data: null })
@@ -117,7 +117,7 @@ const AdminAlbumAdd = () => {
           </LI>
 
           {trackList
-            .sort((a, b) => a.seq - b.seq)
+            .sort((a, b) => a.trackNo - b.trackNo)
             .map((i, idx) => (
               <LI key={idx}>
                 <p>{idx + 1}</p>

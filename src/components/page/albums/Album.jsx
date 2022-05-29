@@ -40,7 +40,7 @@ const Album = (props) => {
           </LI>
 
           {trackList
-            .sort((a, b) => b.seq - a.seq)
+            .sort((a, b) => a.trackNo - b.trackNo)
             .map((i, idx) => (
               <LI key={idx}>
                 <p>{idx + 1}</p>
