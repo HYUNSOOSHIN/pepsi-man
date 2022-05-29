@@ -2,32 +2,42 @@ import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { dbService } from "../../../fireBase"
-import Container from "../../../containers/container"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
 import SearchIcon from "@material-ui/icons/Search"
 import CreateIcon from "@material-ui/icons/Create"
 
-const Talks = (props) => {
+const Talks = () => {
   const history = useHistory()
-  const { talks } = props
+  const [talkList, setTalkList] = useState([])
   const [orderBy, setOrderBy] = useState(0)
 
   useEffect(() => {
     dbService.collection("talks").onSnapshot((snapshot) => {
-      snapshot.docs.map((doc) => {
-        console.log(doc.data())
-      })
+      setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
   }, [])
 
-  function orderByFunc(list) {
+  const orderByFunc = (list) => {
     const sortList = [...list]
     if (orderBy === 0) {
-      return sortList.sort((a, b) => new Date(b.regDate) - new Date(a.regDate))
+      return sortList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
     } else if (orderBy === 1) {
-      return sortList.sort((a, b) => new Date(b.likeCount) - new Date(a.likeCount))
+      return sortList.sort((a, b) => new Date(b.clickCount) - new Date(a.clickCount))
     }
+  }
+
+  const onClickTalkItem = async (talk) => {
+    history.push(`/talks/${talk.id}`)
+    const temp = { ...talk }
+    delete temp.id
+    await dbService
+      .collection("talks")
+      .doc(talk.id)
+      .update({
+        ...temp,
+        clickCount: (talk.clickCount || 0) + 1,
+      })
   }
 
   return (
@@ -53,15 +63,15 @@ const Talks = (props) => {
       </Section>
 
       <TalkListSection>
-        {orderByFunc(talks).map((item, index) => (
-          <TalkItem key={index} item={item} />
+        {orderByFunc(talkList).map((item, index) => (
+          <TalkItem key={index} item={item} onClick={() => onClickTalkItem(item)} />
         ))}
       </TalkListSection>
     </Layout>
   )
 }
 
-export default Container(Talks)
+export default Talks
 
 const Section = styled.section`
   display: flex;

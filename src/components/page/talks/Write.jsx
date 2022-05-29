@@ -1,24 +1,47 @@
 import React, { useState, useRef } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
+import { useSelector } from "react-redux"
+import { dbService, storageService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 
 const Write = () => {
   const history = useHistory()
+  const { user } = useSelector((state) => state.reducer)
   const [title, setTitle] = useState("")
   const [contents, setContents] = useState("")
   // 이미지 형식 {base64: null, file: null}
-  const [images, setImages] = useState([])
-  const imageInput = useRef(null)
+  const [file, setFile] = useState(null)
+  const [fileData, setFileData] = useState("")
+  const inputRef = useRef()
 
-  const toBase64 = (file) =>
-    new Promise((resolve, reject) => {
-      const reader = new FileReader()
-      reader.readAsDataURL(file)
-      reader.onload = () => resolve(reader.result)
-      reader.onerror = (error) => reject(error)
-    })
+  const onSubmit = async () => {
+    if (title == "") return alert("Please enter a title")
+    else if (contents == "") return alert("Please enter a contents")
+    else if (file == null) return alert("Please enter a image")
+
+    let fileUrl = ""
+    if (fileData !== "" && file !== null) {
+      const fileRef = storageService.ref().child(`albums/${file.name}`)
+      const response = await fileRef.putString(fileData, "data_url")
+      fileUrl = await response.ref.getDownloadURL()
+    }
+
+    await dbService
+      .collection("talks")
+      .add({
+        uid: user.uid,
+        writer: user.displayName || "Person",
+        title,
+        contents,
+        imageUrl: fileUrl,
+        clickCount: 0,
+        commentCount: 0,
+        createdAt: Date.now(),
+      })
+      .then(() => history.goBack())
+  }
 
   return (
     <Layout>
@@ -32,41 +55,38 @@ const Write = () => {
 
       <ImageSection>
         <input
-          ref={imageInput}
+          ref={inputRef}
           style={{ display: "none" }}
           type={"file"}
           onChange={async (e) => {
-            if (e.target.files.length === 0) return
-            const file = e.target.files[0]
-            const base64 = await toBase64(file)
-            setImages([...images, { base64, file }])
+            if (e.target.files[0]) {
+              const reader = new FileReader()
+
+              reader.onload = (event) => {
+                setFileData(event.target.result)
+              }
+              setFile(e.target.files[0])
+              reader.readAsDataURL(e.target.files[0])
+            }
           }}
           accept={"image/*"}
         />
-        <ImageAddButton
-          onClick={() => {
-            if (images.length === 3) alert("You can add up to 3 images")
-            else imageInput.current.click()
-          }}
-        >
-          Add image
-        </ImageAddButton>
+        <ImageAddButton onClick={() => inputRef.current.click()}>Add image</ImageAddButton>
 
         <ImageListView>
-          {images.map((i, idx) => (
-            <ImageItem key={idx}>
-              <img src={i.base64} alt={`추가 이미지${idx}`} />
+          {fileData && (
+            <ImageItem>
+              <img src={fileData} alt="image" />
               <button
                 onClick={() => {
-                  const temp = [...images]
-                  temp.splice(idx, 1)
-                  setImages(temp)
+                  setFile(null)
+                  setFileData("")
                 }}
               >
                 <RemoveCircleIcon />
               </button>
             </ImageItem>
-          ))}
+          )}
         </ImageListView>
       </ImageSection>
 
@@ -74,7 +94,7 @@ const Write = () => {
         <Button margin={true} onClick={() => history.goBack()}>
           <p>cancel</p>
         </Button>
-        <Button onClick={() => alert("This is a feature under development")}>
+        <Button onClick={onSubmit}>
           <p>write</p>
         </Button>
       </ButtonsSection>
@@ -197,7 +217,7 @@ const ButtonsSection = styled.section`
   display: flex;
   justify-content: center;
   align-items: center;
-  margin-top: 20px;
+  margin-top: 50px;
 `
 const Button = styled.button`
   width: fit-content;

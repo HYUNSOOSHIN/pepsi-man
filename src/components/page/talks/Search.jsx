@@ -1,27 +1,55 @@
-import React, { useState } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
-import Container from "../../../containers/container"
+import { debounce } from "lodash"
+import { dbService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
 import SearchIcon from "@material-ui/icons/Search"
 
-const Search = (props) => {
-  const { talks } = props
+const Search = () => {
   const history = useHistory()
   const [searchText, setSearchText] = useState("")
+  const [talkList, setTalkList] = useState([])
+  const [filterTalkList, setFilterTalkList] = useState([])
+
+  useEffect(() => {
+    dbService.collection("talks").onSnapshot((snapshot) => {
+      setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      setFilterTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+    })
+  }, [])
+
+  const filterList = useCallback(
+    debounce((text) => {
+      const filtered = talkList.filter((item) => {
+        if (text == "") return true
+        else return item.title.includes(text) || item.contents.includes(text)
+      })
+      setFilterTalkList(filtered)
+    }, 500),
+    [talkList]
+  )
 
   return (
     <Layout>
       <Section>
         <ArrowBackIcon onClick={() => history.goBack()} />
         <SearchIcon />
-        <input type={"text"} placeholder={"Please enter a search term"} value={searchText} onChange={(e) => setSearchText(e.target.value)} />
+        <input
+          type={"text"}
+          placeholder={"Please enter a search term"}
+          value={searchText}
+          onChange={(e) => {
+            setSearchText(e.target.value)
+            filterList(e.target.value)
+          }}
+        />
       </Section>
 
       <TalkListSection>
-        {talks.map((item, index) => (
+        {filterTalkList.map((item, index) => (
           <TalkItem key={index} item={item} />
         ))}
       </TalkListSection>
@@ -29,7 +57,7 @@ const Search = (props) => {
   )
 }
 
-export default Container(Search)
+export default Search
 
 const Section = styled.section`
   display: flex;

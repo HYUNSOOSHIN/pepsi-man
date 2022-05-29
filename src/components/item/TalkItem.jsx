@@ -1,18 +1,16 @@
 import React from "react"
-import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import FindInPageIcon from "@material-ui/icons/FindInPage"
-import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
-import pepsi from "../../images/pep.jpg"
+import { timeForToday } from "utils/util"
 
 const TalkItem = (props) => {
-  const history = useHistory()
-  const { item } = props
+  const { item, onClick } = props
 
   return (
-    <Container onClick={() => history.push(`/talks/${item.talkSeq}`)}>
-      <Thumbnail src={pepsi} alt={"temp image"} />
+    <Container onClick={onClick}>
+      <ImageView>{item.imageUrl && <Thumbnail src={item.imageUrl} alt={"temp image"} />}</ImageView>
+
       <TextBox>
         <div style={{ width: "100%" }}>
           <Title>{item.title}</Title>
@@ -22,15 +20,13 @@ const TalkItem = (props) => {
         <Box>
           <WriterView>
             <p>
-              {item.regDate} <span>{item.userName}</span>
+              {timeForToday(item.createdAt)} <span>{item.writer || "Person"}</span>
             </p>
           </WriterView>
 
           <TalkStatusView>
             <FindInPageIcon />
             <p>{item.clickCount}</p>
-            <FavoriteIcon />
-            <p>{item.likeCount}</p>
             <CommentIcon />
             <p>{item.commentCount}</p>
           </TalkStatusView>
@@ -58,25 +54,40 @@ const Container = styled.button`
     transition: box-shadow 0.25s ease-in 0s, transform 0.25s ease-in 0s;
     transform: translateY(-8px);
   }
-  @media (max-width: 1024px) {
+  @media (max-width: 768px) {
+    flex-direction: column;
     &:hover {
       box-shadow: 0px 3.3px 5px 0px #08000010 !important;
       transition: none;
       transform: none;
     }
   }
-  @media (max-width: 768px) {
-    flex-direction: column;
-  }
 `
-const Thumbnail = styled.img`
+const ImageView = styled.div`
+  position: relative;
   width: 200px;
-  height: 200px;
-  @media (max-width: 1024px) {
+  &::after {
+    content: "";
+    padding-bottom: 100%;
+    display: block;
   }
   @media (max-width: 768px) {
     width: 100%;
-    height: auto;
+  }
+`
+const Thumbnail = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border-radius: 5px;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  @media (max-width: 768px) {
+    border-radius: 5px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
   }
 `
 const TextBox = styled.div`

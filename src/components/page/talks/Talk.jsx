@@ -1,24 +1,69 @@
 import React, { useState, useEffect } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
-import Container from "../../../containers/container"
+import { useSelector } from "react-redux"
+import { dbService } from "../../../fireBase"
+import { timeForToday } from "utils/util"
 import Layout from "../../common/Layout"
+import { IconButton } from "@material-ui/core"
 import FindInPageIcon from "@material-ui/icons/FindInPage"
-import FavoriteIcon from "@material-ui/icons/Favorite"
 import CommentIcon from "@material-ui/icons/Comment"
-import pepsi from "../../../images/pep.jpg"
+import CloseRounded from "@material-ui/icons/CloseRounded"
 
 const Talk = (props) => {
   const { talkSeq } = props.match.params
-  const { talk, setTalk } = props
   const history = useHistory()
+  const { user } = useSelector((state) => state.reducer)
+
+  const [talk, setTalk] = useState({})
+  const [commentList, setCommentList] = useState([])
   const [comment, setComment] = useState("")
 
   useEffect(() => {
-    setTalk(talkSeq)
+    dbService
+      .collection("comments")
+      .where("talkSeq", "==", talkSeq)
+      .onSnapshot((snapshot) => {
+        setCommentList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
+      })
+
+    dbService
+      .collection("talks")
+      .doc(talkSeq)
+      .onSnapshot((snapshot) => setTalk(snapshot.data()))
   }, [])
 
-  if (Object.keys(talk).length === 0) return null
+  const onSubmitComment = async () => {
+    const temp = { ...talk }
+    delete temp.id
+    await dbService
+      .collection("talks")
+      .doc(talkSeq)
+      .update({ ...temp, commentCount: (talk.commentCount || 0) + 1 })
+    await dbService
+      .collection("comments")
+      .add({
+        talkSeq,
+        uid: user.uid,
+        writer: user.displayName || "Person",
+        comment,
+        createdAt: Date.now(),
+      })
+      .then(() => setComment(""))
+  }
+
+  const onClickCommentDelete = async (id) => {
+    const temp = { ...talk }
+    delete temp.id
+    await dbService
+      .collection("talks")
+      .doc(talkSeq)
+      .update({
+        ...temp,
+        commentCount: talk.commentCount - 1,
+      })
+    await dbService.collection("comments").doc(id).delete()
+  }
 
   return (
     <Layout>
@@ -26,27 +71,18 @@ const Talk = (props) => {
         <Box1>
           <Title>{talk.title}</Title>
           <Writer>
-            <span>{talk.userName}</span> {talk.regDate}
+            <span>{talk.writer || "Person"}</span> {timeForToday(talk.createdAt)}
           </Writer>
 
-          {/* 이미지 대체 */}
-          <Thumbnail src={pepsi} alt={"임시 이미지"} />
+          <ImageView>{talk.imageUrl && <Thumbnail src={talk.imageUrl} alt={"image"} />}</ImageView>
 
           <Contents>{talk.contents}</Contents>
         </Box1>
-
-        <Box2>
-          <LikeButton onClick={() => alert("This is a feature under development")}>
-            <FavoriteIcon />
-          </LikeButton>
-        </Box2>
 
         <Box3>
           <FlexBox>
             <FindInPageIcon />
             <p>{talk.clickCount}</p>
-            <FavoriteIcon />
-            <p>{talk.likeCount}</p>
             <CommentIcon />
             <p>{talk.commentCount}</p>
           </FlexBox>
@@ -57,26 +93,37 @@ const Talk = (props) => {
 
       <CommentSection>
         <CommentWriteView>
-          <input type={"text"} placeholder={"Please enter a comment"} value={comment} onChange={(e) => setComment(e.target.value)} />
-          <button onClick={() => alert("This is a feature under development")}>
+          <textarea placeholder={"Please enter a comment"} value={comment} onChange={(e) => setComment(e.target.value)} />
+          <button onClick={onSubmitComment}>
             <p>write</p>
           </button>
         </CommentWriteView>
 
-        <CommentListView>
-          <div>
-            <p id={"title"}>익명1</p>
-            <p id={"date"}>작성시간</p>
-          </div>
+        {commentList
+          .sort((a, b) => a.createdAt - b.createdAt)
+          .map((i, idx) => (
+            <CommentListView key={idx}>
+              <BetweenView>
+                <div>
+                  <p id={"title"}>{i.writer || "Person"}</p>
+                  <p id={"date"}>{timeForToday(i.createdAt || Date.now())}</p>
+                </div>
+                {i.uid == user.uid && (
+                  <IconButton style={{ padding: "0px", borderRadius: "0px" }} onClick={() => onClickCommentDelete(i.id)}>
+                    <CloseRounded />
+                  </IconButton>
+                )}
+              </BetweenView>
 
-          <p>내용입니다</p>
-        </CommentListView>
+              <p>{i.comment}</p>
+            </CommentListView>
+          ))}
       </CommentSection>
     </Layout>
   )
 }
 
-export default Container(Talk)
+export default Talk
 
 // TALK
 const TalkSection = styled.section`
@@ -125,54 +172,31 @@ const Writer = styled.p`
     font-size: 12px;
   }
 `
-const Thumbnail = styled.img`
+const ImageView = styled.div`
+  position: relative;
   width: 524px;
-  height: 524px;
   margin: 30px 0px;
-  @media (max-width: 1024px) {
+  &::after {
+    content: "";
+    padding-bottom: 100%;
+    display: block;
   }
   @media (max-width: 768px) {
     width: 90%;
-    height: auto;
     max-width: 524px;
   }
+`
+const Thumbnail = styled.img`
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
 `
 const Contents = styled.p`
   width: 100%;
   height: fit-content;
   font-size: 15px;
-`
-const Box2 = styled.div`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: fit-content;
-  margin-top: 10px;
-`
-const LikeButton = styled.button`
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: fit-content;
-  height: fit-content;
-  margin: 30px 0;
-  padding: 5px;
-  border: 1px solid;
-  border-radius: 5px;
-  & > svg {
-    width: 24px;
-    height: 24px;
-    padding: 0px;
-  }
-  @media (max-width: 1024px) {
-  }
-  @media (max-width: 768px) {
-    & > svg {
-      width: 18px;
-      height: 18px;
-    }
-  }
 `
 const Box3 = styled.div`
   display: flex;
@@ -225,19 +249,19 @@ const CommentSection = styled.section`
 const CommentWriteView = styled.div`
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: flex-start;
   width: 100%;
-  height: fit-content;
-  & > input {
+  & > textarea {
     flex: 1;
     width: 100%;
-    height: 40px;
+    height: 120px;
     padding: 5px 10px;
+    resize: none;
   }
   & > button {
     width: fit-content;
     height: 40px;
-    margin-left: -1px;
+    margin-left: 10px;
     padding: 0 10px;
     border: 1px solid;
   }
@@ -246,8 +270,19 @@ const CommentListView = styled.div`
   width: 100%;
   height: fit-content;
   margin-top: 10px;
-  padding: 5px;
+  padding: 10px;
   border: 1px solid;
+  border-radius: 5px;
+  & > p {
+    margin-top: 5px;
+    font-size: 15px;
+    white-space: pre-line;
+  }
+`
+const BetweenView = styled.div`
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   & > div {
     display: flex;
     justify-content: flex-start;
@@ -259,10 +294,5 @@ const CommentListView = styled.div`
     #date {
       font-size: 12px;
     }
-  }
-  & > p {
-    margin-top: 5px;
-    font-size: 15px;
-    white-space: pre-line;
   }
 `
