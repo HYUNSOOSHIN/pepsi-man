@@ -30,9 +30,11 @@ const AdminPhotos = () => {
         <AddButton onClick={onClickAdd}>Add Photo</AddButton>
       </FlexEndView>
       <PhotoSection>
-        {photoList.map((i, idx) => (
-          <PhotoItem key={idx} img={i.imageUrl} onClick={() => setPhotoEditDialog({ open: true, data: i })} />
-        ))}
+        {photoList
+          .sort((a, b) => a.createdAt - b.createdAt)
+          .map((i, idx) => (
+            <PhotoItem key={idx} img={i.imageUrl} onClick={() => setPhotoEditDialog({ open: true, data: i })} />
+          ))}
       </PhotoSection>
     </Layout>
   )

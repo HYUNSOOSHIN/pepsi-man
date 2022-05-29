@@ -20,9 +20,11 @@ const Photos = () => {
     <Layout>
       <PhotoDialog open={photoDialog.open} onClose={() => setPhotoDialog({ ...photoDialog, open: false })} img={photoDialog.img} />
       <Section>
-        {photoList.map((i, idx) => (
-          <PhotoItem key={idx} img={i.imageUrl} onClick={() => setPhotoDialog({ open: true, img: i.imageUrl })} />
-        ))}
+        {photoList
+          .sort((a, b) => a.createdAt - b.createdAt)
+          .map((i, idx) => (
+            <PhotoItem key={idx} img={i.imageUrl} onClick={() => setPhotoDialog({ open: true, img: i.imageUrl })} />
+          ))}
       </Section>
     </Layout>
   )
