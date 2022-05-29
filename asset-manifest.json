@@ -1,8 +1,8 @@
 {
   "files": {
     "main.css": "/pepsi-man/static/css/main.202e1a4b.chunk.css",
-    "main.js": "/pepsi-man/static/js/main.bd7d5826.chunk.js",
-    "main.js.map": "/pepsi-man/static/js/main.bd7d5826.chunk.js.map",
+    "main.js": "/pepsi-man/static/js/main.45f5e7e2.chunk.js",
+    "main.js.map": "/pepsi-man/static/js/main.45f5e7e2.chunk.js.map",
     "runtime-main.js": "/pepsi-man/static/js/runtime-main.45bd552f.js",
     "runtime-main.js.map": "/pepsi-man/static/js/runtime-main.45bd552f.js.map",
     "static/js/2.41952267.chunk.js": "/pepsi-man/static/js/2.41952267.chunk.js",
@@ -20,6 +20,6 @@
     "static/js/runtime-main.45bd552f.js",
     "static/js/2.41952267.chunk.js",
     "static/css/main.202e1a4b.chunk.css",
-    "static/js/main.bd7d5826.chunk.js"
+    "static/js/main.45f5e7e2.chunk.js"
   ]
 }
