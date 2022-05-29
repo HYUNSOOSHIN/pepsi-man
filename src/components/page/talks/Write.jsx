@@ -23,7 +23,7 @@ const Write = () => {
 
     let fileUrl = ""
     if (fileData !== "" && file !== null) {
-      const fileRef = storageService.ref().child(`albums/${file.name}`)
+      const fileRef = storageService.ref().child(`talks/${file.name}`)
       const response = await fileRef.putString(fileData, "data_url")
       fileUrl = await response.ref.getDownloadURL()
     }
