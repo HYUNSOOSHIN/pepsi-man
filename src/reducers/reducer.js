@@ -5,7 +5,6 @@ const SET_USER = "@PEPSI_MAN/COMMON/SET_USER"
 
 // action
 export const setUser = createAction(SET_USER)
-export const setTalk = createAction(SET_TALK)
 
 // init state
 const initState = {
