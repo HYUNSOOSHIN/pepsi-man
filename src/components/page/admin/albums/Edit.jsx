@@ -159,7 +159,7 @@ const AdminAlbumEdit = (props) => {
             <p>LYRICS</p>
             <p>MV</p>
             <p>EDIT</p>
-            <p>DEL</p>
+            <p>ACTIONS</p>
           </LI>
 
           {trackList

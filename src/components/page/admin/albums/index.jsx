@@ -49,11 +49,8 @@ const AddButton = styled.button`
   font-family: "Noto Sans KR";
 `
 const AlbumSection = styled.section`
-  &::after {
-    content: "";
-    clear: both;
-    display: block;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `
 
 export default AdminAlbums

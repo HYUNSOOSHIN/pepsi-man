@@ -53,11 +53,8 @@ const AddButton = styled.button`
   font-family: "Noto Sans KR";
 `
 const PhotoSection = styled.section`
-  &::after {
-    content: "";
-    clear: both;
-    display: block;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `
 
 export default AdminPhotos

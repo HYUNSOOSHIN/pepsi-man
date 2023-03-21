@@ -37,7 +37,7 @@ const AdminTalks = () => {
             <th>NO.</th>
             <th>TITLE</th>
             <th>CONTENTS</th>
-            <th>DEL</th>
+            <th>ACTIONS</th>
           </tr>
         </thead>
         <tbody>
