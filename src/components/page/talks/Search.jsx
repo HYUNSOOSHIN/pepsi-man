@@ -68,6 +68,7 @@ const Section = styled.section`
   padding: 10px;
   border: 1px solid;
   & > svg {
+    cursor: pointer;
     width: 30px;
     height: 30px;
     margin-right: 10px;

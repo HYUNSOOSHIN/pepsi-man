@@ -9,7 +9,11 @@ const TalkItem = (props) => {
 
   return (
     <Container onClick={onClick}>
-      <ImageView>{item.imageUrl && <Thumbnail src={item.imageUrl} alt={"temp image"} />}</ImageView>
+      {item.imageUrl && (
+        <ImageView>
+          <Thumbnail src={item.imageUrl} alt={"temp image"} />
+        </ImageView>
+      )}
 
       <TextBox>
         <div style={{ width: "100%" }}>
@@ -77,17 +81,18 @@ const ImageView = styled.div`
 `
 const Thumbnail = styled.img`
   position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  top: 10px;
+  left: 10px;
+  width: 180px;
+  height: 180px;
+  border: 1px solid #f5f5f5;
   border-radius: 5px;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+  object-fit: cover;
   @media (max-width: 768px) {
-    border-radius: 5px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
 `
 const TextBox = styled.div`
@@ -106,12 +111,15 @@ const TextBox = styled.div`
   }
 `
 const Title = styled.p`
+  overflow: hidden;
+  display: -webkit-box;
   font-size: 20px;
   font-weight: bold;
   /* width: 100%; */
   overflow-x: hidden;
-  white-space: nowrap;
   text-overflow: ellipsis;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
   @media (max-width: 1024px) {
   }
   @media (max-width: 768px) {

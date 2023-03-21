@@ -22,3 +22,9 @@ export const timeForToday = (value) => {
 
   //   return `${Math.floor(betweenTimeDay / 365)}년전`
 }
+
+// trim
+export const trim = (text) => {
+  if (typeof text != "string") return text
+  return text.replace(/ /gi, "")
+}

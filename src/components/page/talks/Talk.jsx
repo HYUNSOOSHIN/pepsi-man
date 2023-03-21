@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
 import { dbService } from "../../../fireBase"
-import { timeForToday } from "utils/util"
+import { timeForToday, trim } from "utils/util"
 import Layout from "../../common/Layout"
 import { IconButton } from "@material-ui/core"
 import FindInPageIcon from "@material-ui/icons/FindInPage"
@@ -34,6 +34,10 @@ const Talk = (props) => {
   }, [])
 
   const onSubmitComment = async () => {
+    if (trim(comment) == "") {
+      alert("Please enter a comment")
+      return
+    }
     const temp = { ...talk }
     delete temp.id
     await dbService
@@ -79,7 +83,7 @@ const Talk = (props) => {
           <Contents>{talk.contents}</Contents>
         </Box1>
 
-        <Box3>
+        <Box2>
           <FlexBox>
             <FindInPageIcon />
             <p>{talk.clickCount}</p>
@@ -88,7 +92,7 @@ const Talk = (props) => {
           </FlexBox>
 
           <BackButton onClick={() => history.goBack()}>to list</BackButton>
-        </Box3>
+        </Box2>
       </TalkSection>
 
       <CommentSection>
@@ -192,20 +196,22 @@ const Thumbnail = styled.img`
   left: 0;
   width: 100%;
   height: 100%;
+  border-radius: 10px;
+  object-fit: cover;
 `
 const Contents = styled.p`
   width: 100%;
   height: fit-content;
   font-size: 15px;
 `
-const Box3 = styled.div`
+const Box2 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: flex-end;
   width: 100%;
   height: fit-content;
-  margin-top: 10px;
+  margin-top: 30px;
 `
 const FlexBox = styled.div`
   display: flex;
@@ -224,7 +230,7 @@ const FlexBox = styled.div`
 const BackButton = styled.button`
   width: fit-content;
   height: 35px;
-  margin: 10px 0px 30px;
+  margin: 15px 0px 30px;
   padding: 0 10px;
   border: 1px solid;
   border-radius: 5px;

@@ -5,6 +5,7 @@ import { useSelector } from "react-redux"
 import { dbService, storageService } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
+import { trim } from "utils/util"
 
 const Write = () => {
   const history = useHistory()
@@ -17,9 +18,8 @@ const Write = () => {
   const inputRef = useRef()
 
   const onSubmit = async () => {
-    if (title == "") return alert("Please enter a title")
-    else if (contents == "") return alert("Please enter a contents")
-    else if (file == null) return alert("Please enter a image")
+    if (trim(title) == "") return alert("Please enter a title")
+    else if (trim(contents) == "") return alert("Please enter a contents")
 
     let fileUrl = ""
     if (fileData !== "" && file !== null) {
@@ -46,8 +46,8 @@ const Write = () => {
   return (
     <Layout>
       <InputSection>
-        <Input type={"text"} placeholder={"title"} value={title} onChange={(e) => setTitle(e.target.value)} />
-        <Textarea placeholder={"contents"} value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
+        <Input type={"text"} placeholder={"Title"} value={title} onChange={(e) => setTitle(e.target.value)} />
+        <Textarea placeholder={"Contents"} value={contents} onChange={(e) => setContents(e.target.value)}></Textarea>
         <LeftTextView error={contents.length > 500}>
           <p>{contents.length}/500</p>
         </LeftTextView>

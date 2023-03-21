@@ -33,9 +33,6 @@ const Photos = () => {
 export default Photos
 
 const Section = styled.section`
-  &::after {
-    content: "";
-    clear: both;
-    display: block;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `

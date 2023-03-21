@@ -6,7 +6,7 @@ const AlbumItem = (props) => {
 
   return (
     <Container onClick={onClick}>
-      <div className="img-view">{albumItem.imageUrl && <img src={albumItem.imageUrl} alt={"album image"} />}</div>
+      <div className="img-view">{albumItem.imageUrl && <img src={albumItem.imageUrl} alt={"album image"} loading="lazy" />}</div>
       <p>{albumItem.title}</p>
       <div>
         <p id={"artist"}>{albumItem.artist}</p>
@@ -23,12 +23,12 @@ const Container = styled.button`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  float: left;
   width: 33.3%;
   height: auto;
   padding: 10px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
+  text-align: left;
 
   &:hover {
     box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1), 0 10px 10px rgba(0, 0, 0, 0.1) !important;
@@ -56,8 +56,14 @@ const Container = styled.button`
     }
   }
   & > p {
+    overflow: hidden;
+    display: -webkit-box;
+    width: 100%;
     margin-top: 10px;
     font-size: 20px;
+    text-overflow: ellipsis;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
   }
   & > div {
     display: flex;
@@ -67,11 +73,13 @@ const Container = styled.button`
     height: fit-content;
 
     & > p#artist {
+      overflow: hidden;
       flex: 1;
-      width: 0px;
       margin-right: 5px;
       font-size: 15px;
       text-align: left;
+      white-space: nowrap;
+      text-overflow: ellipsis;
     }
     & > p#releaseDate {
       font-size: 15px;

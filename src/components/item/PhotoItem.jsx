@@ -6,7 +6,7 @@ const PhotoItem = (props) => {
 
   return (
     <Container onClick={onClick}>
-      <div className="img-view">{img && <img src={img} alt={"photo image"} />}</div>
+      <div className="img-view">{img && <img src={img} alt={"photo image"} loading="lazy" />}</div>
     </Container>
   )
 }
@@ -18,7 +18,6 @@ const Container = styled.button`
   flex-direction: column;
   justify-content: flex-start;
   align-items: flex-start;
-  float: left;
   width: 33.3%;
   height: auto;
   padding: 10px;

@@ -31,9 +31,6 @@ const Albums = () => {
 export default Albums
 
 const Section = styled.section`
-  &::after {
-    content: "";
-    clear: both;
-    display: block;
-  }
+  display: flex;
+  flex-wrap: wrap;
 `
