@@ -24,7 +24,7 @@ import AdminAlbumEdit from "./page/admin/albums/Edit"
 import AdminTalks from "./page/admin/talks"
 
 function App() {
-  const { user } = useSelector((state) => state.reducer)
+  const { user } = useSelector((state) => state.userReducer)
   const [init, setInit] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
 

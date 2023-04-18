@@ -9,7 +9,7 @@ import { trim } from "utils/util"
 
 const Write = () => {
   const history = useHistory()
-  const { user } = useSelector((state) => state.reducer)
+  const { user } = useSelector((state) => state.userReducer)
   const [title, setTitle] = useState("")
   const [contents, setContents] = useState("")
   // 이미지 형식 {base64: null, file: null}

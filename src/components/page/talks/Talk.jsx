@@ -13,7 +13,7 @@ import CloseRounded from "@material-ui/icons/CloseRounded"
 const Talk = (props) => {
   const { talkSeq } = props.match.params
   const history = useHistory()
-  const { user } = useSelector((state) => state.reducer)
+  const { user } = useSelector((state) => state.userReducer)
 
   const [talk, setTalk] = useState({})
   const [commentList, setCommentList] = useState([])
@@ -77,13 +77,19 @@ const Talk = (props) => {
           <Writer>
             <span>{talk.writer || "Person"}</span> {timeForToday(talk.createdAt)}
           </Writer>
-
-          <ImageView>{talk.imageUrl && <Thumbnail src={talk.imageUrl} alt={"image"} />}</ImageView>
-
-          <Contents>{talk.contents}</Contents>
         </Box1>
 
         <Box2>
+          {talk.imageUrl && (
+            <ImageView>
+              <Thumbnail src={talk.imageUrl} alt={"image"} />
+            </ImageView>
+          )}
+
+          <Contents>{talk.contents}</Contents>
+        </Box2>
+
+        <Box3>
           <FlexBox>
             <FindInPageIcon />
             <p>{talk.clickCount}</p>
@@ -92,7 +98,7 @@ const Talk = (props) => {
           </FlexBox>
 
           <BackButton onClick={() => history.goBack()}>to list</BackButton>
-        </Box2>
+        </Box3>
       </TalkSection>
 
       <CommentSection>
@@ -152,6 +158,8 @@ const Box1 = styled.div`
   align-items: center;
   width: 100%;
   height: fit-content;
+  padding-bottom: 10px;
+  border-bottom: 1px solid var(--border);
 `
 const Title = styled.p`
   width: 100%;
@@ -165,7 +173,7 @@ const Title = styled.p`
 `
 const Writer = styled.p`
   width: 100%;
-  margin-top: 5px;
+  margin-top: 15px;
   font-size: 15px;
   & > span {
     font-weight: bold;
@@ -176,10 +184,14 @@ const Writer = styled.p`
     font-size: 12px;
   }
 `
+const Box2 = styled.div`
+  width: 100%;
+  margin-top: 30px;
+`
 const ImageView = styled.div`
   position: relative;
   width: 524px;
-  margin: 30px 0px;
+  margin-bottom: 30px;
   &::after {
     content: "";
     padding-bottom: 100%;
@@ -204,7 +216,7 @@ const Contents = styled.p`
   height: fit-content;
   font-size: 15px;
 `
-const Box2 = styled.div`
+const Box3 = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: center;

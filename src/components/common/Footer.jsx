@@ -5,7 +5,7 @@ const Footer = () => {
   return (
     <Container>
       <p id={"info"}>{`Somewhere in Gwanak-gu, Seoul,  Republic of Korea.\nT: ☺☺☺-☺☺☺☺-☺☺☺☺ / E: shs0655@gmail.com`}</p>
-      <p id={"copyright"}>© HYUNSOOSHIN</p>
+      <p id={"copyright"}>© 2020. HYUNSOOSHIN all rights reserved.</p>
     </Container>
   )
 }

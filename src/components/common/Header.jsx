@@ -10,7 +10,7 @@ import Toggle from "./Toggle"
 const Header = (props) => {
   const history = useHistory()
   const { hamberger, setHamberger } = props
-  const { user } = useSelector((state) => state.reducer)
+  const { user } = useSelector((state) => state.userReducer)
   const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
   useEffect(() => {

@@ -1,25 +1,10 @@
 import React from "react"
 import ReactDOM from "react-dom"
-import { createStore } from "redux"
 import { Provider } from "react-redux"
-import { persistStore, persistReducer } from "redux-persist"
 import { PersistGate } from "redux-persist/integration/react"
-import storage from "redux-persist/lib/storage" // localStorage
-// import storageSession from "redux-persist/lib/storage/session" // sessionStorage
+import { store, persistor } from "./redux/store"
 import App from "./components/App"
-import rootReducer from "./reducers"
 import "./index.css"
-
-const persistConfig = {
-  key: "root",
-  storage: storage,
-}
-
-const enhancedReducer = persistReducer(persistConfig, rootReducer)
-
-const store = createStore(enhancedReducer)
-
-const persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
