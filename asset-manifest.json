@@ -1,24 +1,20 @@
 {
   "files": {
-    "main.css": "/pepsi-man/static/css/main.202e1a4b.chunk.css",
-    "main.js": "/pepsi-man/static/js/main.4b5ccc9a.chunk.js",
-    "main.js.map": "/pepsi-man/static/js/main.4b5ccc9a.chunk.js.map",
+    "main.js": "/pepsi-man/static/js/main.98b0df52.chunk.js",
+    "main.js.map": "/pepsi-man/static/js/main.98b0df52.chunk.js.map",
     "runtime-main.js": "/pepsi-man/static/js/runtime-main.45bd552f.js",
     "runtime-main.js.map": "/pepsi-man/static/js/runtime-main.45bd552f.js.map",
-    "static/js/2.a1305075.chunk.js": "/pepsi-man/static/js/2.a1305075.chunk.js",
-    "static/js/2.a1305075.chunk.js.map": "/pepsi-man/static/js/2.a1305075.chunk.js.map",
+    "static/js/2.c18ab040.chunk.js": "/pepsi-man/static/js/2.c18ab040.chunk.js",
+    "static/js/2.c18ab040.chunk.js.map": "/pepsi-man/static/js/2.c18ab040.chunk.js.map",
     "index.html": "/pepsi-man/index.html",
-    "static/css/main.202e1a4b.chunk.css.map": "/pepsi-man/static/css/main.202e1a4b.chunk.css.map",
-    "static/js/2.a1305075.chunk.js.LICENSE.txt": "/pepsi-man/static/js/2.a1305075.chunk.js.LICENSE.txt",
-    "static/media/index.css": "/pepsi-man/static/media/NotoSansKR-Regular.81f0390f.woff",
+    "static/js/2.c18ab040.chunk.js.LICENSE.txt": "/pepsi-man/static/js/2.c18ab040.chunk.js.LICENSE.txt",
     "static/media/instagram.513d4aff.png": "/pepsi-man/static/media/instagram.513d4aff.png",
     "static/media/tiktok.bf973583.png": "/pepsi-man/static/media/tiktok.bf973583.png",
     "static/media/zior.19da9f7d.png": "/pepsi-man/static/media/zior.19da9f7d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.45bd552f.js",
-    "static/js/2.a1305075.chunk.js",
-    "static/css/main.202e1a4b.chunk.css",
-    "static/js/main.4b5ccc9a.chunk.js"
+    "static/js/2.c18ab040.chunk.js",
+    "static/js/main.98b0df52.chunk.js"
   ]
 }
