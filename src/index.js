@@ -4,7 +4,6 @@ import { Provider } from "react-redux"
 import { PersistGate } from "redux-persist/integration/react"
 import { store, persistor } from "./redux/store"
 import App from "./components/App"
-import "./index.css"
 
 ReactDOM.render(
   <React.StrictMode>
@@ -17,7 +16,7 @@ ReactDOM.render(
   document.getElementById("root")
 )
 
-console.log("%cWELCOME TO ZIORPARK", `font-size: 25px;`)
+console.log("%cWELCOME TO ZIORPARK PAGE!", `font-size: 25px;`)
 console.log(
   `%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c01%c0%c1%c010%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1
 %c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c10%c1%c0%c1%c0%c1%c0%c1%c0%c1%c0%c1

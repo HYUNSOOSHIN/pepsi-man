@@ -2,12 +2,17 @@ import React from "react"
 import styled from "styled-components"
 import { Switch } from "@material-ui/core"
 import { withStyles } from "@material-ui/core/styles"
+import { useDispatch, useSelector } from "react-redux"
+import { setDarkmode } from "redux/modules/config"
 
-const Toggle = ({ value, setValue }) => {
+const Toggle = () => {
+  const dispatch = useDispatch()
+  const { darkmode } = useSelector((state) => state.configReducer)
+
   return (
     <ToggleView>
       <ToggleText>DarkMode</ToggleText>
-      <AntSwitch checked={value} onChange={setValue} name="color_toggle" />
+      <AntSwitch checked={darkmode} onChange={() => dispatch(setDarkmode(!darkmode))} name="color_toggle" />
     </ToggleView>
   )
 }

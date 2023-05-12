@@ -28,7 +28,7 @@ const Backdrop = styled.div`
 
 const Container = styled.div`
   position: relative;
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   width: 768px;
   border-radius: 6px;
 

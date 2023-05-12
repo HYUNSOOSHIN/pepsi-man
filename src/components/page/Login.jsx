@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux"
 import { setUser } from "redux/modules/user"
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome"
 import { faGoogle } from "@fortawesome/free-brands-svg-icons"
-import { darkColors, whiteColors } from "../../utils/color"
 import { authService, firebaseInstance } from "../../fireBase"
 import Toggle from "../common/Toggle"
 import AdminDialog from "components/dialog/AdminDialog"
@@ -15,15 +14,6 @@ const Login = () => {
   const history = useHistory()
   const dispatch = useDispatch()
   const [adminDialog, setAdminDialog] = useState(false)
-  const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
-
-  const setColorMode = (colorMode) => {
-    for (const [key, value] of Object.entries(colorMode)) {
-      document.documentElement.style.setProperty(`--${key}`, `${value}`)
-    }
-  }
-
-  setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)
 
   const onClickLogin = () => {
     authService
@@ -46,25 +36,20 @@ const Login = () => {
   }
 
   const onClickAdminLogin = async (id, pw) => {
-    await authService.signInWithEmailAndPassword(id, pw).then((data) => {
-      dispatch(setUser(data.user))
-      history.replace("/admin")
-    })
+    await authService
+      .signInWithEmailAndPassword(id, pw)
+      .then((data) => {
+        dispatch(setUser(data.user))
+        history.replace("/admin")
+      })
+      .catch((error) => alert(error))
   }
 
   return (
     <Container>
       <AdminDialog open={adminDialog} onClose={() => setAdminDialog(false)} onClickLogin={onClickAdminLogin} />
       <AbsoluteView>
-        <Toggle
-          value={toggle}
-          setValue={() => {
-            const bool = !toggle
-            setColorMode(toggle ? whiteColors : darkColors)
-            setToggle(bool)
-            localStorage.setItem("darkMode", `${bool}`)
-          }}
-        />
+        <Toggle />
       </AbsoluteView>
 
       <AdminButton onClick={onClickAdminButton}>ADMIN</AdminButton>
@@ -82,7 +67,7 @@ const Login = () => {
 }
 
 const Container = styled.div`
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   display: flex;
   justify-content: center;
   align-items: center;
@@ -98,7 +83,7 @@ const AdminButton = styled.button`
   position: absolute;
   right: 20px;
   bottom: 20px;
-  color: var(--text);
+  color: ${(props) => props.theme.text};
   font-size: 13px;
 `
 const InputView = styled.div`
@@ -123,7 +108,7 @@ const Button = styled.button`
   width: 300px;
   height: 35px;
   margin-bottom: 10px;
-  border: 1px solid var(--border);
+  border: 1px solid ${(props) => props.theme.border}; ;
 `
 
 export default Login

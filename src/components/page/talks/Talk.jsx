@@ -159,7 +159,7 @@ const Box1 = styled.div`
   width: 100%;
   height: fit-content;
   padding-bottom: 10px;
-  border-bottom: 1px solid var(--border);
+  border-bottom: 1px solid ${(props) => props.theme.border};
 `
 const Title = styled.p`
   width: 100%;
@@ -287,7 +287,7 @@ const CommentWriteView = styled.div`
 const CommentListView = styled.div`
   width: 100%;
   height: fit-content;
-  margin-top: 10px;
+  margin-top: 30px;
   padding: 10px;
   border: 1px solid;
   border-radius: 5px;

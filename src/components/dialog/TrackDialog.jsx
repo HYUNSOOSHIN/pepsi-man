@@ -63,7 +63,7 @@ const Backdrop = styled.div`
 
 const Container = styled.div`
   position: relative;
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   display: flex;
   flex-direction: column;
   width: 524px;
@@ -81,7 +81,7 @@ const Container = styled.div`
 
 const TitleText = styled.p`
   margin-bottom: 25px;
-  color: var(--text);
+  color: ${(props) => props.theme.text};
   font-size: 20px;
   font-weight: bold;
 `

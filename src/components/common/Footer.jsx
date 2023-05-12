@@ -13,7 +13,7 @@ const Footer = () => {
 export default Footer
 
 const Container = styled.footer`
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -21,9 +21,9 @@ const Container = styled.footer`
   width: 100%;
   height: fit-content;
   padding: 20px 0px;
-  border-top: 1px solid var(--border);
+  border-top: 1px solid ${(props) => props.theme.border};
   #info {
-    color: var(--text);
+    color: ${(props) => props.theme.text};
     font-size: 12px;
     line-height: 15px;
     text-align: center;
@@ -31,7 +31,7 @@ const Container = styled.footer`
   }
   #copyright {
     margin-top: 5px;
-    color: var(--text);
+    color: ${(props) => props.theme.text};
     font-size: 11px;
   }
 

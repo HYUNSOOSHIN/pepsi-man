@@ -2,7 +2,10 @@ import React, { useState, useEffect } from "react"
 import { BrowserRouter, Route, Switch } from "react-router-dom"
 import { authService } from "../fireBase"
 import { useSelector } from "react-redux"
-// 페이지
+import { ThemeProvider } from "styled-components"
+import { darkTheme, whiteTheme } from "utils/theme"
+import { GlobalStyle } from "./styled/GlobalStyle"
+// 사용자 페이지
 import Login from "./page/Login"
 import Home from "./page/Home"
 import Introduce from "./page/Introduce"
@@ -24,6 +27,7 @@ import AdminAlbumEdit from "./page/admin/albums/Edit"
 import AdminTalks from "./page/admin/talks"
 
 function App() {
+  const { darkmode } = useSelector((state) => state.configReducer)
   const { user } = useSelector((state) => state.userReducer)
   const [init, setInit] = useState(false)
   const [isLogin, setIsLogin] = useState(false)
@@ -43,43 +47,47 @@ function App() {
   return (
     init && (
       <BrowserRouter basename={process.env.PUBLIC_URL}>
-        {isLogin ? (
-          <>
-            <Route exact path="/" component={Home} />
-            <Route path="/introduce" component={Introduce} />
+        <ThemeProvider theme={darkmode ? darkTheme : whiteTheme}>
+          <GlobalStyle />
 
-            <Route path="/photos" component={Photos} />
+          {isLogin ? (
+            <>
+              <Route exact path="/" component={Home} />
+              <Route path="/introduce" component={Introduce} />
 
-            <Switch>
-              <Route path="/albums/:albumSeq/:trackSeq" component={MV} />
-              <Route path="/albums/:albumSeq" component={Album} />
-              <Route path="/albums" component={Albums} />
-            </Switch>
+              <Route path="/photos" component={Photos} />
 
-            <Switch>
-              <Route path="/talks/search" component={Search} />
-              <Route path="/talks/write" component={Write} />
-              <Route path="/talks/:talkSeq" component={Talk} />
-              <Route path="/talks" component={Talks} />
-            </Switch>
-
-            {user.email?.includes("admin") && (
               <Switch>
-                <Route exact path="/admin" component={Admin} />
-                <Route path="/admin/introduce" component={AdminIntroduce} />
-                <Route path="/admin/photos" component={AdminPhotos} />
-                <Route path="/admin/albums" component={AdminAlbums} />
-                <Route path="/admin/album/add" component={AdminAlbumAdd} />
-                <Route path="/admin/album/edit/:albumSeq" component={AdminAlbumEdit} />
-                <Route path="/admin/talks" component={AdminTalks} />
+                <Route path="/albums/:albumSeq/:trackSeq" component={MV} />
+                <Route path="/albums/:albumSeq" component={Album} />
+                <Route path="/albums" component={Albums} />
               </Switch>
-            )}
-          </>
-        ) : (
-          <>
-            <Route strict path="/" component={Login} />
-          </>
-        )}
+
+              <Switch>
+                <Route path="/talks/search" component={Search} />
+                <Route path="/talks/write" component={Write} />
+                <Route path="/talks/:talkSeq" component={Talk} />
+                <Route path="/talks" component={Talks} />
+              </Switch>
+
+              {user.email?.includes("admin") && (
+                <Switch>
+                  <Route exact path="/admin" component={Admin} />
+                  <Route path="/admin/introduce" component={AdminIntroduce} />
+                  <Route path="/admin/photos" component={AdminPhotos} />
+                  <Route path="/admin/albums" component={AdminAlbums} />
+                  <Route path="/admin/album/add" component={AdminAlbumAdd} />
+                  <Route path="/admin/album/edit/:albumSeq" component={AdminAlbumEdit} />
+                  <Route path="/admin/talks" component={AdminTalks} />
+                </Switch>
+              )}
+            </>
+          ) : (
+            <>
+              <Route strict path="/" component={Login} />
+            </>
+          )}
+        </ThemeProvider>
       </BrowserRouter>
     )
   )

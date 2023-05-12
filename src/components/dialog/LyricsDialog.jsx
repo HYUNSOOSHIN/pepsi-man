@@ -41,7 +41,7 @@ const Backdrop = styled.div`
 `
 
 const Container = styled.div`
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   overflow-y: hidden;
   display: flex;
   flex-direction: column;
@@ -67,7 +67,7 @@ const HeaderSection = styled.section`
   padding: 10px;
   border-bottom: 1px solid #b6b7b8;
   & > p {
-    color: var(--text);
+    color: ${(props) => props.theme.text};
     font-size: 20px;
     font-weight: bold;
   }
@@ -87,7 +87,7 @@ const LyricsSection = styled.section`
   height: fit-content;
   padding: 10px;
   & > p {
-    color: var(--text);
+    color: ${(props) => props.theme.text};
     font-size: 15px;
     white-space: pre-line;
   }

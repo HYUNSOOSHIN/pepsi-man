@@ -6,13 +6,26 @@ export default function AdminDialog(props) {
   const [id, setId] = useState("")
   const [pw, setPw] = useState("")
 
+  const onSubmit = (e) => {
+    e.preventDefault()
+
+    if (id === "") return alert("Enter your Id!")
+    else if (pw === "") return alert("Enter your Password!")
+
+    onClickLogin(id, pw)
+  }
+
   return (
     <Backdrop open={open} onClick={onClose}>
       <Container onClick={(e) => e.stopPropagation()}>
         <Title>ADMIN LOGIN</Title>
-        <Input type="text" placeholder="EMAIL" value={id} onChange={(e) => setId(e.target.value)} />
-        <Input type="password" placeholder="PASSWORD" value={pw} onChange={(e) => setPw(e.target.value)} />
-        <Button onClick={() => onClickLogin(id, pw)}>LOGIN</Button>
+        <form onSubmit={onSubmit}>
+          <Input type="text" placeholder="EMAIL" value={id} onChange={(e) => setId(e.target.value)} />
+          <Input type="password" placeholder="PASSWORD" value={pw} onChange={(e) => setPw(e.target.value)} />
+          <Button type="submit" onClick={onSubmit}>
+            LOGIN
+          </Button>
+        </form>
       </Container>
     </Backdrop>
   )
@@ -33,7 +46,7 @@ const Backdrop = styled.div`
 
 const Container = styled.div`
   position: relative;
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   width: 300px;
   height: 250px;
   padding: 30px;
@@ -41,7 +54,7 @@ const Container = styled.div`
 `
 const Title = styled.p`
   margin-bottom: 25px;
-  color: var(--text);
+  color: ${(props) => props.theme.text};
   font-size: 20px;
   font-weight: bold;
 `

@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { authService } from "../../fireBase"
 import MenuIcon from "@material-ui/icons/Menu"
-import { darkColors, whiteColors } from "../../utils/color"
 import Toggle from "./Toggle"
 
 const Header = (props) => {
   const history = useHistory()
   const { hamberger, setHamberger } = props
   const { user } = useSelector((state) => state.userReducer)
-  const [toggle, setToggle] = useState(localStorage.getItem("darkMode") === "true")
 
   useEffect(() => {
     window.addEventListener("resize", () => {
@@ -29,18 +27,10 @@ const Header = (props) => {
     }
   }, [])
 
-  const setColorMode = (colorMode) => {
-    for (const [key, value] of Object.entries(colorMode)) {
-      document.documentElement.style.setProperty(`--${key}`, `${value}`)
-    }
-  }
-
   const onClickLogout = () => {
     authService.signOut()
     history.replace("/")
   }
-
-  setColorMode(localStorage.getItem("darkMode") === "true" ? darkColors : whiteColors)
 
   return (
     <Container>
@@ -49,15 +39,7 @@ const Header = (props) => {
       <NaviView id={"navi"} hamberger={hamberger} onClick={(e) => e.stopPropagation()}>
         <AbsoluteView>
           <ToggleView hamberger={hamberger}>
-            <Toggle
-              value={toggle}
-              setValue={() => {
-                const bool = !toggle
-                setColorMode(toggle ? whiteColors : darkColors)
-                setToggle(bool)
-                localStorage.setItem("darkMode", `${bool}`)
-              }}
-            />
+            <Toggle />
           </ToggleView>
           <UserView>
             <UserName>{user.email?.includes("admin") ? "Admin" : user.isAnonymous ? "Person" : user.displayName}</UserName>
@@ -123,7 +105,7 @@ const LogoLink = styled(Link)`
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  color: var(--text);
+  color: ${(props) => props.theme.text};
   font-size: 30px;
   font-weight: bold;
   font-family: "Times New Roman", Times, serif;
@@ -137,7 +119,7 @@ const LogoLink = styled(Link)`
   }
 `
 const NaviView = styled.div`
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   display: flex;
   flex: 1;
   justify-content: space-around;
@@ -145,7 +127,7 @@ const NaviView = styled.div`
   margin-left: 30px;
   z-index: 100;
   & > a {
-    color: var(--text);
+    color: ${(props) => props.theme.text};
     font-size: 20px;
     font-family: "Times New Roman", Times, serif;
   }
@@ -207,7 +189,7 @@ const UserView = styled.div`
 `
 const UserName = styled.p`
   margin: 0 10px;
-  color: var(--text);
+  color: ${(props) => props.theme.text};
   font-size: 14px;
   font-weight: bold;
   @media (max-width: 1024px) {

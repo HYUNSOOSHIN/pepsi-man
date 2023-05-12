@@ -21,7 +21,7 @@ const Layout = (props) => {
 export default Layout
 
 const Container = styled.div`
-  background-color: var(--background);
+  background-color: ${(props) => props.theme.background};
   position: relative;
 `
 const Inner = styled.div`
