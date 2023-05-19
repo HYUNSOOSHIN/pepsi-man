@@ -1,78 +1,51 @@
-pepsi-man
+# PEPSI-MAN
+가수/래퍼 ZIORPARK 페이지
 
+<img src="/src/images/zior.png" width="300px"/>
 
-Zior Park - PENGUIN
+## 📖 PEPSI-MAN
+> 2020.11 - 2022.06
+- 개인 프로젝트
+- Media Query를 이용한 반응형 웹 구현
+- Styled Components를 이용한 다크모드 기능 적용
+- 페이지 내 컨텐츠 관리를 위한 관리자 모드 개발
+- Firebase를 이용한 사용자 인증 / 실시간 데이터베이스 적용 (Authentication, FireStore, Storage)
 
-To North Pole
-Keep moving on
-O oh my lord
-Why you tryna stop me
+## 🛠 Tech Stack
+<p>
+  <img src="https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB" />
+  <img src="https://img.shields.io/badge/Redux-593D88?style=for-the-badge&logo=redux&logoColor=white" /> 
+  <img src="https://img.shields.io/badge/firebase-ffca28?style=for-the-badge&logo=firebase&logoColor=black"/>  
+  <img src="https://img.shields.io/badge/styled--components-DB7093?style=for-the-badge&logo=styled-components&logoColor=white" />
+  <img src= "https://img.shields.io/badge/Font_Awesome-339AF0?style=for-the-badge&logo=fontawesome&logoColor=white"> 
+  <img src="https://img.shields.io/badge/GitHub%20Pages-222222?style=for-the-badge&logo=GitHub%20Pages&logoColor=white" />
+</p>
 
-My great fantasy is blurry
-My old clothes is buried
-My old documents I burned it
-On the glacier I'm staring at other side
-I just signed with the small shop
-Big wings small cage with lil magpies
-Testing just done take it my partner
-Linchpin Mr Park making new products
-Lord distribute my works to the Hollywood
-My igloo's melting I'ma get house in Malibu
-New school new typhoon
-There's a bunch of coward
-They're always jealous and
-Afraid of fxxkin' new
-I forgot what was my color when I was born
-I can only see black and white on my coat
-It ain't complain just saying
-Would be hard to walk without jokes
-Already my steps funny you know
+## 💻 Getting Started
 
-I'm walkin' on
-Frozen ground to North Pole
-I'm only one
-Here's maybe no one knows
-Oh oh
-Look at my funny steps
-Oh oh
-I forgot what was my plan
-Oh oh
-Fxxk off I'm a psychopath
-Oh oh oh oh
-Can't stop my feet to North Pole
+### Install
 
-My great fantasy is blurry
-My old clothes is buried
-My old documents I burned it
-On the glacier Im staring at other side
-Winter's coming inside my fantasy's darken
-My life looks so invaluable
-But still god keep calm
-Oh but I'm still
-Cocky oh like Kim Kardashian
-There's no sign
-Empire state of my mind
-Hollywood of my mind
-Stumble every time like a bird
-Maybe don't know how to use my arms yet
-It's not a concept
-Goin' to Promised land
-Maybe it's a far from North Pole
-Need new mindset
+Install this project with:
 
-I'm walkin' on
-Frozen ground to North Pole
-I'm only one
-Here's maybe no one knows
-Oh oh
-Look at my funny steps
-Oh oh
-I forgot what was my plan
-Oh oh
-Fuck off im not a psychopath
-Oh oh oh oh
-Can't stop my feet to North Pole
-To North Pole
-Keep moving on
-O oh my lord
-Why you tryna stop me
+```sh
+  yarn install
+```
+
+### Usage
+
+To run the project, execute the following command:
+
+```sh
+  yarn start
+```
+
+### Deployment
+
+You can deploy this project using:
+
+```sh
+  yarn deploy
+```
+
+## 🚀 Results
+https://hyunsooshin.github.io/pepsi-man
