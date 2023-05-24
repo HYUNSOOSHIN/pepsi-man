@@ -8,10 +8,12 @@ const MV = (props) => {
   const [track, setTrack] = useState({})
 
   useEffect(() => {
-    ;(async () => {
+    const initData = async () => {
       const result = await dbService.collection("tracks").doc(trackSeq).get()
       setTrack(result.data())
-    })()
+    }
+
+    initData()
   }, [])
 
   return (

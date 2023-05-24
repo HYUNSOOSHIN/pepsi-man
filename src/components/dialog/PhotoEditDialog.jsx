@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { dbService, storageService } from "../../fireBase"
 
@@ -9,9 +9,7 @@ export default function PhotoAddDialog(props) {
   const inputRef = useRef()
 
   useEffect(() => {
-    if (open == false) {
-      initState()
-    }
+    if (open === false) initState()
   }, [open])
 
   const initState = () => {
@@ -19,16 +17,28 @@ export default function PhotoAddDialog(props) {
     setFileData("")
   }
 
-  const onClickDelete = async () => {
+  const onChangeInputData = useCallback((e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const onClickDelete = useCallback(async () => {
     if (confirm("Really?"))
       await dbService
         .collection("photos")
         .doc(data.id)
         .delete()
         .then(() => onClose())
-  }
+  }, [])
 
-  const onClickEdit = async () => {
+  const onClickEdit = useCallback(async () => {
     let fileUrl = ""
     if (fileData !== "") {
       const fileRef = storageService.ref().child(`photos/${file.name}`)
@@ -44,7 +54,7 @@ export default function PhotoAddDialog(props) {
       .doc(id)
       .update({ imageUrl: fileUrl || data.imageUrl })
       .then(() => onClose())
-  }
+  }, [file, fileData])
 
   return (
     <Backdrop open={open} onClick={onClose}>
@@ -52,22 +62,7 @@ export default function PhotoAddDialog(props) {
         <TitleText>Photo Edit</TitleText>
         <InputView>
           <Label>Image</Label>
-          <input
-            ref={inputRef}
-            style={{ display: "none" }}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                const reader = new FileReader()
-
-                reader.onload = (event) => {
-                  setFileData(event.target.result)
-                }
-                setFile(e.target.files[0])
-                reader.readAsDataURL(e.target.files[0])
-              }
-            }}
-          />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputData} />
           <Input type="text" value={file ? file.name : data?.imageUrl} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { dbService, storageService } from "../../../../fireBase"
 import Layout from "components/common/Layout"
@@ -16,7 +16,20 @@ const AdminIntroduce = () => {
     })
   }, [])
 
-  const onSubmit = async () => {
+  const onChangeInputFile = useCallback((e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+        previewRef.current.src = event.target.result
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const onSubmit = useCallback(async () => {
     let fileUrl = ""
     if (fileData !== "") {
       const fileRef = storageService.ref().child(`profile/${file.name}`)
@@ -39,7 +52,7 @@ const AdminIntroduce = () => {
         setFileData("")
         alert("Changed!")
       })
-  }
+  }, [file, fileData])
 
   return (
     <Layout>
@@ -48,23 +61,7 @@ const AdminIntroduce = () => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input
-            ref={inputRef}
-            style={{ display: "none" }}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                const reader = new FileReader()
-
-                reader.onload = (event) => {
-                  setFileData(event.target.result)
-                  previewRef.current.src = event.target.result
-                }
-                setFile(e.target.files[0])
-                reader.readAsDataURL(e.target.files[0])
-              }
-            }}
-          />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
           <Input type="text" value={file ? file.name : introduce.imageUrl} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { dbService } from "../../../../fireBase"
@@ -15,9 +15,9 @@ const AdminAlbums = () => {
     })
   }, [])
 
-  const onClickAdd = () => {
+  const onClickAdd = useCallback(() => {
     history.push("/admin/album/add")
-  }
+  }, [])
 
   return (
     <Layout>

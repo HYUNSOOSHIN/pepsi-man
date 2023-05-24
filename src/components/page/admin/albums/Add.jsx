@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
@@ -18,7 +18,36 @@ const AdminAlbumAdd = () => {
   const [trackList, setTrackList] = useState([])
   const inputRef = useRef()
 
-  const onSubmit = async () => {
+  const onClickTrackDialogAdd = useCallback(
+    (value) => {
+      const index = trackList.findIndex((i) => i.trackNo == value.trackNo)
+      if (index != -1) {
+        const temp = [...trackList]
+        temp[index] = value
+        setTrackList(temp)
+      } else {
+        const temp = [...trackList]
+        temp.push({ ...value, trackNo: trackList.length > 0 ? trackList[trackList.length - 1].trackNo + 1 : 0 })
+        setTrackList(temp)
+      }
+      setTrackDialog({ open: false, data: null })
+    },
+    [trackList]
+  )
+
+  const onChangeInputFile = useCallback((e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const onSubmit = useCallback(async () => {
     if (fileData == "") return alert("Please enter a image")
     else if (title == "") return alert("Please enter a title")
     else if (artist == "") return alert("Please enter a artist")
@@ -38,7 +67,7 @@ const AdminAlbumAdd = () => {
         trackList.forEach((i) => dbService.collection("tracks").add({ albumSeq: res.id, ...i, createdAt: Date.now() }))
         history.back()
       })
-  }
+  }, [file, fileData, title, artist, date, trackList])
 
   return (
     <Layout>
@@ -46,19 +75,7 @@ const AdminAlbumAdd = () => {
         open={trackDialog.open}
         onClose={() => setTrackDialog({ open: false, data: null })}
         data={trackDialog.data}
-        onClickAdd={(value) => {
-          const index = trackList.findIndex((i) => i.trackNo == value.trackNo)
-          if (index != -1) {
-            const temp = [...trackList]
-            temp[index] = value
-            setTrackList(temp)
-          } else {
-            const temp = [...trackList]
-            temp.push({ ...value, trackNo: trackList.length > 0 ? trackList[trackList.length - 1].trackNo + 1 : 0 })
-            setTrackList(temp)
-          }
-          setTrackDialog({ open: false, data: null })
-        }}
+        onClickAdd={onClickTrackDialogAdd}
       />
 
       <ProfileImgSection>{fileData && <img src={fileData} alt={"profile img"} />}</ProfileImgSection>
@@ -66,22 +83,7 @@ const AdminAlbumAdd = () => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input
-            ref={inputRef}
-            style={{ display: "none" }}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                const reader = new FileReader()
-
-                reader.onload = (event) => {
-                  setFileData(event.target.result)
-                }
-                setFile(e.target.files[0])
-                reader.readAsDataURL(e.target.files[0])
-              }
-            }}
-          />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
           <Input type="text" value={file ? file.name : ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

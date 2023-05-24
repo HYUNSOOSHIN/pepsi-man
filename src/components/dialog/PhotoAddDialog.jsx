@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { dbService, storageService } from "../../fireBase"
 
@@ -9,9 +9,7 @@ export default function PhotoAddDialog(props) {
   const inputRef = useRef()
 
   useEffect(() => {
-    if (open == false) {
-      initState()
-    }
+    if (open === false) initState()
   }, [open])
 
   const initState = () => {
@@ -19,7 +17,19 @@ export default function PhotoAddDialog(props) {
     setFileData("")
   }
 
-  const onClickAdd = async () => {
+  const onChangeInputData = useCallback((e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const onClickAdd = useCallback(async () => {
     let fileUrl = ""
     if (fileData !== "") {
       const fileRef = storageService.ref().child(`photos/${file.name}`)
@@ -32,7 +42,7 @@ export default function PhotoAddDialog(props) {
         .collection("photos")
         .add({ imageUrl: fileUrl, createdAt: Date.now() })
         .then(() => onClose())
-  }
+  }, [file, fileData])
 
   return (
     <Backdrop open={open} onClick={onClose}>
@@ -40,22 +50,7 @@ export default function PhotoAddDialog(props) {
         <TitleText>Photo Add</TitleText>
         <InputView>
           <Label>Image</Label>
-          <input
-            ref={inputRef}
-            style={{ display: "none" }}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                const reader = new FileReader()
-
-                reader.onload = (event) => {
-                  setFileData(event.target.result)
-                }
-                setFile(e.target.files[0])
-                reader.readAsDataURL(e.target.files[0])
-              }
-            }}
-          />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputData} />
           <Input type="text" value={file ? file.name : ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

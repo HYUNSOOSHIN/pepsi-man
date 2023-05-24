@@ -8,19 +8,20 @@ export default function TrackDialog(props) {
   const [mv, setMv] = useState("")
 
   useEffect(() => {
-    if (open == false) {
-      initState()
-    } else {
-      setTitle(data?.title || "")
-      setLyrics(data?.lyrics || "")
-      setMv(data?.mv || "")
-    }
+    if (open === false) initState()
+    else setState()
   }, [open])
 
   const initState = () => {
     setTitle("")
     setLyrics("")
     setMv("")
+  }
+
+  const setState = () => {
+    setTitle(data?.title || "")
+    setLyrics(data?.lyrics || "")
+    setMv(data?.mv || "")
   }
 
   return (

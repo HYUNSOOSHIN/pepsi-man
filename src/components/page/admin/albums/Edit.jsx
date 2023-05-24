@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
@@ -21,9 +21,9 @@ const AdminAlbumEdit = (props) => {
   const inputRef = useRef()
 
   useEffect(() => {
-    ;(async () => {
-      const pro1 = await dbService.collection("albums").doc(albumSeq).get()
-      const pro2 = await dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
+    const initData = async () => {
+      const pro1 = dbService.collection("albums").doc(albumSeq).get()
+      const pro2 = dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
       Promise.all([pro1, pro2]).then((res) => {
         const album = res[0].data()
         setFileData(album.imageUrl)
@@ -33,13 +33,56 @@ const AdminAlbumEdit = (props) => {
         const tracks = res[1].docs.map((doc) => ({ ...doc.data(), id: doc.id }))
         setTrackList(tracks)
       })
-    })()
+    }
+
+    initData()
   }, [])
 
-  const onDelete = async () => {
+  const onClickTrackDialogAdd = useCallback(
+    (value) => {
+      const index = trackList.findIndex((i) => i.trackNo == value.trackNo)
+      if (index != -1) {
+        const temp = [...trackList]
+        temp[index] = value
+        setTrackList(temp)
+      } else {
+        const temp = [...trackList]
+        temp.push({ ...value, trackNo: trackList.length > 0 ? trackList[trackList.length - 1].trackNo + 1 : 0 })
+        setTrackList(temp)
+      }
+      setTrackDialog({ open: false, data: null })
+    },
+    [trackList]
+  )
+
+  const onChangeInputFile = useCallback((e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const onClickTrackDelete = useCallback(
+    (idx) => {
+      const temp = [...trackList]
+      const deleteTrack = temp.splice(idx, 1)
+      setTrackList(temp)
+      const deleteTemp = [...deleteList]
+      deleteTemp.push(...deleteTrack)
+      setDeleteList(deleteTemp)
+    },
+    [trackList, deleteList]
+  )
+
+  const onDelete = useCallback(async () => {
     if (confirm("Really?")) {
-      const pro1 = await dbService.collection("albums").doc(albumSeq).delete()
-      const pro2 = await dbService
+      const pro1 = dbService.collection("albums").doc(albumSeq).delete()
+      const pro2 = dbService
         .collection("tracks")
         .where("albumSeq", "==", albumSeq)
         .get()
@@ -47,9 +90,9 @@ const AdminAlbumEdit = (props) => {
 
       Promise.all([pro1, pro2]).then(() => history.back())
     }
-  }
+  }, [])
 
-  const onSubmit = async () => {
+  const onSubmit = useCallback(async () => {
     if (fileData == "") return alert("Please enter a image")
     else if (title == "") return alert("Please enter a title")
     else if (artist == "") return alert("Please enter a artist")
@@ -62,7 +105,7 @@ const AdminAlbumEdit = (props) => {
       fileUrl = await response.ref.getDownloadURL()
     }
 
-    const pro1 = await dbService
+    const pro1 = dbService
       .collection("albums")
       .doc(albumSeq)
       .update({ imageUrl: fileUrl || fileData, title, artist, releaseDate: date })
@@ -84,7 +127,7 @@ const AdminAlbumEdit = (props) => {
       })
 
     Promise.all([pro1, pro2, pro3]).then(() => history.back())
-  }
+  }, [file, fileData, title, artist, date, trackList])
 
   return (
     <Layout>
@@ -92,19 +135,7 @@ const AdminAlbumEdit = (props) => {
         open={trackDialog.open}
         onClose={() => setTrackDialog({ open: false, data: null })}
         data={trackDialog.data}
-        onClickAdd={(value) => {
-          const index = trackList.findIndex((i) => i.trackNo == value.trackNo)
-          if (index != -1) {
-            const temp = [...trackList]
-            temp[index] = value
-            setTrackList(temp)
-          } else {
-            const temp = [...trackList]
-            temp.push({ ...value, trackNo: trackList.length > 0 ? trackList[trackList.length - 1].trackNo + 1 : 0 })
-            setTrackList(temp)
-          }
-          setTrackDialog({ open: false, data: null })
-        }}
+        onClickAdd={onClickTrackDialogAdd}
       />
 
       <ProfileImgSection>{fileData && <img src={fileData} alt={"profile img"} />}</ProfileImgSection>
@@ -112,22 +143,7 @@ const AdminAlbumEdit = (props) => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input
-            ref={inputRef}
-            style={{ display: "none" }}
-            type="file"
-            onChange={(e) => {
-              if (e.target.files[0]) {
-                const reader = new FileReader()
-
-                reader.onload = (event) => {
-                  setFileData(event.target.result)
-                }
-                setFile(e.target.files[0])
-                reader.readAsDataURL(e.target.files[0])
-              }
-            }}
-          />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
           <Input type="text" value={file ? file.name : fileData} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
@@ -171,18 +187,7 @@ const AdminAlbumEdit = (props) => {
                 <p>{i.lyrics === "" ? null : <LibraryBooksIcon />}</p>
                 <p>{i.mv === "" ? null : <YouTubeIcon />}</p>
                 <button onClick={() => setTrackDialog({ open: true, data: i })}>EDIT</button>
-                <button
-                  onClick={() => {
-                    const temp = [...trackList]
-                    const deleteTrack = temp.splice(idx, 1)
-                    setTrackList(temp)
-                    const deleteTemp = [...deleteList]
-                    deleteTemp.push(...deleteTrack)
-                    setDeleteList(deleteTemp)
-                  }}
-                >
-                  DEL
-                </button>
+                <button onClick={() => onClickTrackDelete(idx)}>DEL</button>
               </LI>
             ))}
         </UL>

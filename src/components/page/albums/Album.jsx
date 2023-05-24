@@ -16,14 +16,16 @@ const Album = (props) => {
   const [lyricsDialog, setLyricsDialog] = useState({ open: false, track: {} })
 
   useEffect(() => {
-    ;(async () => {
-      const pro1 = await dbService.collection("albums").doc(albumSeq).get()
-      const pro2 = await dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
+    const initData = async () => {
+      const pro1 = dbService.collection("albums").doc(albumSeq).get()
+      const pro2 = dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
       Promise.all([pro1, pro2]).then((res) => {
         setAlbum(res[0].data())
         setTrackList(res[1].docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       })
-    })()
+    }
+
+    initData()
   }, [])
 
   return (

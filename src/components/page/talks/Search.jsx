@@ -21,6 +21,11 @@ const Search = () => {
     })
   }, [])
 
+  const onChangeInputData = (e) => {
+    setSearchText(e.target.value)
+    filterList(e.target.value)
+  }
+
   const filterList = useCallback(
     debounce((text) => {
       const filtered = talkList.filter((item) => {
@@ -32,25 +37,30 @@ const Search = () => {
     [talkList]
   )
 
+  const onClickTalkItem = useCallback(async (talk) => {
+    history.push(`/talks/${talk.id}`)
+    const temp = { ...talk }
+    delete temp.id
+    await dbService
+      .collection("talks")
+      .doc(talk.id)
+      .update({
+        ...temp,
+        clickCount: (talk.clickCount || 0) + 1,
+      })
+  }, [])
+
   return (
     <Layout>
       <Section>
         <ArrowBackIcon onClick={() => history.goBack()} />
         <SearchIcon />
-        <input
-          type={"text"}
-          placeholder={"Please enter a search term"}
-          value={searchText}
-          onChange={(e) => {
-            setSearchText(e.target.value)
-            filterList(e.target.value)
-          }}
-        />
+        <input type={"text"} placeholder={"Please enter a search term"} value={searchText} onChange={onChangeInputData} />
       </Section>
 
       <TalkListSection>
         {filterTalkList.map((item, index) => (
-          <TalkItem key={index} item={item} />
+          <TalkItem key={index} item={item} onClick={() => onClickTalkItem(item)} />
         ))}
       </TalkListSection>
     </Layout>

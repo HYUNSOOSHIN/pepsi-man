@@ -1,4 +1,4 @@
-import React, { useState } from "react"
+import React, { useState, useCallback } from "react"
 import styled from "styled-components"
 
 export default function AdminDialog(props) {
@@ -6,14 +6,17 @@ export default function AdminDialog(props) {
   const [id, setId] = useState("")
   const [pw, setPw] = useState("")
 
-  const onSubmit = (e) => {
-    e.preventDefault()
+  const onSubmit = useCallback(
+    (e) => {
+      e.preventDefault()
 
-    if (id === "") return alert("Enter your Id!")
-    else if (pw === "") return alert("Enter your Password!")
+      if (id === "") return alert("Enter your Id!")
+      else if (pw === "") return alert("Enter your Password!")
 
-    onClickLogin(id, pw)
-  }
+      onClickLogin(id, pw)
+    },
+    [id, pw]
+  )
 
   return (
     <Backdrop open={open} onClick={onClose}>

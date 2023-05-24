@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react"
+import React, { useState, useRef, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
@@ -17,7 +17,24 @@ const Write = () => {
   const [fileData, setFileData] = useState("")
   const inputRef = useRef()
 
-  const onSubmit = async () => {
+  const onChangeInputFile = useCallback(async (e) => {
+    if (e.target.files[0]) {
+      const reader = new FileReader()
+
+      reader.onload = (event) => {
+        setFileData(event.target.result)
+      }
+      setFile(e.target.files[0])
+      reader.readAsDataURL(e.target.files[0])
+    }
+  }, [])
+
+  const removeFile = () => {
+    setFile(null)
+    setFileData("")
+  }
+
+  const onSubmit = useCallback(async () => {
     if (trim(title) == "") return alert("Please enter a title")
     else if (trim(contents) == "") return alert("Please enter a contents")
 
@@ -41,7 +58,7 @@ const Write = () => {
         createdAt: Date.now(),
       })
       .then(() => history.goBack())
-  }
+  }, [title, contents, file, fileData])
 
   return (
     <Layout>
@@ -54,35 +71,14 @@ const Write = () => {
       </InputSection>
 
       <ImageSection>
-        <input
-          ref={inputRef}
-          style={{ display: "none" }}
-          type={"file"}
-          onChange={async (e) => {
-            if (e.target.files[0]) {
-              const reader = new FileReader()
-
-              reader.onload = (event) => {
-                setFileData(event.target.result)
-              }
-              setFile(e.target.files[0])
-              reader.readAsDataURL(e.target.files[0])
-            }
-          }}
-          accept={"image/*"}
-        />
+        <input ref={inputRef} style={{ display: "none" }} type={"file"} onChange={onChangeInputFile} accept={"image/*"} />
         <ImageAddButton onClick={() => inputRef.current.click()}>Add image</ImageAddButton>
 
         <ImageListView>
           {fileData && (
             <ImageItem>
               <img src={fileData} alt="image" />
-              <button
-                onClick={() => {
-                  setFile(null)
-                  setFileData("")
-                }}
-              >
+              <button onClick={removeFile}>
                 <RemoveCircleIcon />
               </button>
             </ImageItem>

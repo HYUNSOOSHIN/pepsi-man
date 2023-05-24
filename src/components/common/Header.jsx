@@ -1,4 +1,4 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useCallback } from "react"
 import styled from "styled-components"
 import { Link, useHistory } from "react-router-dom"
 import { useSelector } from "react-redux"
@@ -27,10 +27,10 @@ const Header = (props) => {
     }
   }, [])
 
-  const onClickLogout = () => {
+  const onClickLogout = useCallback(() => {
     authService.signOut()
     history.replace("/")
-  }
+  }, [])
 
   return (
     <Container>

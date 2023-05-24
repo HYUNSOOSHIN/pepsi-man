@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import styled from "styled-components"
 import { dbService } from "../../../../fireBase"
 import Layout from "components/common/Layout"
@@ -12,7 +12,7 @@ const AdminTalks = () => {
     })
   }, [])
 
-  const onClickTalkDelete = (id) => {
+  const onClickTalkDelete = useCallback((id) => {
     if (confirm("Really?")) {
       dbService.collection("talks").doc(id).delete()
       dbService
@@ -21,7 +21,7 @@ const AdminTalks = () => {
         .get()
         .then((docs) => docs.forEach((doc) => doc.ref.delete()))
     }
-  }
+  }, [])
 
   return (
     <Layout>

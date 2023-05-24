@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { dbService } from "../../../fireBase"
@@ -18,16 +18,19 @@ const Talks = () => {
     })
   }, [])
 
-  const orderByFunc = (list) => {
-    const sortList = [...list]
-    if (orderBy === 0) {
-      return sortList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-    } else if (orderBy === 1) {
-      return sortList.sort((a, b) => new Date(b.clickCount) - new Date(a.clickCount))
-    }
-  }
+  const orderByFunc = useCallback(
+    (list) => {
+      const sortList = [...list]
+      if (orderBy === 0) {
+        return sortList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
+      } else if (orderBy === 1) {
+        return sortList.sort((a, b) => new Date(b.clickCount) - new Date(a.clickCount))
+      }
+    },
+    [orderBy]
+  )
 
-  const onClickTalkItem = async (talk) => {
+  const onClickTalkItem = useCallback(async (talk) => {
     history.push(`/talks/${talk.id}`)
     const temp = { ...talk }
     delete temp.id
@@ -38,7 +41,7 @@ const Talks = () => {
         ...temp,
         clickCount: (talk.clickCount || 0) + 1,
       })
-  }
+  }, [])
 
   return (
     <Layout>

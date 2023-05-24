@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react"
+import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
@@ -14,7 +14,6 @@ const Talk = (props) => {
   const { talkSeq } = props.match.params
   const history = useHistory()
   const { user } = useSelector((state) => state.userReducer)
-
   const [talk, setTalk] = useState({})
   const [commentList, setCommentList] = useState([])
   const [comment, setComment] = useState("")
@@ -33,7 +32,7 @@ const Talk = (props) => {
       .onSnapshot((snapshot) => setTalk(snapshot.data()))
   }, [])
 
-  const onSubmitComment = async () => {
+  const onSubmitComment = useCallback(async () => {
     if (trim(comment) == "") {
       alert("Please enter a comment")
       return
@@ -54,20 +53,23 @@ const Talk = (props) => {
         createdAt: Date.now(),
       })
       .then(() => setComment(""))
-  }
+  }, [comment, talk])
 
-  const onClickCommentDelete = async (id) => {
-    const temp = { ...talk }
-    delete temp.id
-    await dbService
-      .collection("talks")
-      .doc(talkSeq)
-      .update({
-        ...temp,
-        commentCount: talk.commentCount - 1,
-      })
-    await dbService.collection("comments").doc(id).delete()
-  }
+  const onClickCommentDelete = useCallback(
+    async (id) => {
+      const temp = { ...talk }
+      delete temp.id
+      await dbService
+        .collection("talks")
+        .doc(talkSeq)
+        .update({
+          ...temp,
+          commentCount: talk.commentCount - 1,
+        })
+      await dbService.collection("comments").doc(id).delete()
+    },
+    [talk]
+  )
 
   return (
     <Layout>
