@@ -48,4 +48,4 @@ You can deploy this project using:
 ```
 
 ## 🚀 Results
-https://hyunsooshin.github.io/pepsi-man
+https://pepsi-man.hyunsooshin.com
