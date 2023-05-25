@@ -1,4 +1,4 @@
-import React, { useState, useRef, useCallback } from "react"
+import React, { useState, useEffect, useRef, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
@@ -7,15 +7,30 @@ import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 import { trim } from "utils/util"
 import Layout from "../../common/Layout"
 
-const Write = () => {
+const Edit = (props) => {
+  const { talkSeq } = props.match.params
   const history = useHistory()
   const { user } = useSelector((state) => state.userReducer)
+  const [uid, setUid] = useState(0)
   const [title, setTitle] = useState("")
   const [contents, setContents] = useState("")
   // 이미지 형식 {base64: null, file: null}
   const [file, setFile] = useState(null)
   const [fileData, setFileData] = useState("")
   const inputRef = useRef()
+
+  useEffect(() => {
+    const initData = async () => {
+      const result = await dbService.collection("talks").doc(talkSeq).get()
+      const data = result.data()
+      setUid(data.uid)
+      setTitle(data.title)
+      setContents(data.contents)
+      setFileData(data.imageUrl)
+    }
+
+    initData()
+  }, [])
 
   const onChangeInputFile = useCallback(async (e) => {
     if (e.target.files[0]) {
@@ -35,11 +50,14 @@ const Write = () => {
   }
 
   const onSubmit = useCallback(async () => {
-    if (trim(title) == "") return alert("Please enter a title")
+    if (uid !== user.uid) return alert("You can't edit it. because you are not a writer")
+    else if (trim(title) == "") return alert("Please enter a title")
     else if (trim(contents) == "") return alert("Please enter a contents")
 
     let fileUrl = ""
-    if (fileData !== "" && file !== null) {
+    if (fileData.includes("https://firebasestorage.googleapis.com")) {
+      fileUrl = fileData
+    } else if (fileData !== "" && file !== null) {
       const fileRef = storageService.ref().child(`talks/${file.name}`)
       const response = await fileRef.putString(fileData, "data_url")
       fileUrl = await response.ref.getDownloadURL()
@@ -47,15 +65,11 @@ const Write = () => {
 
     await dbService
       .collection("talks")
-      .add({
-        uid: user.uid,
-        writer: user.displayName || "Person",
+      .doc(talkSeq)
+      .update({
         title,
         contents,
         imageUrl: fileUrl,
-        clickCount: 0,
-        commentCount: 0,
-        createdAt: Date.now(),
       })
       .then(() => history.goBack())
   }, [title, contents, file, fileData])
@@ -91,14 +105,14 @@ const Write = () => {
           <p>cancel</p>
         </Button>
         <Button onClick={onSubmit}>
-          <p>write</p>
+          <p>edit</p>
         </Button>
       </ButtonsSection>
     </Layout>
   )
 }
 
-export default Write
+export default Edit
 
 const InputSection = styled.section`
   display: flex;

@@ -84,7 +84,7 @@ const AdminAlbumAdd = () => {
         <InputView>
           <Label>Image</Label>
           <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
-          <Input type="text" value={file ? file.name : ""} readOnly />
+          <Input type="text" value={file?.name || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
         <InputView>

@@ -31,7 +31,9 @@ const AdminIntroduce = () => {
 
   const onSubmit = useCallback(async () => {
     let fileUrl = ""
-    if (fileData !== "") {
+    if (fileData.includes("https://firebasestorage.googleapis.com")) {
+      fileUrl = fileData
+    } else if (fileData !== "") {
       const fileRef = storageService.ref().child(`profile/${file.name}`)
       const response = await fileRef.putString(fileData, "data_url")
       fileUrl = await response.ref.getDownloadURL()
@@ -62,49 +64,49 @@ const AdminIntroduce = () => {
         <InputView>
           <Label>Image</Label>
           <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
-          <Input type="text" value={file ? file.name : introduce.imageUrl} readOnly />
+          <Input type="text" value={file?.name || introduce.imageUrl || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
         <InputView>
           <Label>Name</Label>
-          <Input type="text" value={introduce.name} onChange={(e) => setIntroduce({ ...introduce, name: e.target.value })} />
+          <Input type="text" value={introduce.name || ""} onChange={(e) => setIntroduce({ ...introduce, name: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Nationality</Label>
-          <Input type="text" value={introduce.nationality} onChange={(e) => setIntroduce({ ...introduce, nationality: e.target.value })} />
+          <Input type="text" value={introduce.nationality || ""} onChange={(e) => setIntroduce({ ...introduce, nationality: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Date of birth</Label>
-          <Input type="text" value={introduce.birth} onChange={(e) => setIntroduce({ ...introduce, birth: e.target.value })} />
+          <Input type="text" value={introduce.birth || ""} onChange={(e) => setIntroduce({ ...introduce, birth: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Debut</Label>
-          <Input type="text" value={introduce.debut} onChange={(e) => setIntroduce({ ...introduce, debut: e.target.value })} />
+          <Input type="text" value={introduce.debut || ""} onChange={(e) => setIntroduce({ ...introduce, debut: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Crew</Label>
-          <Input type="text" value={introduce.crew} onChange={(e) => setIntroduce({ ...introduce, crew: e.target.value })} />
+          <Input type="text" value={introduce.crew || ""} onChange={(e) => setIntroduce({ ...introduce, crew: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Label</Label>
-          <Input type="text" value={introduce.label} onChange={(e) => setIntroduce({ ...introduce, label: e.target.value })} />
+          <Input type="text" value={introduce.label || ""} onChange={(e) => setIntroduce({ ...introduce, label: e.target.value })} />
         </InputView>
 
         <InputView>
           <Label>Instagram</Label>
-          <Input type="text" value={introduce.instaUrl} onChange={(e) => setIntroduce({ ...introduce, instaUrl: e.target.value })} />
+          <Input type="text" value={introduce.instaUrl || ""} onChange={(e) => setIntroduce({ ...introduce, instaUrl: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Tiktok</Label>
-          <Input type="text" value={introduce.tiktokUrl} onChange={(e) => setIntroduce({ ...introduce, tiktokUrl: e.target.value })} />
+          <Input type="text" value={introduce.tiktokUrl || ""} onChange={(e) => setIntroduce({ ...introduce, tiktokUrl: e.target.value })} />
         </InputView>
         <InputView>
           <Label>Youtube</Label>
-          <Input type="text" value={introduce.youtubeUrl} onChange={(e) => setIntroduce({ ...introduce, youtubeUrl: e.target.value })} />
+          <Input type="text" value={introduce.youtubeUrl || ""} onChange={(e) => setIntroduce({ ...introduce, youtubeUrl: e.target.value })} />
         </InputView>
         <InputView>
           <Label>SoundCloud</Label>
-          <Input type="text" value={introduce.soundcloudUrl} onChange={(e) => setIntroduce({ ...introduce, soundcloudUrl: e.target.value })} />
+          <Input type="text" value={introduce.soundcloudUrl || ""} onChange={(e) => setIntroduce({ ...introduce, soundcloudUrl: e.target.value })} />
         </InputView>
       </InputSection>
 

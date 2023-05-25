@@ -17,6 +17,7 @@ import Talks from "./page/talks"
 import Talk from "./page/talks/Talk"
 import Search from "./page/talks/Search"
 import Write from "./page/talks/Write"
+import Edit from "./page/talks/Edit"
 // 관리자 페이지
 import Admin from "./page/admin"
 import AdminIntroduce from "./page/admin/introduce"
@@ -66,6 +67,7 @@ function App() {
               <Switch>
                 <Route path="/talks/search" component={Search} />
                 <Route path="/talks/write" component={Write} />
+                <Route path="/talks/edit/:talkSeq" component={Edit} />
                 <Route path="/talks/:talkSeq" component={Talk} />
                 <Route path="/talks" component={Talks} />
               </Switch>

@@ -144,7 +144,7 @@ const AdminAlbumEdit = (props) => {
         <InputView>
           <Label>Image</Label>
           <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
-          <Input type="text" value={file ? file.name : fileData} readOnly />
+          <Input type="text" value={file?.name || fileData || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
         <InputView>

@@ -60,8 +60,8 @@ const Admin = () => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
-          <Input type="text" value={file ? file.name : main.mainImage} readOnly />
+          <input ref={inputRef} style={{ display: "none" }} type="file" value={""} onChange={onChangeInputFile} />
+          <Input type="text" value={file?.name || main.mainImage || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
       </InputSection>

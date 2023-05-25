@@ -15,10 +15,12 @@ const Search = () => {
   const [filterTalkList, setFilterTalkList] = useState([])
 
   useEffect(() => {
-    dbService.collection("talks").onSnapshot((snapshot) => {
+    const talks = dbService.collection("talks").onSnapshot((snapshot) => {
       setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       setFilterTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
+
+    return () => talks()
   }, [])
 
   const onChangeInputData = (e) => {

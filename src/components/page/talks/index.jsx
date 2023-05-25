@@ -13,9 +13,11 @@ const Talks = () => {
   const [orderBy, setOrderBy] = useState(0)
 
   useEffect(() => {
-    dbService.collection("talks").onSnapshot((snapshot) => {
+    const talks = dbService.collection("talks").onSnapshot((snapshot) => {
       setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
+
+    return () => talks()
   }, [])
 
   const orderByFunc = useCallback(

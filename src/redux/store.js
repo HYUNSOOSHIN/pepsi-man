@@ -11,6 +11,6 @@ const persistConfig = {
 
 const enhancedReducer = persistReducer(persistConfig, rootReducer)
 
-export const store = configureStore({ reducer: enhancedReducer })
+export const store = configureStore({ reducer: enhancedReducer, middleware: [] })
 
 export const persistor = persistStore(store)

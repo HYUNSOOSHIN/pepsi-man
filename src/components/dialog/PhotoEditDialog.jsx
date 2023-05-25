@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
 import { dbService, storageService } from "../../fireBase"
 
-export default function PhotoAddDialog(props) {
+export default function PhotoEditDialog(props) {
   const { open, onClose, data } = props
   const [file, setFile] = useState(null)
   const [fileData, setFileData] = useState("")
@@ -63,7 +63,7 @@ export default function PhotoAddDialog(props) {
         <InputView>
           <Label>Image</Label>
           <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputData} />
-          <Input type="text" value={file ? file.name : data?.imageUrl} readOnly />
+          <Input type="text" value={file?.name || data?.imageUrl || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>
 

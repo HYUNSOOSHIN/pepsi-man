@@ -19,17 +19,34 @@ const Talk = (props) => {
   const [comment, setComment] = useState("")
 
   useEffect(() => {
-    dbService
+    const comments = dbService
       .collection("comments")
       .where("talkSeq", "==", talkSeq)
       .onSnapshot((snapshot) => {
         setCommentList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       })
 
-    dbService
+    const talks = dbService
       .collection("talks")
       .doc(talkSeq)
-      .onSnapshot((snapshot) => setTalk(snapshot.data()))
+      .onSnapshot((snapshot) => setTalk(snapshot.data() || {}))
+
+    return () => {
+      comments()
+      talks()
+    }
+  }, [])
+
+  const onClickTalkDelete = useCallback(async (e) => {
+    e.preventDefault()
+
+    if (confirm("Really?")) {
+      await dbService
+        .collection("talks")
+        .doc(talkSeq)
+        .delete()
+        .then(() => history.goBack())
+    }
   }, [])
 
   const onSubmitComment = useCallback(async () => {
@@ -57,16 +74,18 @@ const Talk = (props) => {
 
   const onClickCommentDelete = useCallback(
     async (id) => {
-      const temp = { ...talk }
-      delete temp.id
-      await dbService
-        .collection("talks")
-        .doc(talkSeq)
-        .update({
-          ...temp,
-          commentCount: talk.commentCount - 1,
-        })
-      await dbService.collection("comments").doc(id).delete()
+      if (confirm("Really?")) {
+        const temp = { ...talk }
+        delete temp.id
+        await dbService
+          .collection("talks")
+          .doc(talkSeq)
+          .update({
+            ...temp,
+            commentCount: talk.commentCount - 1,
+          })
+        await dbService.collection("comments").doc(id).delete()
+      }
     },
     [talk]
   )
@@ -79,6 +98,14 @@ const Talk = (props) => {
           <Writer>
             <span>{talk.writer || "Person"}</span> {timeForToday(talk.createdAt)}
           </Writer>
+          {talk.uid == user.uid && (
+            <MenuView>
+              <MenuLink href={`/talks/edit/${talkSeq}`}>Edit</MenuLink>
+              <MenuLink href="#" onClick={onClickTalkDelete}>
+                Delete
+              </MenuLink>
+            </MenuView>
+          )}
         </Box1>
 
         <Box2>
@@ -154,6 +181,7 @@ const TalkSection = styled.section`
   }
 `
 const Box1 = styled.div`
+  position: relative;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -185,6 +213,20 @@ const Writer = styled.p`
   @media (max-width: 768px) {
     font-size: 12px;
   }
+`
+const MenuView = styled.div`
+  position: absolute;
+  right: 0;
+  bottom: 10px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+`
+const MenuLink = styled.a`
+  cursor: pointer;
+  margin-left: 10px;
+  color: ${(props) => props.theme.text};
+  font-size: 15px;
 `
 const Box2 = styled.div`
   width: 100%;
