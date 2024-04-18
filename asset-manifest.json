@@ -1,20 +1,20 @@
 {
   "files": {
-    "main.js": "/static/js/main.62eadaa1.chunk.js",
-    "main.js.map": "/static/js/main.62eadaa1.chunk.js.map",
+    "main.js": "/static/js/main.7a6711c0.chunk.js",
+    "main.js.map": "/static/js/main.7a6711c0.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.dc876d92.js",
     "runtime-main.js.map": "/static/js/runtime-main.dc876d92.js.map",
-    "static/js/2.c857f6dd.chunk.js": "/static/js/2.c857f6dd.chunk.js",
-    "static/js/2.c857f6dd.chunk.js.map": "/static/js/2.c857f6dd.chunk.js.map",
+    "static/js/2.2c55a96b.chunk.js": "/static/js/2.2c55a96b.chunk.js",
+    "static/js/2.2c55a96b.chunk.js.map": "/static/js/2.2c55a96b.chunk.js.map",
     "index.html": "/index.html",
-    "static/js/2.c857f6dd.chunk.js.LICENSE.txt": "/static/js/2.c857f6dd.chunk.js.LICENSE.txt",
+    "static/js/2.2c55a96b.chunk.js.LICENSE.txt": "/static/js/2.2c55a96b.chunk.js.LICENSE.txt",
     "static/media/instagram.513d4aff.png": "/static/media/instagram.513d4aff.png",
     "static/media/tiktok.bf973583.png": "/static/media/tiktok.bf973583.png",
     "static/media/zior.19da9f7d.png": "/static/media/zior.19da9f7d.png"
   },
   "entrypoints": [
     "static/js/runtime-main.dc876d92.js",
-    "static/js/2.c857f6dd.chunk.js",
-    "static/js/main.62eadaa1.chunk.js"
+    "static/js/2.2c55a96b.chunk.js",
+    "static/js/main.7a6711c0.chunk.js"
   ]
 }
