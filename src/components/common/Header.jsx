@@ -12,19 +12,14 @@ const Header = (props) => {
   const { user } = useSelector((state) => state.userReducer)
 
   useEffect(() => {
-    window.addEventListener("resize", () => {
+    const onResize = () => {
       if (window.innerWidth > 1024) {
         setHamberger(false)
       }
-    })
-
-    return () => {
-      window.removeEventListener("resize", () => {
-        if (window.innerWidth > 1024) {
-          setHamberger(false)
-        }
-      })
     }
+    window.addEventListener("resize", onResize)
+
+    return () => window.removeEventListener("resize", onResize)
   }, [])
 
   const onClickLogout = useCallback(() => {

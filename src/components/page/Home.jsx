@@ -7,9 +7,11 @@ const Home = () => {
   const [mainImage, setMainImage] = useState("")
 
   useEffect(() => {
-    dbService.collection("main").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("main").onSnapshot((snapshot) => {
       setMainImage(snapshot.docs[0].data().mainImage)
     })
+
+    return () => unsubscribe()
   }, [])
 
   return (

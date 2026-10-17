@@ -7,9 +7,11 @@ const AdminTalks = () => {
   const [talkList, setTalkList] = useState([])
 
   useEffect(() => {
-    dbService.collection("talks").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("talks").onSnapshot((snapshot) => {
       setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
+
+    return () => unsubscribe()
   }, [])
 
   const onClickTalkDelete = useCallback((id) => {

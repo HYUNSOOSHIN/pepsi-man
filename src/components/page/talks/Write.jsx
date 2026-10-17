@@ -2,7 +2,8 @@ import React, { useState, useRef, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
-import { dbService, storageService } from "../../../fireBase"
+import { dbService, uploadImage } from "../../../fireBase"
+import useImageFile from "utils/useImageFile"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 import { trim } from "utils/util"
 import Layout from "../../common/Layout"
@@ -12,27 +13,8 @@ const Write = () => {
   const { user } = useSelector((state) => state.userReducer)
   const [title, setTitle] = useState("")
   const [contents, setContents] = useState("")
-  // 이미지 형식 {base64: null, file: null}
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, selectFile, clearFile } = useImageFile()
   const inputRef = useRef()
-
-  const onChangeInputFile = useCallback(async (e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
-    }
-  }, [])
-
-  const removeFile = () => {
-    setFile(null)
-    setFileData("")
-  }
 
   const onSubmit = useCallback(async () => {
     if (trim(title) == "") return alert("Please enter a title")
@@ -40,9 +22,7 @@ const Write = () => {
 
     let fileUrl = ""
     if (fileData !== "" && file !== null) {
-      const fileRef = storageService.ref().child(`talks/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("talks", file)
     }
 
     await dbService
@@ -71,14 +51,14 @@ const Write = () => {
       </InputSection>
 
       <ImageSection>
-        <input ref={inputRef} style={{ display: "none" }} type={"file"} onChange={onChangeInputFile} accept={"image/*"} />
+        <input ref={inputRef} style={{ display: "none" }} type={"file"} onChange={selectFile} accept={"image/*"} />
         <ImageAddButton onClick={() => inputRef.current.click()}>Add image</ImageAddButton>
 
         <ImageListView>
           {fileData && (
             <ImageItem>
               <img src={fileData} alt="image" />
-              <button onClick={removeFile}>
+              <button onClick={clearFile}>
                 <RemoveCircleIcon />
               </button>
             </ImageItem>

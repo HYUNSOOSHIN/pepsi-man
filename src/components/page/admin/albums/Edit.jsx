@@ -4,15 +4,15 @@ import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
 import YouTubeIcon from "@material-ui/icons/YouTube"
 import ControlPoint from "@material-ui/icons/ControlPoint"
-import { dbService, storageService } from "../../../../fireBase"
+import { dbService, uploadImage } from "../../../../fireBase"
+import useImageFile from "utils/useImageFile"
 import Layout from "components/common/Layout"
 import TrackDialog from "components/dialog/TrackDialog"
 
 const AdminAlbumEdit = (props) => {
   const { albumSeq } = props.match.params
   const [trackDialog, setTrackDialog] = useState({ open: false, data: null })
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, setFileData, selectFile } = useImageFile()
   const [title, setTitle] = useState("")
   const [artist, setArtist] = useState("")
   const [date, setDate] = useState("")
@@ -21,10 +21,12 @@ const AdminAlbumEdit = (props) => {
   const inputRef = useRef()
 
   useEffect(() => {
+    let cancelled = false
     const initData = async () => {
       const pro1 = dbService.collection("albums").doc(albumSeq).get()
       const pro2 = dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
       Promise.all([pro1, pro2]).then((res) => {
+        if (cancelled) return
         const album = res[0].data()
         setFileData(album.imageUrl)
         setTitle(album.title)
@@ -36,7 +38,11 @@ const AdminAlbumEdit = (props) => {
     }
 
     initData()
-  }, [])
+
+    return () => {
+      cancelled = true
+    }
+  }, [albumSeq])
 
   const onClickTrackDialogAdd = useCallback(
     (value) => {
@@ -54,18 +60,6 @@ const AdminAlbumEdit = (props) => {
     },
     [trackList]
   )
-
-  const onChangeInputFile = useCallback((e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
-    }
-  }, [])
 
   const onClickTrackDelete = useCallback(
     (idx) => {
@@ -100,9 +94,7 @@ const AdminAlbumEdit = (props) => {
 
     let fileUrl = ""
     if (fileData !== "" && file !== null) {
-      const fileRef = storageService.ref().child(`albums/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("albums", file)
     }
 
     const pro1 = dbService
@@ -143,7 +135,7 @@ const AdminAlbumEdit = (props) => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={selectFile} />
           <Input type="text" value={file?.name || fileData || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

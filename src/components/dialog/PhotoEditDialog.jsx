@@ -1,33 +1,16 @@
-import React, { useState, useEffect, useRef, useCallback } from "react"
+import React, { useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
-import { dbService, storageService } from "../../fireBase"
+import { dbService, uploadImage } from "../../fireBase"
+import useImageFile from "utils/useImageFile"
 
 export default function PhotoEditDialog(props) {
   const { open, onClose, data } = props
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, selectFile, clearFile } = useImageFile()
   const inputRef = useRef()
 
   useEffect(() => {
-    if (open === false) initState()
+    if (open === false) clearFile()
   }, [open])
-
-  const initState = () => {
-    setFile(null)
-    setFileData("")
-  }
-
-  const onChangeInputData = useCallback((e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
-    }
-  }, [])
 
   const onClickDelete = useCallback(async () => {
     if (confirm("Really?"))
@@ -41,9 +24,7 @@ export default function PhotoEditDialog(props) {
   const onClickEdit = useCallback(async () => {
     let fileUrl = ""
     if (fileData !== "") {
-      const fileRef = storageService.ref().child(`photos/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("photos", file)
     }
     const temp = { ...data }
     const id = temp.id
@@ -62,7 +43,7 @@ export default function PhotoEditDialog(props) {
         <TitleText>Photo Edit</TitleText>
         <InputView>
           <Label>Image</Label>
-          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputData} />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={selectFile} />
           <Input type="text" value={file?.name || data?.imageUrl || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

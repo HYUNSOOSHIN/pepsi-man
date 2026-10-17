@@ -10,10 +10,12 @@ const Photos = () => {
   const [photoList, setPhotoList] = useState([])
 
   useEffect(() => {
-    dbService.collection("photos").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("photos").onSnapshot((snapshot) => {
       const photoArray = snapshot.docs.map((doc) => doc.data())
       setPhotoList(photoArray)
     })
+
+    return () => unsubscribe()
   }, [])
 
   return (

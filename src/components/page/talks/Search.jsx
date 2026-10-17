@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { debounce } from "lodash"
-import { dbService } from "../../../fireBase"
+import { dbService, increment } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
 import ArrowBackIcon from "@material-ui/icons/ArrowBack"
@@ -14,13 +14,24 @@ const Search = () => {
   const [talkList, setTalkList] = useState([])
   const [filterTalkList, setFilterTalkList] = useState([])
 
+  // Firestore는 부분 문자열 검색을 지원하지 않아 클라이언트에서 필터링한다
+  // 실시간 구독 대신 진입 시 한 번만 조회해 문서 변경마다 재전송되는 읽기를 막는다
   useEffect(() => {
-    const talks = dbService.collection("talks").onSnapshot((snapshot) => {
-      setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-      setFilterTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
+    let cancelled = false
+    dbService
+      .collection("talks")
+      .orderBy("createdAt", "desc")
+      .get()
+      .then((snapshot) => {
+        if (cancelled) return
+        const list = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+        setTalkList(list)
+        setFilterTalkList(list)
+      })
 
-    return () => talks()
+    return () => {
+      cancelled = true
+    }
   }, [])
 
   const onChangeInputData = (e) => {
@@ -39,17 +50,15 @@ const Search = () => {
     [talkList]
   )
 
+  // 언마운트 시 대기 중인 debounce 호출 취소
+  useEffect(() => () => filterList.cancel(), [filterList])
+
   const onClickTalkItem = useCallback(async (talk) => {
     history.push(`/talks/${talk.id}`)
-    const temp = { ...talk }
-    delete temp.id
     await dbService
       .collection("talks")
       .doc(talk.id)
-      .update({
-        ...temp,
-        clickCount: (talk.clickCount || 0) + 1,
-      })
+      .update({ clickCount: increment(1) })
   }, [])
 
   return (

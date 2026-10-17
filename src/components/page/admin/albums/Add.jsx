@@ -4,14 +4,14 @@ import { IconButton } from "@material-ui/core"
 import LibraryBooksIcon from "@material-ui/icons/LibraryBooks"
 import YouTubeIcon from "@material-ui/icons/YouTube"
 import ControlPoint from "@material-ui/icons/ControlPoint"
-import { dbService, storageService } from "../../../../fireBase"
+import { dbService, uploadImage } from "../../../../fireBase"
+import useImageFile from "utils/useImageFile"
 import Layout from "components/common/Layout"
 import TrackDialog from "components/dialog/TrackDialog"
 
 const AdminAlbumAdd = () => {
   const [trackDialog, setTrackDialog] = useState({ open: false, data: null })
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, selectFile } = useImageFile()
   const [title, setTitle] = useState("")
   const [artist, setArtist] = useState("")
   const [date, setDate] = useState("")
@@ -35,18 +35,6 @@ const AdminAlbumAdd = () => {
     [trackList]
   )
 
-  const onChangeInputFile = useCallback((e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
-    }
-  }, [])
-
   const onSubmit = useCallback(async () => {
     if (fileData == "") return alert("Please enter a image")
     else if (title == "") return alert("Please enter a title")
@@ -55,9 +43,7 @@ const AdminAlbumAdd = () => {
 
     let fileUrl = ""
     if (fileData !== "" && file !== null) {
-      const fileRef = storageService.ref().child(`albums/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("albums", file)
     }
 
     await dbService
@@ -83,7 +69,7 @@ const AdminAlbumAdd = () => {
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={onChangeInputFile} />
+          <input ref={inputRef} style={{ display: "none" }} type="file" onChange={selectFile} />
           <Input type="text" value={file?.name || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

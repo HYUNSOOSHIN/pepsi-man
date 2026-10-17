@@ -1,40 +1,26 @@
 import React, { useState, useEffect, useRef, useCallback } from "react"
 import styled from "styled-components"
-import { dbService, storageService } from "../../../fireBase"
+import { dbService, uploadImage } from "../../../fireBase"
+import useImageFile from "utils/useImageFile"
 import Layout from "components/common/Layout"
 
 const Admin = () => {
   const [main, setMain] = useState("")
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, setFileData, selectFile } = useImageFile()
   const inputRef = useRef()
-  const previewRef = useRef()
 
   useEffect(() => {
-    dbService.collection("main").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("main").onSnapshot((snapshot) => {
       setMain({ ...snapshot.docs[0].data(), id: snapshot.docs[0].id })
     })
-  }, [])
 
-  const onChangeInputFile = useCallback((e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-        previewRef.current.src = event.target.result
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
-    }
+    return () => unsubscribe()
   }, [])
 
   const onSubmit = useCallback(async () => {
     let fileUrl = ""
     if (fileData !== "") {
-      const fileRef = storageService.ref().child(`main/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("main", file)
     }
     const data = { ...main }
     const id = data.id
@@ -55,12 +41,12 @@ const Admin = () => {
 
   return (
     <Layout>
-      <ProfileImgSection>{main.mainImage && <img ref={previewRef} src={main.mainImage} alt={"profile img"} />}</ProfileImgSection>
+      <ProfileImgSection>{(fileData || main.mainImage) && <img src={fileData || main.mainImage} alt={"profile img"} />}</ProfileImgSection>
 
       <InputSection>
         <InputView>
           <Label>Image</Label>
-          <input ref={inputRef} style={{ display: "none" }} type="file" value={""} onChange={onChangeInputFile} />
+          <input ref={inputRef} style={{ display: "none" }} type="file" value={""} onChange={selectFile} />
           <Input type="text" value={file?.name || main.mainImage || ""} readOnly />
           <FileButton onClick={() => inputRef.current.click()}>Search</FileButton>
         </InputView>

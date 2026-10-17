@@ -2,7 +2,8 @@ import React, { useState, useEffect, useRef, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
-import { dbService, storageService } from "../../../fireBase"
+import { dbService, uploadImage } from "../../../fireBase"
+import useImageFile from "utils/useImageFile"
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle"
 import { trim } from "utils/util"
 import Layout from "../../common/Layout"
@@ -14,14 +15,14 @@ const Edit = (props) => {
   const [uid, setUid] = useState(0)
   const [title, setTitle] = useState("")
   const [contents, setContents] = useState("")
-  // 이미지 형식 {base64: null, file: null}
-  const [file, setFile] = useState(null)
-  const [fileData, setFileData] = useState("")
+  const { file, fileData, setFileData, selectFile, clearFile } = useImageFile()
   const inputRef = useRef()
 
   useEffect(() => {
+    let cancelled = false
     const initData = async () => {
       const result = await dbService.collection("talks").doc(talkSeq).get()
+      if (cancelled) return
       const data = result.data()
       setUid(data.uid)
       setTitle(data.title)
@@ -30,24 +31,11 @@ const Edit = (props) => {
     }
 
     initData()
-  }, [])
 
-  const onChangeInputFile = useCallback(async (e) => {
-    if (e.target.files[0]) {
-      const reader = new FileReader()
-
-      reader.onload = (event) => {
-        setFileData(event.target.result)
-      }
-      setFile(e.target.files[0])
-      reader.readAsDataURL(e.target.files[0])
+    return () => {
+      cancelled = true
     }
-  }, [])
-
-  const removeFile = () => {
-    setFile(null)
-    setFileData("")
-  }
+  }, [talkSeq])
 
   const onSubmit = useCallback(async () => {
     if (uid !== user.uid) return alert("You can't edit it. because you are not a writer")
@@ -58,9 +46,7 @@ const Edit = (props) => {
     if (fileData.includes("https://firebasestorage.googleapis.com")) {
       fileUrl = fileData
     } else if (fileData !== "" && file !== null) {
-      const fileRef = storageService.ref().child(`talks/${file.name}`)
-      const response = await fileRef.putString(fileData, "data_url")
-      fileUrl = await response.ref.getDownloadURL()
+      fileUrl = await uploadImage("talks", file)
     }
 
     await dbService
@@ -85,14 +71,14 @@ const Edit = (props) => {
       </InputSection>
 
       <ImageSection>
-        <input ref={inputRef} style={{ display: "none" }} type={"file"} onChange={onChangeInputFile} accept={"image/*"} />
+        <input ref={inputRef} style={{ display: "none" }} type={"file"} onChange={selectFile} accept={"image/*"} />
         <ImageAddButton onClick={() => inputRef.current.click()}>Add image</ImageAddButton>
 
         <ImageListView>
           {fileData && (
             <ImageItem>
               <img src={fileData} alt="image" />
-              <button onClick={removeFile}>
+              <button onClick={clearFile}>
                 <RemoveCircleIcon />
               </button>
             </ImageItem>

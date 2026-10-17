@@ -1,48 +1,67 @@
 import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
-import { dbService } from "../../../fireBase"
+import { dbService, increment } from "../../../fireBase"
 import Layout from "../../common/Layout"
 import TalkItem from "../../item/TalkItem"
 import SearchIcon from "@material-ui/icons/Search"
 import CreateIcon from "@material-ui/icons/Create"
 
+const PAGE_SIZE = 20
+// orderBy 인덱스별 정렬 필드 (0: Newest, 1: Popularity)
+const ORDER_FIELDS = ["createdAt", "clickCount"]
+
 const Talks = () => {
   const history = useHistory()
   const [talkList, setTalkList] = useState([])
   const [orderBy, setOrderBy] = useState(0)
+  const [lastDoc, setLastDoc] = useState(null)
+  const [hasMore, setHasMore] = useState(false)
+  const [loading, setLoading] = useState(false)
 
-  useEffect(() => {
-    const talks = dbService.collection("talks").onSnapshot((snapshot) => {
-      setTalkList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
-    })
-
-    return () => talks()
-  }, [])
-
-  const orderByFunc = useCallback(
-    (list) => {
-      const sortList = [...list]
-      if (orderBy === 0) {
-        return sortList.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt))
-      } else if (orderBy === 1) {
-        return sortList.sort((a, b) => new Date(b.clickCount) - new Date(a.clickCount))
-      }
+  // 전체 컬렉션 대신 정렬된 한 페이지씩 조회
+  const fetchPage = useCallback(
+    (cursor) => {
+      let query = dbService.collection("talks").orderBy(ORDER_FIELDS[orderBy], "desc").limit(PAGE_SIZE)
+      if (cursor) query = query.startAfter(cursor)
+      return query.get()
     },
     [orderBy]
   )
 
+  const applyPage = (snapshot, append) => {
+    const page = snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id }))
+    setTalkList((prev) => (append ? [...prev, ...page] : page))
+    setLastDoc(snapshot.docs[snapshot.docs.length - 1] || null)
+    setHasMore(snapshot.docs.length === PAGE_SIZE)
+  }
+
+  useEffect(() => {
+    let cancelled = false
+    fetchPage(null).then((snapshot) => {
+      if (!cancelled) applyPage(snapshot, false)
+    })
+
+    return () => {
+      cancelled = true
+    }
+  }, [fetchPage])
+
+  const onClickMore = useCallback(async () => {
+    setLoading(true)
+    try {
+      applyPage(await fetchPage(lastDoc), true)
+    } finally {
+      setLoading(false)
+    }
+  }, [fetchPage, lastDoc])
+
   const onClickTalkItem = useCallback(async (talk) => {
     history.push(`/talks/${talk.id}`)
-    const temp = { ...talk }
-    delete temp.id
     await dbService
       .collection("talks")
       .doc(talk.id)
-      .update({
-        ...temp,
-        clickCount: (talk.clickCount || 0) + 1,
-      })
+      .update({ clickCount: increment(1) })
   }, [])
 
   return (
@@ -68,10 +87,18 @@ const Talks = () => {
       </Section>
 
       <TalkListSection>
-        {orderByFunc(talkList).map((item, index) => (
-          <TalkItem key={index} item={item} onClick={() => onClickTalkItem(item)} />
+        {talkList.map((item) => (
+          <TalkItem key={item.id} item={item} onClick={() => onClickTalkItem(item)} />
         ))}
       </TalkListSection>
+
+      {hasMore && (
+        <MoreView>
+          <button onClick={onClickMore} disabled={loading}>
+            <p>{loading ? "loading..." : "more"}</p>
+          </button>
+        </MoreView>
+      )}
     </Layout>
   )
 }
@@ -153,5 +180,21 @@ const TalkListSection = styled.section`
   }
   @media (max-width: 768px) {
     margin-top: 30px;
+  }
+`
+const MoreView = styled.section`
+  display: flex;
+  justify-content: center;
+  margin: 30px 0;
+  & > button {
+    width: 120px;
+    height: 35px;
+    border: 1px solid;
+    border-radius: 5px;
+    & > p {
+      color: ${(props) => props.theme.text};
+      font-size: 15px;
+      font-weight: bold;
+    }
   }
 `

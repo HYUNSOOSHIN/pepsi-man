@@ -10,9 +10,11 @@ const AdminAlbums = () => {
   const [albumList, setAlbumList] = useState([])
 
   useEffect(() => {
-    dbService.collection("albums").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("albums").onSnapshot((snapshot) => {
       setAlbumList(snapshot.docs.map((doc) => ({ ...doc.data(), id: doc.id })))
     })
+
+    return () => unsubscribe()
   }, [])
 
   const onClickAdd = useCallback(() => {

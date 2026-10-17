@@ -11,9 +11,11 @@ const Introduce = () => {
   const [profileInfo, setProfileInfo] = useState({})
 
   useEffect(() => {
-    dbService.collection("introduce").onSnapshot((snapshot) => {
+    const unsubscribe = dbService.collection("introduce").onSnapshot((snapshot) => {
       setProfileInfo(snapshot.docs[0].data())
     })
+
+    return () => unsubscribe()
   }, [])
 
   return (

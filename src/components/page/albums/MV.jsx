@@ -8,13 +8,19 @@ const MV = (props) => {
   const [track, setTrack] = useState({})
 
   useEffect(() => {
+    let cancelled = false
     const initData = async () => {
       const result = await dbService.collection("tracks").doc(trackSeq).get()
+      if (cancelled) return
       setTrack(result.data())
     }
 
     initData()
-  }, [])
+
+    return () => {
+      cancelled = true
+    }
+  }, [trackSeq])
 
   return (
     <Layout>

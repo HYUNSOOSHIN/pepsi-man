@@ -16,17 +16,23 @@ const Album = (props) => {
   const [lyricsDialog, setLyricsDialog] = useState({ open: false, track: {} })
 
   useEffect(() => {
+    let cancelled = false
     const initData = async () => {
       const pro1 = dbService.collection("albums").doc(albumSeq).get()
       const pro2 = dbService.collection("tracks").where("albumSeq", "==", albumSeq).get()
       Promise.all([pro1, pro2]).then((res) => {
+        if (cancelled) return
         setAlbum(res[0].data())
         setTrackList(res[1].docs.map((doc) => ({ ...doc.data(), id: doc.id })))
       })
     }
 
     initData()
-  }, [])
+
+    return () => {
+      cancelled = true
+    }
+  }, [albumSeq])
 
   return (
     <Layout>

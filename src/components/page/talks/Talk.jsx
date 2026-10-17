@@ -2,7 +2,7 @@ import React, { useState, useEffect, useCallback } from "react"
 import { useHistory } from "react-router-dom"
 import styled from "styled-components"
 import { useSelector } from "react-redux"
-import { dbService } from "../../../fireBase"
+import { dbService, increment } from "../../../fireBase"
 import { timeForToday, trim } from "utils/util"
 import Layout from "../../common/Layout"
 import { IconButton } from "@material-ui/core"
@@ -35,31 +35,32 @@ const Talk = (props) => {
       comments()
       talks()
     }
-  }, [])
+  }, [talkSeq])
 
-  const onClickTalkDelete = useCallback(async (e) => {
-    e.preventDefault()
+  const onClickTalkDelete = useCallback(
+    async (e) => {
+      e.preventDefault()
 
-    if (confirm("Really?")) {
-      await dbService
-        .collection("talks")
-        .doc(talkSeq)
-        .delete()
-        .then(() => history.goBack())
-    }
-  }, [])
+      if (confirm("Really?")) {
+        await dbService
+          .collection("talks")
+          .doc(talkSeq)
+          .delete()
+          .then(() => history.goBack())
+      }
+    },
+    [talkSeq]
+  )
 
   const onSubmitComment = useCallback(async () => {
     if (trim(comment) == "") {
       alert("Please enter a comment")
       return
     }
-    const temp = { ...talk }
-    delete temp.id
     await dbService
       .collection("talks")
       .doc(talkSeq)
-      .update({ ...temp, commentCount: (talk.commentCount || 0) + 1 })
+      .update({ commentCount: increment(1) })
     await dbService
       .collection("comments")
       .add({
@@ -70,24 +71,19 @@ const Talk = (props) => {
         createdAt: Date.now(),
       })
       .then(() => setComment(""))
-  }, [comment, talk])
+  }, [comment, talkSeq, user])
 
   const onClickCommentDelete = useCallback(
     async (id) => {
       if (confirm("Really?")) {
-        const temp = { ...talk }
-        delete temp.id
         await dbService
           .collection("talks")
           .doc(talkSeq)
-          .update({
-            ...temp,
-            commentCount: talk.commentCount - 1,
-          })
+          .update({ commentCount: increment(-1) })
         await dbService.collection("comments").doc(id).delete()
       }
     },
-    [talk]
+    [talkSeq]
   )
 
   return (
@@ -100,7 +96,7 @@ const Talk = (props) => {
           </Writer>
           {talk.uid == user.uid && (
             <MenuView>
-              <MenuLink href={`/talks/edit/${talkSeq}`}>Edit</MenuLink>
+              <MenuLink onClick={() => history.push(`/talks/edit/${talkSeq}`)}>Edit</MenuLink>
               <MenuLink href="#" onClick={onClickTalkDelete}>
                 Delete
               </MenuLink>
