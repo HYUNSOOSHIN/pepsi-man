@@ -41,11 +41,9 @@ To run the project, execute the following command:
 
 ### Deployment
 
-You can deploy this project using:
+Pushing to `master` deploys automatically to GitHub Pages via GitHub Actions (`.github/workflows/deploy.yml`).
 
-```sh
-  yarn deploy
-```
+Firebase config values in `.env` must be registered as repository secrets (`gh secret set -f .env`).
 
 ## 🚀 Results
 https://pepsi-man.hyunsooshin.com
